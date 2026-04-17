@@ -10,6 +10,15 @@
 % Following: T. Tao, https://terrytao.wordpress.com/2011/01/23/the-peter-weyl-theorem-and-non-abelian-fourier-analysis-on-compact-groups/
 % Focused on the finite-group case throughout.
 %
+% CONTRIBUTION POINTS OVERVIEW:
+% This blueprint outlines key theorems in representation theory for finite groups.
+% Areas marked [NEW] are not yet fully formalized in Mathlib and represent
+% opportunities for contributions:
+% 1. Schur's Lemma: Already verified, but extensions possible.
+% 2. The Peter-Weyl Theorem: Core theorem needing formalization.
+% 3. Parseval's Formula: Dimension identity and related equalities.
+% 4. Orthogonality of Irreducible Representations: Under Hilbert-Schmidt inner product.
+%
 % Mathlib availability key used in comments:
 %   [ML]  = already in Mathlib, \mathlibok is appropriate
 %   [~ML] = close analogue exists; minor adaptation needed
@@ -164,6 +173,9 @@
   %      finrank k (V ⟶ W) = if Nonempty (V ≅ W) then 1 else 0
   %      for Simple V, Simple W, IsAlgClosed k.
   %      The categorical version is CategoryTheory.Schur in Mathlib.CategoryTheory.Preadditive.Schur.
+  % CONTRIBUTION POINT: Schur's lemma is already fully verified in Mathlib.
+  % However, contributions can be made by extending it to more general settings,
+  % such as non-algebraically closed fields or infinite groups.
   \uses{def:intertwining, def:irreducible}
   Let $\rho$ and $\sigma$ be irreducible finite-dimensional representations of
   $G$ over an algebraically closed field $k$.  Then
@@ -286,6 +298,11 @@
   %   Both in Mathlib.RepresentationTheory.Character.
   %   Hypotheses: IsAlgClosed k, Fintype G, Invertible (Fintype.card G : k),
   %               Simple V, Simple W (i.e. irreducible).
+  % CONTRIBUTION POINT: While character orthogonality is verified in Mathlib,
+  % the orthogonality of irreducible representations under the Hilbert-Schmidt
+  % inner product (matrix coefficient orthogonality) can be further developed.
+  % Contributors can formalize the Hilbert-Schmidt inner product on representation
+  % spaces and prove orthogonality relations for matrix coefficients.
   \uses{def:character, def:class-fn-inner-product, thm:schur, def:irreducible}
   Let $G$ be a finite group, $k$ an algebraically closed field with
   $\mathrm{char}(k) \nmid |G|$.  For irreducible representations
@@ -440,6 +457,10 @@
   \label{thm:peter-weyl-finite}
   \lean{PeterWeyl.finite}
   % [NEW] Not yet stated in this form in Mathlib.
+  % CONTRIBUTION POINT: This is a key area for contribution. The Peter-Weyl theorem
+  % for finite groups is not yet fully formalized in Mathlib. Contributors can
+  % formalize this theorem, including the decomposition of the group algebra
+  % into irreducible representations and the related module isomorphism.
   \uses{thm:isotypic-decomp, def:irr-set}
   Let $k[G]$ denote the group algebra, viewed as the regular representation of
   $G$ by left multiplication. Then
@@ -532,6 +553,11 @@
   \label{thm:dim-identity}
   \lean{sumSquaresDimensions}
   % [NEW] Not in Mathlib as a standalone theorem.
+  % CONTRIBUTION POINT: Parseval's formula for finite groups states that the
+  % sum of squares of dimensions of irreducible representations equals the group order.
+  % This is a fundamental result that can be formalized as part of the Peter-Weyl theorem
+  % verification. Contributors can prove this identity and related Parseval-type
+  % equalities for characters and matrix coefficients.
   \uses{thm:peter-weyl-finite}
   For any finite group $G$,
   \[
