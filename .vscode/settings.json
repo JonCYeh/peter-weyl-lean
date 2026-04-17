@@ -142,5 +142,11 @@
             "env": {}
         }
     ],
-    "latex-workshop.latex.outDir": "%WORKSPACE_FOLDER%/blueprint/print"
+    "latex-workshop.latex.outDir": "%WORKSPACE_FOLDER%/blueprint/print",
+    "chat.tools.terminal.autoApprove": {
+        "/^source venv/bin/activate && which leanblueprint && sed -n '1,120p' \\$\\(which leanblueprint\\)$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
 }
