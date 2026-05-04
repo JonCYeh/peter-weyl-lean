@@ -103,6 +103,7 @@ instance instIsSemisimpleRing_groupAlgebra :
 instance instModuleFinite_groupAlgebra : Module.Finite k (MonoidAlgebra k G) :=
   Module.Finite.finsupp
 
+omit [IsAlgClosed k] [Group G] [NeZero ((Nat.card G : k))] in
 /-- The `k`-dimension of the group algebra equals the order of the group. -/
 lemma finrank_groupAlgebra : finrank k (MonoidAlgebra k G) = Fintype.card G := by
   -- `MonoidAlgebra k G` is reducibly equal to `G →₀ k`.
@@ -128,6 +129,7 @@ lemma algebraMap_surjective_of_finiteDim_divisionRing
     Function.Surjective (algebraMap k D) :=
   (IsAlgClosed.algebraMap_bijective_of_isIntegral (k := k) (K := D)).2
 
+omit [IsAlgClosed k] in
 /-- The canonical algebra map `k → D` is injective for any nonzero
 `k`-algebra `D` with `[Field k]`. -/
 lemma algebraMap_injective_of_field
