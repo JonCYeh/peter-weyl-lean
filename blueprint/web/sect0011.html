@@ -157,7 +157,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">32</span>
+    <span class="theorem_thmlabel">31</span>
     <span class="theorem_thmtitle">Module form of Peter–Weyl</span>
     <div class="thm_header_extras">
 
@@ -166,7 +166,7 @@
 
     <a class="icon proof" href="sect0011.html#thm:peter-weyl-module">#</a>
     
-    <a class="icon proof" href="sect0011.html#a0000000046"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0011.html#a0000000045"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -184,13 +184,13 @@
           
           <li><a href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">Corollary 25</a></li>
           
-          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 30</a></li>
+          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 29</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
           
           <li><a href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">Corollary 25</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
           
         </ul>
     
@@ -222,14 +222,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>    Under the standing hypotheses there exist \(n \in \mathbb N\), simple subrepresentations \((V_i)_{i {\lt} n}\) of the regular representation, and multiplicities \((d_i)_{i {\lt} n}\) with each \(d_i = \dim _k V_i \ne 0\), such that </p>
-<div class="displaymath" id="a0000000047">
+<div class="displaymath" id="a0000000046">
   \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq \;  \bigoplus _{i {\lt} n} V_i^{\, \oplus d_i}  \]
 </div>
 <p> as \(k[G]\)-modules. Equivalently: every irreducible appears in \(k[G]\) with multiplicity equal to its \(k\)-dimension, and these are all the irreducibles. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000046">
+<div class="proof_wrapper" id="a0000000045">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -237,7 +237,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Apply Corollary&#160;<a href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">25</a> to \(R := \mathrm{MonoidAlgebra}\  k\  G\), \(R_0 := k\), and \(M := \mathrm{MonoidAlgebra}\  k\  G\) (a finite \(k[G]\)-module since \(|G| {\lt} \infty \) and so a finite \(k\)-module). This produces simple subrepresentations \(V_i\) and dimensions \(d_i\) together with a \(k\)-algebra isomorphism \(\mathrm{End}_{k[G]}\, k[G] \simeq \prod _i \mathrm{Mat}_{d_i}(\mathrm{End}_{k[G]} V_i)\). Now \(\mathrm{End}_{k[G]}\, k[G] \simeq k[G]^{\mathrm{op}}\) canonically (<span class="ttfamily">moduleEndSelf</span> = <span class="ttfamily">MulOpposite.opAlgEquiv</span>), and by Schur (Theorem&#160;<a href="sect0005.html#thm:schur-scalar">13</a>) \(\mathrm{End}_{k[G]} V_i \simeq k\). The isomorphism then becomes \(k[G]^{\mathrm{op}} \simeq \prod _i \mathrm{Mat}_{d_i}(k)\), recovering Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">30</a> (and its module form by reading off the decomposition of the standard \(k[G]\)-module on the right). The dimension identification \(d_i = \dim _k V_i\) comes from comparing dimensions of \(V_i^{\oplus d_i}\) and \(\mathrm{Mat}_{d_i}(k)\) via the equivalence \(\mathrm{Mat}_{d_i}(k) \cong V_i^{\oplus d_i}\) as left \(\mathrm{Mat}_{d_i}(k)\)-modules. </p>
+  <p> Apply Corollary&#160;<a href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">25</a> to \(R := \mathrm{MonoidAlgebra}\  k\  G\), \(R_0 := k\), and \(M := \mathrm{MonoidAlgebra}\  k\  G\) (a finite \(k[G]\)-module since \(|G| {\lt} \infty \) and so a finite \(k\)-module). This produces simple subrepresentations \(V_i\) and dimensions \(d_i\) together with a \(k\)-algebra isomorphism \(\mathrm{End}_{k[G]}\, k[G] \simeq \prod _i \mathrm{Mat}_{d_i}(\mathrm{End}_{k[G]} V_i)\). Now \(\mathrm{End}_{k[G]}\, k[G] \simeq k[G]^{\mathrm{op}}\) canonically (<span class="ttfamily">moduleEndSelf</span> = <span class="ttfamily">MulOpposite.opAlgEquiv</span>), and by Schur (Theorem&#160;<a href="sect0005.html#thm:schur-scalar">13</a>) \(\mathrm{End}_{k[G]} V_i \simeq k\). The isomorphism then becomes \(k[G]^{\mathrm{op}} \simeq \prod _i \mathrm{Mat}_{d_i}(k)\), recovering Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">29</a> (and its module form by reading off the decomposition of the standard \(k[G]\)-module on the right). The dimension identification \(d_i = \dim _k V_i\) comes from comparing dimensions of \(V_i^{\oplus d_i}\) and \(\mathrm{Mat}_{d_i}(k)\) via the equivalence \(\mathrm{Mat}_{d_i}(k) \cong V_i^{\oplus d_i}\) as left \(\mathrm{Mat}_{d_i}(k)\)-modules. </p>
 
   </div>
 </div>

@@ -6,7 +6,7 @@ Representation.Equiv
 Representation.IsIrreducible
 FDRep
 MonoidAlgebra.Submodule.instIsSemisimpleModule
-MonoidAlgebra.instIsSemisimpleRing
+PeterWeyl.instIsSemisimpleRing_groupAlgebra
 FDRep.isSemisimpleModule_asModule
 FDRep.finrank_hom_simple_simple
 Representation.IsIrreducible.algebraMap_intertwiningMap_bijective_of_isAlgClosed
@@ -17,16 +17,14 @@ FDRep.char_one
 FDRep.char_conj
 FDRep.char_iso
 FDRep.average_char_eq_finrank_invariants
-Representation.card_inv_mul_sum_char_mul_char_eq_finrank
 FDRep.char_orthonormal
 isotypicComponent
 sSupIndep_isotypicComponents
 sSup_isotypicComponents
 IsSemisimpleModule.exists_end_algEquiv_pi_matrix_end
 Representation.leftRegular
-FDRep.character_leftRegular
 IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing_finite
-IsAlgClosed.divisionRing_algEquiv
+PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed
 PeterWeyl.groupAlgebra_algEquiv_pi_matrix
 PeterWeyl.sum_sq_dim_eq_card
 PeterWeyl.regular_decomposition

@@ -157,16 +157,18 @@
     <span class="lemma_thmcaption">
     Lemma
     </span>
-    <span class="lemma_thmlabel">29</span>
+    <span class="lemma_thmlabel">28</span>
     <span class="lemma_thmtitle">Finite-dim division algebra over alg-closed \(k\) equals \(k\)</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
     <a class="icon proof" href="sect0009.html#lem:divalg-of-isAlgClosed">#</a>
     
-    <a class="icon proof" href="sect0009.html#a0000000041"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0009.html#a0000000040"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -204,7 +206,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/IsAlgClosed.divisionRing_algEquiv" class="lean_decl">IsAlgClosed.divisionRing_algEquiv</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed" class="lean_decl">PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed</a></li>
           
         </ul>
     
@@ -219,7 +221,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000041">
+<div class="proof_wrapper" id="a0000000040">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -227,7 +229,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The canonical map \(\iota : k \to D\) is injective (it has trivial kernel since \(k\) is a field and \(\iota (1) = 1 \ne 0\)). For surjectivity, take \(d \in D\). Since \(D\) is finite-dimensional over \(k\), the powers \(1, d, d^2, \ldots \) are \(k\)-linearly dependent, so \(d\) satisfies some non-zero polynomial \(f \in k[X]\). Pick \(f\) of minimal degree; it is then irreducible in \(k[X]\) (else a proper factorisation would give zero-divisors in \(D\), contradicting \(D\) a division ring). Since \(k\) is algebraically closed, every irreducible polynomial in \(k[X]\) has degree \(1\), so \(\deg f = 1\) and \(d \in \iota (k)\). </p>
+  <p> The canonical map \(\iota : k \to D\) is injective (it has trivial kernel since \(k\) is a field and \(\iota (1) = 1 \ne 0\)). For surjectivity, take \(d \in D\). Since \(D\) is finite-dimensional over \(k\), the powers \(1, d, d^2, \ldots \) are \(k\)-linearly dependent, so \(d\) satisfies some non-zero polynomial \(f \in k[X]\). Pick \(f\) of minimal degree; it is then irreducible in \(k[X]\) (else a proper factorisation would give zero-divisors in \(D\), contradicting \(D\) a division ring). Since \(k\) is algebraically closed, every irreducible polynomial in \(k[X]\) has degree \(1\), so \(\deg f = 1\) and \(d \in \iota (k)\). The Lean formalisation (<span class="ttfamily">PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed</span>) packages this as <span class="ttfamily">AlgEquiv.ofBijective (Algebra.ofId k D)</span>, with surjectivity supplied by <span class="ttfamily">IsAlgClosed.algebraMap_bijective_of_isIntegral</span> (using <span class="ttfamily">Algebra.IsIntegral.of_finite</span>) and injectivity by <span class="ttfamily">(algebraMap k D).injective</span>. </p>
 
   </div>
 </div>
@@ -236,16 +238,18 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">30</span>
+    <span class="theorem_thmlabel">29</span>
     <span class="theorem_thmtitle">Peter–Weyl for finite groups, ring form</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
     <a class="icon proof" href="sect0009.html#thm:peter-weyl-ring">#</a>
     
-    <a class="icon proof" href="sect0009.html#a0000000042"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0009.html#a0000000041"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -261,13 +265,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 28</a></li>
+          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 27</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
           
-          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 28</a></li>
+          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 27</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
           
         </ul>
     
@@ -299,13 +303,13 @@
   </div>
   <div class="theorem_thmcontent">
   <p>    Under the standing hypotheses there exist \(n \in \mathbb N\) and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
-<div class="displaymath" id="a0000000043">
+<div class="displaymath" id="a0000000042">
   \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(k).  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000042">
+<div class="proof_wrapper" id="a0000000041">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -313,7 +317,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Apply Theorem&#160;<a href="sect0008.html#thm:wedderburn-kG">28</a> to obtain \(\Phi : k[G] \simeq _{\! k} \prod _i \mathrm{Mat}_{d_i}(D_i)\) with each \(D_i\) a finite-dimensional division \(k\)-algebra. Apply Lemma&#160;<a href="sect0009.html#lem:divalg-of-isAlgClosed">29</a> componentwise to obtain \(D_i \simeq k\) as \(k\)-algebras, and apply the matrix-algebra functor to get \(\mathrm{Mat}_{d_i}(D_i) \simeq \mathrm{Mat}_{d_i}(k)\). Compose. </p>
+  <p> Apply Theorem&#160;<a href="sect0008.html#thm:wedderburn-kG">27</a> to obtain \(\Phi : k[G] \simeq _{\! k} \prod _i \mathrm{Mat}_{d_i}(D_i)\) with each \(D_i\) a finite-dimensional division \(k\)-algebra. Apply Lemma&#160;<a href="sect0009.html#lem:divalg-of-isAlgClosed">28</a> componentwise to obtain \(D_i \simeq k\) as \(k\)-algebras, and lift through <span class="ttfamily">AlgEquiv.mapMatrix</span> via <span class="ttfamily">AlgEquiv.piCongrRight</span> to get \(\prod _i \mathrm{Mat}_{d_i}(D_i) \simeq \prod _i \mathrm{Mat}_{d_i}(k)\). Compose. The Lean formalisation (<span class="ttfamily">PeterWeyl.groupAlgebra_algEquiv_pi_matrix</span>) follows this structure exactly. </p>
 
   </div>
 </div>

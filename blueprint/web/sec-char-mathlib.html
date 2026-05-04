@@ -554,8 +554,6 @@
     <span class="theorem_thmtitle">Hom-space dimension via characters</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
@@ -590,29 +588,10 @@
 
     
     
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/Representation.card_inv_mul_sum_char_mul_char_eq_finrank" class="lean_decl">Representation.card_inv_mul_sum_char_mul_char_eq_finrank</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    \(|G|^{-1}\sum _{g}\chi _V(g)\chi _W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G\). </p>
+  <p>   \(|G|^{-1}\sum _{g}\chi _V(g)\chi _W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G\). </p>
 
   </div>
 </div>
@@ -624,7 +603,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> <span class="ttfamily">Representation.card_inv_mul_sum_char_mul_char_eq_finrank</span>. </p>
+  <p> Apply Theorem&#160;<a href="sec-char-mathlib.html#thm:avg-char">20</a> to the representation \(\mathrm{Hom}_k(V, W)\) with \(G\)-action \(g \cdot T := V.\rho _W(g) \circ T \circ V.\rho _V(g)^{-1}\). Its character at \(g\) equals \(\chi _V(g^{-1})\chi _W(g)\), and its \(G\)-invariants are exactly \((V \to W)_G\). (In Mathlib this calculation is built into the proof of <span class="ttfamily">FDRep.char_orthonormal</span> via the Hom-space description as a tensor product of dual and target.) </p>
 
   </div>
 </div>

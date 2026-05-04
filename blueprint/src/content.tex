@@ -11,7 +11,6 @@
 %            Representation.IsIrreducible.{algebraMap_intertwiningMap_bijective_of_isAlgClosed,
 %                                         finrank_intertwiningMap_self})
 %   * Character orthonormality (FDRep.char_orthonormal,
-%       Representation.card_inv_mul_sum_char_mul_char_eq_finrank,
 %       FDRep.average_char_eq_finrank_invariants)
 %   * Wedderburn–Artin in two forms
 %       (IsSemisimpleRing.exists_algEquiv_pi_matrix_end_mulOpposite,
@@ -186,9 +185,13 @@ to them.
 
 \begin{corollary}[${k[G]}$ is a semisimple ring]
   \label{cor:kG-semisimple-ring}
-  \lean{MonoidAlgebra.instIsSemisimpleRing}
-  \mathlibok
+  \lean{PeterWeyl.instIsSemisimpleRing_groupAlgebra}
   \leanok
+  % Not exposed under a stable named instance in Mathlib, but registered as a
+  % derived instance via MonoidAlgebra.Submodule.instIsSemisimpleModule
+  % (whose docstring explicitly notes it implies IsSemisimpleRing k[G]).
+  % In Lean this is recovered by `inferInstance` and packaged locally as
+  % `PeterWeyl.instIsSemisimpleRing_groupAlgebra`.
   \uses{thm:maschke}
   \texttt{IsSemisimpleRing (MonoidAlgebra k G)} holds.
 \end{corollary}
@@ -198,6 +201,9 @@ to them.
   \uses{thm:maschke}
   By definition, \texttt{IsSemisimpleRing R := IsSemisimpleModule R R}.
   Specialise Theorem~\ref{thm:maschke} to $V := \texttt{MonoidAlgebra k G}$.
+  Formalised as
+  \texttt{PeterWeyl.instIsSemisimpleRing\_groupAlgebra} via
+  \texttt{inferInstance}.
 \end{proof}
 
 \begin{corollary}[Every $V : \texttt{FDRep k G}$ is semisimple]
@@ -384,15 +390,24 @@ declarations.
 
 \begin{theorem}[Hom-space dimension via characters]
   \label{thm:hom-via-char}
-  \lean{Representation.card_inv_mul_sum_char_mul_char_eq_finrank}
-  \mathlibok
-  \leanok
+  % [NEW] In Mathlib this identity appears only as an intermediate step
+  %       inside the proof of FDRep.char_orthonormal (combining
+  %       FDRep.average_char_eq_finrank_invariants with the description of
+  %       the character of Hom(V, W) ≅ V* ⊗ W). It is not currently
+  %       exposed as a named lemma; we would extract it as
+  %       `Representation.finrank_hom_eq_inner_char` (or similar).
   \uses{thm:avg-char, def:intertwiner}
   $|G|^{-1}\sum_{g}\chi_V(g)\chi_W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G$.
 \end{theorem}
 
-\begin{proof}\leanok\uses{thm:avg-char}
-  \texttt{Representation.card\_inv\_mul\_sum\_char\_mul\_char\_eq\_finrank}.
+\begin{proof}
+  \uses{thm:avg-char}
+  Apply Theorem~\ref{thm:avg-char} to the representation $\mathrm{Hom}_k(V, W)$
+  with $G$-action $g \cdot T := V.\rho_W(g) \circ T \circ V.\rho_V(g)^{-1}$.
+  Its character at $g$ equals $\chi_V(g^{-1})\chi_W(g)$, and its
+  $G$-invariants are exactly $(V \to W)_G$. (In Mathlib this calculation is
+  built into the proof of \texttt{FDRep.char\_orthonormal} via the Hom-space
+  description as a tensor product of dual and target.)
 \end{proof}
 
 \begin{theorem}[Character orthonormality]
@@ -496,23 +511,18 @@ algebras with $k$.
   left multiplication.
 \end{definition}
 
-\begin{lemma}[$\chi_{k[G]}$ is supported at $1$]
-  \label{lem:char-regular}
-  \lean{FDRep.character_leftRegular}
-  % [~ML] Folklore; not packaged as a single lemma in Mathlib but is one
-  %       short calculation: trace of a permutation matrix counts fixed
-  %       points and left translation by g ≠ 1 is fixed-point free on G.
-  \uses{def:regular, def:character}
-  $\chi_{k[G]}(g) = |G|$ if $g = 1$ and $0$ otherwise.
-\end{lemma}
-
-\begin{proof}
-  \uses{def:character}
-  In the basis $\{\delta_h : h \in G\}$, the matrix of left translation by
-  $g$ is the permutation matrix for $h \mapsto gh$. Its trace counts
-  fixed points: $h = gh$ iff $g = 1$, in which case all $|G|$ basis vectors
-  are fixed.
-\end{proof}
+\begin{remark}[Character of the regular representation]
+  In the classical proof of Peter--Weyl one would compute
+  $\chi_{k[G]}(g) = |G|\cdot[g = 1]$
+  (since left translation by $g$ acts as a permutation matrix on the basis
+  $\{\delta_h\}$ and has $|G|$ fixed points if $g = 1$, otherwise none) and
+  use Schur orthogonality to deduce that every irreducible appears with
+  multiplicity $\dim V_\xi$ in $k[G]$. The proof in this blueprint does
+  \emph{not} use this calculation; we recover the same conclusion as a
+  consequence of the Wedderburn--Artin decomposition
+  (Theorem~\ref{thm:peter-weyl-ring}). We mention it only to connect to the
+  classical exposition.
+\end{remark}
 
 \section{Wedderburn form of $k[G]$}
 
@@ -547,13 +557,13 @@ algebras with $k$.
 
 \begin{lemma}[Finite-dim division algebra over alg-closed $k$ equals $k$]
   \label{lem:divalg-of-isAlgClosed}
-  \lean{IsAlgClosed.divisionRing_algEquiv}
-  % [NEW] Standard but not packaged with this name in Mathlib. Easy:
-  %       any element of D is algebraic over k (D is finite-dim), hence
-  %       satisfies a non-zero polynomial; over alg-closed k the minimal
-  %       polynomial of any element splits with linear factors, but
-  %       irreducibility of the minimal polynomial in a division algebra
-  %       forces degree 1, i.e. the element is in k.
+  \lean{PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed}
+  \leanok
+  % [NEW] Not packaged under a single name in Mathlib. The key surjectivity
+  %       step is Mathlib's IsAlgClosed.algebraMap_bijective_of_isIntegral
+  %       (any finite-dimensional algebra is integral); injectivity is the
+  %       generic injectivity of a field hom. Packaged locally as
+  %       PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed.
   \uses{def:standing-hypotheses}
   Let $k$ be an algebraically closed field and $D$ a finite-dimensional
   division $k$-algebra. Then the canonical map $k \to D$ is a $k$-algebra
@@ -561,6 +571,7 @@ algebras with $k$.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:standing-hypotheses}
   The canonical map $\iota : k \to D$ is injective (it has trivial kernel
   since $k$ is a field and $\iota(1) = 1 \ne 0$). For surjectivity, take
@@ -570,12 +581,18 @@ algebras with $k$.
   in $k[X]$ (else a proper factorisation would give zero-divisors in $D$,
   contradicting $D$ a division ring). Since $k$ is algebraically closed,
   every irreducible polynomial in $k[X]$ has degree $1$, so $\deg f = 1$ and
-  $d \in \iota(k)$.
+  $d \in \iota(k)$. The Lean formalisation
+  (\texttt{PeterWeyl.divisionAlgebra\_algEquiv\_of\_isAlgClosed}) packages this
+  as \texttt{AlgEquiv.ofBijective (Algebra.ofId k D)}, with surjectivity
+  supplied by \texttt{IsAlgClosed.algebraMap\_bijective\_of\_isIntegral} (using
+  \texttt{Algebra.IsIntegral.of\_finite}) and injectivity by
+  \texttt{(algebraMap k D).injective}.
 \end{proof}
 
 \begin{theorem}[Peter–Weyl for finite groups, ring form]
   \label{thm:peter-weyl-ring}
   \lean{PeterWeyl.groupAlgebra_algEquiv_pi_matrix}
+  \leanok
   % [NEW] Combines Theorem~\ref{thm:wedderburn-kG} with
   %       Lemma~\ref{lem:divalg-of-isAlgClosed} to drop each Dᵢ to k.
   \uses{thm:wedderburn-kG, lem:divalg-of-isAlgClosed}
@@ -589,13 +606,18 @@ algebras with $k$.
 \end{theorem}
 
 \begin{proof}
+  \leanok
   \uses{thm:wedderburn-kG, lem:divalg-of-isAlgClosed}
   Apply Theorem~\ref{thm:wedderburn-kG} to obtain
   $\Phi : k[G] \simeq_{\!k} \prod_i \mathrm{Mat}_{d_i}(D_i)$ with each $D_i$
   a finite-dimensional division $k$-algebra. Apply
   Lemma~\ref{lem:divalg-of-isAlgClosed} componentwise to obtain $D_i \simeq k$
-  as $k$-algebras, and apply the matrix-algebra functor to get
-  $\mathrm{Mat}_{d_i}(D_i) \simeq \mathrm{Mat}_{d_i}(k)$. Compose.
+  as $k$-algebras, and lift through \texttt{AlgEquiv.mapMatrix} via
+  \texttt{AlgEquiv.piCongrRight} to get
+  $\prod_i \mathrm{Mat}_{d_i}(D_i) \simeq \prod_i \mathrm{Mat}_{d_i}(k)$.
+  Compose. The Lean formalisation
+  (\texttt{PeterWeyl.groupAlgebra\_algEquiv\_pi\_matrix}) follows this
+  structure exactly.
 \end{proof}
 
 \section{Sum-of-squares dimension formula}
@@ -603,6 +625,7 @@ algebras with $k$.
 \begin{corollary}[Sum of squares of dimensions]
   \label{cor:sum-of-squares}
   \lean{PeterWeyl.sum_sq_dim_eq_card}
+  \leanok
   % [NEW]
   \uses{thm:peter-weyl-ring}
   Under the standing hypotheses, with $(d_i)_i$ the dimensions appearing in
@@ -613,10 +636,13 @@ algebras with $k$.
 \end{corollary}
 
 \begin{proof}
+  \leanok
   \uses{thm:peter-weyl-ring}
   Take $\dim_k$ of both sides of the isomorphism in
   Theorem~\ref{thm:peter-weyl-ring}: the left side is
-  $\dim_k\,k[G] = |G|$; the right side is
+  $\dim_k\,k[G] = |G|$ (\texttt{Module.finrank\_finsupp\_self}); the right
+  side, by \texttt{Module.finrank\_pi\_fintype} and
+  \texttt{Module.finrank\_matrix}, is
   $\sum_i \dim_k \mathrm{Mat}_{d_i}(k) = \sum_i d_i^2$.
 \end{proof}
 
@@ -818,7 +844,6 @@ The following declarations are direct citations:
 \texttt{FDRep.character} and the basic identities
 \texttt{FDRep.char\_one}, \texttt{FDRep.char\_conj}, \texttt{FDRep.char\_iso},
 \texttt{FDRep.average\_char\_eq\_finrank\_invariants},
-\texttt{Representation.card\_inv\_mul\_sum\_char\_mul\_char\_eq\_finrank},
 \texttt{FDRep.char\_orthonormal},
 \texttt{isotypicComponent}, \texttt{IsIsotypic},
 \texttt{sSupIndep\_isotypicComponents}, \texttt{sSup\_isotypicComponents},
@@ -828,7 +853,6 @@ The following declarations are direct citations:
 
 \paragraph{Trivial wrappers (\texttt{[\textasciitilde ML]}).}
 \texttt{FDRep.isSemisimpleModule\_asModule} (Corollary~\ref{cor:fdrep-semisimple}),
-\texttt{FDRep.character\_leftRegular} (Lemma~\ref{lem:char-regular}),
 \texttt{Representation.multiplicity\_eq\_inner\_char}
 (Theorem~\ref{thm:multiplicity-formula}),
 \texttt{FDRep.irreducible\_iff\_inner\_self\_eq\_one}
@@ -837,11 +861,20 @@ The following declarations are direct citations:
 \texttt{ClassFunction} and \texttt{ClassFunction.finrank\_eq\_conjClasses}.
 
 \paragraph{Genuinely new contributions (\texttt{[NEW]}).}
-There are only four:
+There are five:
 \begin{enumerate}
-  \item \texttt{IsAlgClosed.divisionRing\_algEquiv} — every finite-dimensional
-    division algebra over an algebraically closed field equals the field
-    (Lemma~\ref{lem:divalg-of-isAlgClosed}). The proof is a 5-line argument.
+  \item \texttt{Representation.finrank\_hom\_eq\_inner\_char} — the
+    hom-space dimension formula
+    $|G|^{-1}\sum_g \chi_V(g)\chi_W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G$
+    (Theorem~\ref{thm:hom-via-char}). Currently appears in Mathlib only as
+    an intermediate step inside the proof of \texttt{FDRep.char\_orthonormal};
+    extract as a standalone lemma.
+  \item \texttt{PeterWeyl.divisionAlgebra\_algEquiv\_of\_isAlgClosed} — every
+    finite-dimensional division algebra over an algebraically closed field
+    equals the field (Lemma~\ref{lem:divalg-of-isAlgClosed}). The Lean proof
+    bundles \texttt{IsAlgClosed.algebraMap\_bijective\_of\_isIntegral} (for
+    surjectivity) with \texttt{(algebraMap k D).injective} via
+    \texttt{AlgEquiv.ofBijective}.
   \item \texttt{PeterWeyl.groupAlgebra\_algEquiv\_pi\_matrix}
     (Theorem~\ref{thm:peter-weyl-ring}). Combines the Mathlib
     Wedderburn–Artin output with the previous lemma; one line of \texttt{simp}
