@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Categorical form (<span class="ttfamily">FDRep</span>)</title>
-<link rel="next" href="sect0005.html" title="Bundled IntertwiningMap form" />
-<link rel="prev" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="up" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
+<title>Sum-of-squares dimension formula</title>
+<link rel="next" href="sect0011.html" title="Module-form Peter–Weyl: k[G] ≅i Vi⊕di" />
+<link rel="prev" href="sect0009.html" title="Algebraic closedness collapses the Di to k" />
+<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -55,11 +55,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
  </li>
 <li class="">
@@ -88,10 +88,10 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
  </li>
@@ -101,7 +101,7 @@
 <li class="">
   <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="sect0010.html"><span class="toc_ref">6.4</span> <span class="toc_entry">Sum-of-squares dimension formula</span></a>
  </li>
 <li class="">
@@ -151,24 +151,22 @@
 
 
 <div class="main-text">
-<h1 id="a0000000005">3.1 Categorical form (<span class="ttfamily">FDRep</span>)</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:schur-fdrep">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000011">6.4 Sum-of-squares dimension formula</h1>
+<div class="corollary_thmwrapper theorem-style-plain" id="cor:sum-of-squares">
+  <div class="corollary_thmheading">
+    <span class="corollary_thmcaption">
+    Corollary
     </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span>
+    <span class="corollary_thmlabel">31</span>
+    <span class="corollary_thmtitle">Sum of squares of dimensions</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0004.html#thm:schur-fdrep">#</a>
+    <a class="icon proof" href="sect0010.html#cor:sum-of-squares">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0010.html#a0000000044"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -184,13 +182,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
+          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 30</a></li>
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 30</a></li>
           
         </ul>
     
@@ -210,7 +204,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple" class="lean_decl">FDRep.finrank_hom_simple_simple</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.sum_sq_dim_eq_card" class="lean_decl">PeterWeyl.sum_sq_dim_eq_card</a></li>
           
         </ul>
     
@@ -220,16 +214,15 @@
     
         </div>
   </div>
-  <div class="theorem_thmcontent">
-  <p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
-<div class="displaymath" id="a0000000023">
-  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
+  <div class="corollary_thmcontent">
+  <p>    Under the standing hypotheses, with \((d_i)_i\) the dimensions appearing in Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">30</a>, </p>
+<div class="displaymath" id="a0000000045">
+  \[  |G| \; =\;  \sum _{i {\lt} n} d_i^{\, 2}.  \]
 </div>
-<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000022">
+<div class="proof_wrapper" id="a0000000044">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -237,7 +230,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Cited directly. The Mathlib proof is the standard one: a non-zero map between simples has trivial kernel and trivial cokernel hence is an isomorphism, so \(V \to W\) is either \(0\) or \(\cong V \to V\), and on \(V \to V\) algebraic closedness gives an eigenvalue \(\lambda \), forcing \(T - \lambda \mathrm{id} = 0\). </p>
+  <p> Take \(\dim _k\) of both sides of the isomorphism in Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">30</a>: the left side is \(\dim _k\, k[G] = |G|\); the right side is \(\sum _i \dim _k \mathrm{Mat}_{d_i}(k) = \sum _i d_i^2\). </p>
 
   </div>
 </div>
@@ -252,11 +245,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0009.html" title="Algebraic closedness collapses the \(D_i\) to \(k\)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0005.html" title="Bundled IntertwiningMap form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0011.html" title="Module-form Peter–Weyl: \({k[G] \cong \bigoplus _i V_i^{\oplus d_i}}\)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

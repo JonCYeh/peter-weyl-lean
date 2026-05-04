@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Categorical form (<span class="ttfamily">FDRep</span>)</title>
-<link rel="next" href="sect0005.html" title="Bundled IntertwiningMap form" />
-<link rel="prev" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="up" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
+<title>The Peter–Weyl Theorem for Finite Groups</title>
+<link rel="next" href="sect0007.html" title="The regular representation" />
+<link rel="prev" href="sect0006.html" title="Mathlib’s isotypic API" />
+<link rel="up" href="index.html" title="Peter WWeyl Lean" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -55,11 +55,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
  </li>
 <li class="">
@@ -88,10 +88,10 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active current">
   <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
  </li>
@@ -151,98 +151,30 @@
 
 
 <div class="main-text">
-<h1 id="a0000000005">3.1 Categorical form (<span class="ttfamily">FDRep</span>)</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:schur-fdrep">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span>
-    <div class="thm_header_extras">
+<h1 id="chap:peter-weyl">6 The Peter–Weyl Theorem for Finite Groups</h1>
 
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0004.html#thm:schur-fdrep">#</a>
-    
-    <a class="icon proof" href="sect0004.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple" class="lean_decl">FDRep.finrank_hom_simple_simple</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="theorem_thmcontent">
-  <p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
-<div class="displaymath" id="a0000000023">
-  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
-</div>
-<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000022">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> Cited directly. The Mathlib proof is the standard one: a non-zero map between simples has trivial kernel and trivial cokernel hence is an isomorphism, so \(V \to W\) is either \(0\) or \(\cong V \to V\), and on \(V \to V\) algebraic closedness gives an eigenvalue \(\lambda \), forcing \(T - \lambda \mathrm{id} = 0\). </p>
-
-  </div>
-</div>
+<p>This is now a one-step application of Wedderburn–Artin to the regular representation, plus an algebraic-closedness step to identify the division algebras with \(k\). </p>
 
 </div> <!--main-text -->
+<nav class=local_toc>
+<ul>
+  <li>  
+  <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
+  </li>
+  <li>  
+  <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
+  </li>
+  <li>  
+  <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
+  </li>
+  <li>  
+  <a href="sect0010.html"><span class="toc_ref">6.4</span> <span class="toc_entry">Sum-of-squares dimension formula</span></a>
+  </li>
+  <li>  
+  <a href="sect0011.html"><span class="toc_ref">6.5</span> <span class="toc_entry">Module-form Peter–Weyl: \({k[G] \cong \bigoplus _i V_i^{\oplus d_i}}\)</span></a>
+  </li>
+</ul>
+</nav>
 </div> <!-- content-wrapper -->
 </div> <!-- content -->
 </div> <!-- wrapper -->
@@ -252,11 +184,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0006.html" title="Mathlib’s isotypic API"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="index.html" title="Peter WWeyl Lean"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0005.html" title="Bundled IntertwiningMap form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0007.html" title="The regular representation"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

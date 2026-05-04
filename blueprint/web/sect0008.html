@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Categorical form (<span class="ttfamily">FDRep</span>)</title>
-<link rel="next" href="sect0005.html" title="Bundled IntertwiningMap form" />
-<link rel="prev" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="up" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
+<title>Wedderburn form of \(k[G]\)</title>
+<link rel="next" href="sect0009.html" title="Algebraic closedness collapses the Di to k" />
+<link rel="prev" href="sect0007.html" title="The regular representation" />
+<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -55,11 +55,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
  </li>
 <li class="">
@@ -88,14 +88,14 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
  </li>
 <li class="">
@@ -151,14 +151,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000005">3.1 Categorical form (<span class="ttfamily">FDRep</span>)</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:schur-fdrep">
+<h1 id="a0000000009">6.2 Wedderburn form of \(k[G]\)</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:wedderburn-kG">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span>
+    <span class="theorem_thmlabel">28</span>
+    <span class="theorem_thmtitle">Wedderburn–Artin for \({k[G]}\)</span>
     <div class="thm_header_extras">
 
     
@@ -166,9 +166,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0004.html#thm:schur-fdrep">#</a>
+    <a class="icon proof" href="sect0008.html#thm:wedderburn-kG">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0008.html#a0000000039"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -184,11 +184,11 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
+          <li><a href="sect0003.html#cor:kG-semisimple-ring">Corollary 10</a></li>
           
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
+          <li><a href="sect0003.html#cor:kG-semisimple-ring">Corollary 10</a></li>
           
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
           
@@ -210,7 +210,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple" class="lean_decl">FDRep.finrank_hom_simple_simple</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing_finite" class="lean_decl">IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing_finite</a></li>
           
         </ul>
     
@@ -221,15 +221,14 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
-<div class="displaymath" id="a0000000023">
-  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
+  <p>    Under the standing hypotheses there exist \(n \in \mathbb N\), division \(k\)-algebras \((D_i)_{i {\lt} n}\) each finite over \(k\), and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
+<div class="displaymath" id="a0000000040">
+  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(D_i).  \]
 </div>
-<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000022">
+<div class="proof_wrapper" id="a0000000039">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -237,7 +236,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Cited directly. The Mathlib proof is the standard one: a non-zero map between simples has trivial kernel and trivial cokernel hence is an isomorphism, so \(V \to W\) is either \(0\) or \(\cong V \to V\), and on \(V \to V\) algebraic closedness gives an eigenvalue \(\lambda \), forcing \(T - \lambda \mathrm{id} = 0\). </p>
+  <p> Apply <span class="ttfamily">IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing_finite</span> with \(R_0 := k\), \(R := \mathrm{MonoidAlgebra}\  k\  G\). The hypothesis <span class="ttfamily">[Module.Finite k (MonoidAlgebra k G)]</span> holds because \(\mathrm{MonoidAlgebra}\  k\  G \simeq (G \to _{\! 0\! } k)\) has \(k\)-dimension \(|G| {\lt} \infty \). The hypothesis <span class="ttfamily">[IsSemisimpleRing R]</span> is Corollary&#160;<a href="sect0003.html#cor:kG-semisimple-ring">10</a>. </p>
 
   </div>
 </div>
@@ -252,11 +251,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0007.html" title="The regular representation"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0005.html" title="Bundled IntertwiningMap form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0009.html" title="Algebraic closedness collapses the \(D_i\) to \(k\)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

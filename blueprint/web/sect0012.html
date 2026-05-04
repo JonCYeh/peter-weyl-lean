@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Maschke’s theorem in Mathlib</title>
-<link rel="next" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="prev" href="chap-maschke.html" title="Maschke and Semisimplicity" />
-<link rel="up" href="chap-maschke.html" title="Maschke and Semisimplicity" />
+<title>Multiplicity formula and irreducibility test</title>
+<link rel="next" href="sect0013.html" title="Class functions and the second orthogonality" />
+<link rel="prev" href="chap-character-consequences.html" title="Character-Theoretic Consequences" />
+<link rel="up" href="chap-character-consequences.html" title="Character-Theoretic Consequences" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -45,11 +45,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
  </li>
 
@@ -110,11 +110,11 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-character-consequences.html"><span class="toc_ref">7</span> <span class="toc_entry">Character-Theoretic Consequences</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class=" active current">
   <a href="sect0012.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Multiplicity formula and irreducibility test</span></a>
  </li>
 <li class="">
@@ -151,24 +151,22 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">2.1 Maschke’s theorem in Mathlib</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:maschke">
+<h1 id="a0000000013">7.1 Multiplicity formula and irreducibility test</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:multiplicity-formula">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">9</span>
-    <span class="theorem_thmtitle">Maschke: every \({k[G]}\)-module is semisimple</span>
+    <span class="theorem_thmlabel">33</span>
+    <span class="theorem_thmtitle">Multiplicity formula</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:maschke">#</a>
+    <a class="icon proof" href="sect0012.html#thm:multiplicity-formula">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0012.html#a0000000048"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -184,13 +182,17 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sec-char-mathlib.html#thm:hom-via-char">Theorem 21</a></li>
           
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
+          <li><a href="sect0004.html#thm:schur-fdrep">Theorem 12</a></li>
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sect0011.html#thm:peter-weyl-module">Theorem 32</a></li>
           
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
+          <li><a href="sec-char-mathlib.html#thm:hom-via-char">Theorem 21</a></li>
+          
+          <li><a href="sect0004.html#thm:schur-fdrep">Theorem 12</a></li>
+          
+          <li><a href="sect0011.html#thm:peter-weyl-module">Theorem 32</a></li>
           
         </ul>
     
@@ -210,7 +212,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.Submodule.instIsSemisimpleModule" class="lean_decl">MonoidAlgebra.Submodule.instIsSemisimpleModule</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.multiplicity_eq_inner_char" class="lean_decl">Representation.multiplicity_eq_inner_char</a></li>
           
         </ul>
     
@@ -221,11 +223,14 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Under the standing hypotheses (Definition&#160;<a href="sect0001.html#def:standing-hypotheses">1</a>), for every <span class="ttfamily">Module (MonoidAlgebra k G) V</span> we have <span class="ttfamily">IsSemisimpleModule (MonoidAlgebra k G) V</span>: every \(k[G]\)-submodule has a \(k[G]\)-complement. </p>
+  <p>    Let \(V : \texttt{FDRep k G}\) and \(\xi \) a simple \(V_\xi : \texttt{FDRep k G}\). Write \(m_\xi \) for the multiplicity of \(V_\xi \) in the isotypic decomposition of \(V\) (Theorem&#160;<a href="sect0006.html#thm:isotypic-decomp">24</a>). Then </p>
+<div class="displaymath" id="a0000000049">
+  \[  m_\xi \; =\;  |G|^{-1}\sum _{g} \chi _V(g)\chi _{V_\xi }(g^{-1}) \; =\;  \mathrm{finrank}_k\bigl(V_\xi \to V\bigr)_G.  \]
+</div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000019">
+<div class="proof_wrapper" id="a0000000048">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -233,27 +238,25 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> This is the registered instance <span class="ttfamily">MonoidAlgebra.Submodule.instIsSemisimpleModule</span> in <span class="ttfamily">Mathlib.RepresentationTheory.Maschke</span>, with hypotheses <span class="ttfamily">[Field k] [Group G] [Finite G] [NeZero (Nat.card G : k)]</span>. The Mathlib proof uses <span class="ttfamily">LinearMap.equivariantProjection</span> (averaging \(\pi \) over \(G\)) plus <span class="ttfamily">LinearMap.equivariantProjection_condition</span>. </p>
+  <p> Decompose \(V \cong \bigoplus _\eta V_\eta ^{\oplus m_\eta }\) via Theorem&#160;<a href="sect0006.html#thm:isotypic-decomp">24</a>. Then \(\mathrm{finrank}_k(V_\xi \to V)_G = \sum _\eta m_\eta \mathrm{finrank}_k(V_\xi \to V_\eta )_G = m_\xi \) by Theorem&#160;<a href="sect0004.html#thm:schur-fdrep">12</a>. The first equality is then Theorem&#160;<a href="sec-char-mathlib.html#thm:hom-via-char">21</a>. </p>
 
   </div>
 </div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:kG-semisimple-ring">
+<div class="corollary_thmwrapper theorem-style-plain" id="cor:irred-test">
   <div class="corollary_thmheading">
     <span class="corollary_thmcaption">
     Corollary
     </span>
-    <span class="corollary_thmlabel">10</span>
-    <span class="corollary_thmtitle">\({k[G]}\) is a semisimple ring</span>
+    <span class="corollary_thmlabel">34</span>
+    <span class="corollary_thmtitle">Irreducibility test</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:kG-semisimple-ring">#</a>
+    <a class="icon proof" href="sect0012.html#cor:irred-test">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0012.html#a0000000050"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -269,9 +272,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0012.html#thm:multiplicity-formula">Theorem 33</a></li>
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sec-char-mathlib.html#thm:char-ortho">Theorem 22</a></li>
+          
+          <li><a href="sect0012.html#thm:multiplicity-formula">Theorem 33</a></li>
+          
+          <li><a href="sec-char-mathlib.html#thm:char-ortho">Theorem 22</a></li>
           
         </ul>
     
@@ -291,7 +298,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.instIsSemisimpleRing" class="lean_decl">MonoidAlgebra.instIsSemisimpleRing</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.irreducible_iff_inner_self_eq_one" class="lean_decl">FDRep.irreducible_iff_inner_self_eq_one</a></li>
           
         </ul>
     
@@ -302,11 +309,11 @@
         </div>
   </div>
   <div class="corollary_thmcontent">
-  <p>    <span class="ttfamily">IsSemisimpleRing (MonoidAlgebra k G)</span> holds. </p>
+  <p>    \(V : \texttt{FDRep k G}\) is simple iff \(|G|^{-1}\sum _g \chi _V(g)\chi _V(g^{-1}) = 1\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000020">
+<div class="proof_wrapper" id="a0000000050">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -314,25 +321,25 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> By definition, <span class="ttfamily">IsSemisimpleRing R := IsSemisimpleModule R R</span>. Specialise Theorem&#160;<a href="sect0003.html#thm:maschke">9</a> to \(V := \texttt{MonoidAlgebra k G}\). </p>
+  <p> Decompose \(V \cong \bigoplus _\xi V_\xi ^{\oplus m_\xi }\) and expand. By Theorem&#160;<a href="sec-char-mathlib.html#thm:char-ortho">22</a>, \(|G|^{-1}\sum _g \chi _V(g)\chi _V(g^{-1}) = \sum _\xi m_\xi ^2\). This integer is \(1\) iff exactly one \(m_\xi \) is \(1\) and the rest are \(0\), iff \(V \cong V_\xi \) is simple. </p>
 
   </div>
 </div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:fdrep-semisimple">
+<div class="corollary_thmwrapper theorem-style-plain" id="cor:char-separates">
   <div class="corollary_thmheading">
     <span class="corollary_thmcaption">
     Corollary
     </span>
-    <span class="corollary_thmlabel">11</span>
-    <span class="corollary_thmtitle">Every \(V : \texttt{FDRep k G}\) is semisimple</span>
+    <span class="corollary_thmlabel">35</span>
+    <span class="corollary_thmtitle">Characters separate isomorphism classes</span>
     <div class="thm_header_extras">
 
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:fdrep-semisimple">#</a>
+    <a class="icon proof" href="sect0012.html#cor:char-separates">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0012.html#a0000000051"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -348,11 +355,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0012.html#thm:multiplicity-formula">Theorem 33</a></li>
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
+          <li><a href="sec-char-mathlib.html#lem:char-iso">Lemma 19</a></li>
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0012.html#thm:multiplicity-formula">Theorem 33</a></li>
+          
+          <li><a href="sec-char-mathlib.html#lem:char-iso">Lemma 19</a></li>
           
         </ul>
     
@@ -372,7 +381,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.isSemisimpleModule_asModule" class="lean_decl">FDRep.isSemisimpleModule_asModule</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.iso_iff_character_eq" class="lean_decl">FDRep.iso_iff_character_eq</a></li>
           
         </ul>
     
@@ -383,11 +392,11 @@
         </div>
   </div>
   <div class="corollary_thmcontent">
-  <p>    For every \(V : \texttt{FDRep k G}\), <span class="ttfamily">V.ρ.asModule</span> is a semisimple <span class="ttfamily">MonoidAlgebra k G</span>-module and is finite as a \(k[G]\)-module. </p>
+  <p>    \(V \cong W\) in \(\texttt{FDRep k G}\) iff \(\chi _V = \chi _W\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000021">
+<div class="proof_wrapper" id="a0000000051">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -395,7 +404,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Direct from Theorem&#160;<a href="sect0003.html#thm:maschke">9</a>; finiteness over \(k[G]\) follows from finiteness over \(k\) (which is built into <span class="ttfamily">FDRep</span>) since \(k\) is a subring of \(k[G]\). </p>
+  <p> \(\Rightarrow \): Lemma&#160;<a href="sec-char-mathlib.html#lem:char-iso">19</a>. \(\Leftarrow \): by Theorem&#160;<a href="sect0012.html#thm:multiplicity-formula">33</a> the multiplicities \(m_\xi (V)\) and \(m_\xi (W)\) depend only on the characters, so they coincide; uniqueness of the isotypic decomposition (Theorem&#160;<a href="sect0006.html#thm:isotypic-decomp">24</a>) then forces \(V \cong W\). </p>
 
   </div>
 </div>
@@ -410,11 +419,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-character-consequences.html" title="Character-Theoretic Consequences"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-character-consequences.html" title="Character-Theoretic Consequences"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0013.html" title="Class functions and the second orthogonality"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

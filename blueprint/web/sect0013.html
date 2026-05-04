@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Maschke’s theorem in Mathlib</title>
-<link rel="next" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="prev" href="chap-maschke.html" title="Maschke and Semisimplicity" />
-<link rel="up" href="chap-maschke.html" title="Maschke and Semisimplicity" />
+<title>Class functions and the second orthogonality</title>
+<link rel="next" href="chap-status.html" title="Mathlib-Status Summary" />
+<link rel="prev" href="sect0012.html" title="Multiplicity formula and irreducibility test" />
+<link rel="up" href="chap-character-consequences.html" title="Character-Theoretic Consequences" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -45,11 +45,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
  </li>
 
@@ -110,14 +110,14 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-character-consequences.html"><span class="toc_ref">7</span> <span class="toc_entry">Character-Theoretic Consequences</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0012.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Multiplicity formula and irreducibility test</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="sect0013.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Class functions and the second orthogonality</span></a>
  </li>
 
@@ -151,25 +151,20 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">2.1 Maschke’s theorem in Mathlib</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:maschke">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000014">7.2 Class functions and the second orthogonality</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:cl-G">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
     </span>
-    <span class="theorem_thmlabel">9</span>
-    <span class="theorem_thmtitle">Maschke: every \({k[G]}\)-module is semisimple</span>
+    <span class="definition_thmlabel">36</span>
+    <span class="definition_thmtitle">Class functions</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:maschke">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0013.html#def:cl-G">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -185,12 +180,6 @@
         <ul class="uses">
           
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
           
         </ul>
     
@@ -210,7 +199,159 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.Submodule.instIsSemisimpleModule" class="lean_decl">MonoidAlgebra.Submodule.instIsSemisimpleModule</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/ClassFunction" class="lean_decl">ClassFunction</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    \(\mathrm{Cl}(G) := \{ f : G \to k \, \mid \,  \forall g, h.\  f(hgh^{-1}) = f(g)\} \), a \(k\)-subspace of \(k^G\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:dim-cl">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">37</span>
+    <span class="lemma_thmtitle">\(\dim \mathrm{Cl}(G) = \) #conjugacy classes</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0013.html#lem:dim-cl">#</a>
+    
+    <a class="icon proof" href="sect0013.html#a0000000052"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0013.html#def:cl-G">Definition 36</a></li>
+          
+          <li><a href="sect0013.html#def:cl-G">Definition 36</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/ClassFunction.finrank_eq_conjClasses" class="lean_decl">ClassFunction.finrank_eq_conjClasses</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    \(\dim _k \mathrm{Cl}(G) = |\mathrm{ConjClasses}\  G|\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000052">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> The indicator functions of conjugacy classes form a basis of \(\mathrm{Cl}(G)\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:char-span">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">38</span>
+    <span class="theorem_thmtitle">Irreducible characters span \(\mathrm{Cl}(G)\)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0013.html#thm:char-span">#</a>
+    
+    <a class="icon proof" href="sect0013.html#a0000000053"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0011.html#thm:peter-weyl-module">Theorem 32</a></li>
+          
+          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 30</a></li>
+          
+          <li><a href="sec-char-mathlib.html#lem:char-conj">Lemma 18</a></li>
+          
+          <li><a href="sect0009.html#thm:peter-weyl-ring">Theorem 30</a></li>
+          
+          <li><a href="sec-char-mathlib.html#lem:char-conj">Lemma 18</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.span_irreducibleCharacters_eq_top" class="lean_decl">FDRep.span_irreducibleCharacters_eq_top</a></li>
           
         </ul>
     
@@ -221,11 +362,11 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Under the standing hypotheses (Definition&#160;<a href="sect0001.html#def:standing-hypotheses">1</a>), for every <span class="ttfamily">Module (MonoidAlgebra k G) V</span> we have <span class="ttfamily">IsSemisimpleModule (MonoidAlgebra k G) V</span>: every \(k[G]\)-submodule has a \(k[G]\)-complement. </p>
+  <p>    The set \(\{ \chi _V : V \in \texttt{FDRep k G},\  \texttt{Simple}\  V\} \) spans \(\mathrm{Cl}(G)\) over \(k\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000019">
+<div class="proof_wrapper" id="a0000000053">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -233,27 +374,25 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> This is the registered instance <span class="ttfamily">MonoidAlgebra.Submodule.instIsSemisimpleModule</span> in <span class="ttfamily">Mathlib.RepresentationTheory.Maschke</span>, with hypotheses <span class="ttfamily">[Field k] [Group G] [Finite G] [NeZero (Nat.card G : k)]</span>. The Mathlib proof uses <span class="ttfamily">LinearMap.equivariantProjection</span> (averaging \(\pi \) over \(G\)) plus <span class="ttfamily">LinearMap.equivariantProjection_condition</span>. </p>
+  <p> Under Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">30</a> the centre of \(k[G]\) pulls back to the centre of \(\prod _i \mathrm{Mat}_{d_i}(k)\), which is \(\prod _i k\), of \(k\)-dimension \(n\) (the number of simples). On the other hand the centre of \(k[G]\) identifies with \(\mathrm{Cl}(G)\) via \(\sum _g a_g g \leftrightarrow (g \mapsto a_g)\) (an element commutes with every \(h \in G\) iff its support function is conjugation-invariant). Hence \(\dim _k \mathrm{Cl}(G) = n\), the number of simples. Since the irreducible characters are orthonormal (Theorem&#160;<a href="sec-char-mathlib.html#thm:char-ortho">22</a>), there are \(n\) of them, and they live in \(\mathrm{Cl}(G)\) by Lemma&#160;<a href="sec-char-mathlib.html#lem:char-conj">18</a>; hence they span (a linearly-independent set of size equal to the dimension is a basis). </p>
 
   </div>
 </div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:kG-semisimple-ring">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:num-irreps">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
     </span>
-    <span class="corollary_thmlabel">10</span>
-    <span class="corollary_thmtitle">\({k[G]}\) is a semisimple ring</span>
+    <span class="theorem_thmlabel">39</span>
+    <span class="theorem_thmtitle">Number of irreducibles = number of conjugacy classes</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:kG-semisimple-ring">#</a>
+    <a class="icon proof" href="sect0013.html#thm:num-irreps">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0013.html#a0000000054"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -269,9 +408,17 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0013.html#thm:char-span">Theorem 38</a></li>
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0013.html#lem:dim-cl">Lemma 37</a></li>
+          
+          <li><a href="sec-char-mathlib.html#thm:char-ortho">Theorem 22</a></li>
+          
+          <li><a href="sect0013.html#thm:char-span">Theorem 38</a></li>
+          
+          <li><a href="sect0013.html#lem:dim-cl">Lemma 37</a></li>
+          
+          <li><a href="sec-char-mathlib.html#thm:char-ortho">Theorem 22</a></li>
           
         </ul>
     
@@ -291,7 +438,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.instIsSemisimpleRing" class="lean_decl">MonoidAlgebra.instIsSemisimpleRing</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.num_simple_eq_num_conjClasses" class="lean_decl">FDRep.num_simple_eq_num_conjClasses</a></li>
           
         </ul>
     
@@ -301,12 +448,12 @@
     
         </div>
   </div>
-  <div class="corollary_thmcontent">
-  <p>    <span class="ttfamily">IsSemisimpleRing (MonoidAlgebra k G)</span> holds. </p>
+  <div class="theorem_thmcontent">
+  <p>    The number of isomorphism classes of simple objects of \(\texttt{FDRep k G}\) equals \(|\mathrm{ConjClasses}\  G|\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000020">
+<div class="proof_wrapper" id="a0000000054">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -314,88 +461,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> By definition, <span class="ttfamily">IsSemisimpleRing R := IsSemisimpleModule R R</span>. Specialise Theorem&#160;<a href="sect0003.html#thm:maschke">9</a> to \(V := \texttt{MonoidAlgebra k G}\). </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:fdrep-semisimple">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">11</span>
-    <span class="corollary_thmtitle">Every \(V : \texttt{FDRep k G}\) is semisimple</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#cor:fdrep-semisimple">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.isSemisimpleModule_asModule" class="lean_decl">FDRep.isSemisimpleModule_asModule</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="corollary_thmcontent">
-  <p>    For every \(V : \texttt{FDRep k G}\), <span class="ttfamily">V.ρ.asModule</span> is a semisimple <span class="ttfamily">MonoidAlgebra k G</span>-module and is finite as a \(k[G]\)-module. </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000021">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> Direct from Theorem&#160;<a href="sect0003.html#thm:maschke">9</a>; finiteness over \(k[G]\) follows from finiteness over \(k\) (which is built into <span class="ttfamily">FDRep</span>) since \(k\) is a subring of \(k[G]\). </p>
+  <p> By Theorem&#160;<a href="sect0013.html#thm:char-span">38</a> and Theorem&#160;<a href="sec-char-mathlib.html#thm:char-ortho">22</a>, the irreducible characters form a basis of \(\mathrm{Cl}(G)\); their number is therefore \(\dim _k\mathrm{Cl}(G) = |\mathrm{ConjClasses}\  G|\) (Lemma&#160;<a href="sect0013.html#lem:dim-cl">37</a>). </p>
 
   </div>
 </div>
@@ -410,11 +476,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0012.html" title="Multiplicity formula and irreducibility test"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-character-consequences.html" title="Character-Theoretic Consequences"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-status.html" title="Mathlib-Status Summary"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Categorical form (<span class="ttfamily">FDRep</span>)</title>
-<link rel="next" href="sect0005.html" title="Bundled IntertwiningMap form" />
-<link rel="prev" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="up" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
+<title>Algebraic closedness collapses the \(D_i\) to \(k\)</title>
+<link rel="next" href="sect0010.html" title="Sum-of-squares dimension formula" />
+<link rel="prev" href="sect0008.html" title="Wedderburn form of k[G]" />
+<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -55,11 +55,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
  </li>
 <li class="">
@@ -88,17 +88,17 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
  </li>
 <li class="">
   <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
  </li>
 <li class="">
@@ -151,24 +151,22 @@
 
 
 <div class="main-text">
-<h1 id="a0000000005">3.1 Categorical form (<span class="ttfamily">FDRep</span>)</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:schur-fdrep">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000010">6.3 Algebraic closedness collapses the \(D_i\) to \(k\)</h1>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:divalg-of-isAlgClosed">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span>
+    <span class="lemma_thmlabel">29</span>
+    <span class="lemma_thmtitle">Finite-dim division algebra over alg-closed \(k\) equals \(k\)</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0004.html#thm:schur-fdrep">#</a>
+    <a class="icon proof" href="sect0009.html#lem:divalg-of-isAlgClosed">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0009.html#a0000000041"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -184,11 +182,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
           
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
           
@@ -210,7 +204,90 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple" class="lean_decl">FDRep.finrank_hom_simple_simple</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsAlgClosed.divisionRing_algEquiv" class="lean_decl">IsAlgClosed.divisionRing_algEquiv</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(k\) be an algebraically closed field and \(D\) a finite-dimensional division \(k\)-algebra. Then the canonical map \(k \to D\) is a \(k\)-algebra isomorphism. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000041">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> The canonical map \(\iota : k \to D\) is injective (it has trivial kernel since \(k\) is a field and \(\iota (1) = 1 \ne 0\)). For surjectivity, take \(d \in D\). Since \(D\) is finite-dimensional over \(k\), the powers \(1, d, d^2, \ldots \) are \(k\)-linearly dependent, so \(d\) satisfies some non-zero polynomial \(f \in k[X]\). Pick \(f\) of minimal degree; it is then irreducible in \(k[X]\) (else a proper factorisation would give zero-divisors in \(D\), contradicting \(D\) a division ring). Since \(k\) is algebraically closed, every irreducible polynomial in \(k[X]\) has degree \(1\), so \(\deg f = 1\) and \(d \in \iota (k)\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:peter-weyl-ring">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">30</span>
+    <span class="theorem_thmtitle">Peter–Weyl for finite groups, ring form</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0009.html#thm:peter-weyl-ring">#</a>
+    
+    <a class="icon proof" href="sect0009.html#a0000000042"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 28</a></li>
+          
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          
+          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 28</a></li>
+          
+          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 29</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.groupAlgebra_algEquiv_pi_matrix" class="lean_decl">PeterWeyl.groupAlgebra_algEquiv_pi_matrix</a></li>
           
         </ul>
     
@@ -221,15 +298,14 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
-<div class="displaymath" id="a0000000023">
-  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
+  <p>    Under the standing hypotheses there exist \(n \in \mathbb N\) and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
+<div class="displaymath" id="a0000000043">
+  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(k).  \]
 </div>
-<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000022">
+<div class="proof_wrapper" id="a0000000042">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -237,7 +313,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Cited directly. The Mathlib proof is the standard one: a non-zero map between simples has trivial kernel and trivial cokernel hence is an isomorphism, so \(V \to W\) is either \(0\) or \(\cong V \to V\), and on \(V \to V\) algebraic closedness gives an eigenvalue \(\lambda \), forcing \(T - \lambda \mathrm{id} = 0\). </p>
+  <p> Apply Theorem&#160;<a href="sect0008.html#thm:wedderburn-kG">28</a> to obtain \(\Phi : k[G] \simeq _{\! k} \prod _i \mathrm{Mat}_{d_i}(D_i)\) with each \(D_i\) a finite-dimensional division \(k\)-algebra. Apply Lemma&#160;<a href="sect0009.html#lem:divalg-of-isAlgClosed">29</a> componentwise to obtain \(D_i \simeq k\) as \(k\)-algebras, and apply the matrix-algebra functor to get \(\mathrm{Mat}_{d_i}(D_i) \simeq \mathrm{Mat}_{d_i}(k)\). Compose. </p>
 
   </div>
 </div>
@@ -252,11 +328,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0008.html" title="Wedderburn form of \(k[G]\)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0005.html" title="Bundled IntertwiningMap form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0010.html" title="Sum-of-squares dimension formula"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mathlib API for representations</title>
-<link rel="next" href="chap-maschke.html" title="Maschke and Semisimplicity" />
-<link rel="prev" href="sect0001.html" title="Standing hypotheses" />
-<link rel="up" href="chap-setup.html" title="Setup and Hypotheses" />
+<title>Mathlib’s character API</title>
+<link rel="next" href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib" />
+<link rel="prev" href="chap-characters.html" title="Characters and Their Orthogonality" />
+<link rel="up" href="chap-characters.html" title="Characters and Their Orthogonality" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -32,14 +32,14 @@
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
-<li class=" active">
+<li class="">
   <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup and Hypotheses</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
-<li class=" active current">
+<li class="">
   <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Mathlib API for representations</span></a>
  </li>
 
@@ -68,11 +68,11 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-characters.html"><span class="toc_ref">4</span> <span class="toc_entry">Characters and Their Orthogonality</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class=" active current">
   <a href="sec-char-mathlib.html"><span class="toc_ref">4.1</span> <span class="toc_entry">Mathlib’s character API</span></a>
  </li>
 
@@ -151,14 +151,15 @@
 
 
 <div class="main-text">
-<h1 id="a0000000003">1.2 Mathlib API for representations</h1>
-<div class="definition_thmwrapper theorem-style-definition" id="def:representation">
+<h1 id="sec:char-mathlib">4.1 Mathlib’s character API</h1>
+
+<div class="definition_thmwrapper theorem-style-definition" id="def:character">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">2</span>
-    <span class="definition_thmtitle">Representation</span>
+    <span class="definition_thmlabel">16</span>
+    <span class="definition_thmtitle">Character of \(V : \texttt{FDRep k G}\)</span>
     <div class="thm_header_extras">
 
     
@@ -166,7 +167,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0002.html#def:representation">#</a>
+    <a class="icon proof" href="sec-char-mathlib.html#def:character">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -180,72 +181,324 @@
         </header>
         
         <ul class="uses">
+          
+          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.character" class="lean_decl">FDRep.character</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    \(\chi _V(g) = \mathrm{tr}(V.\rho (g))\), defined as <span class="ttfamily">FDRep.character V g</span>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:char-one">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">17</span>
+    <span class="lemma_thmtitle">\(\chi _V(1) = \dim V\)</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-char-mathlib.html#lem:char-one">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000028"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_one" class="lean_decl">FDRep.char_one</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000028">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <span class="ttfamily">FDRep.char_one</span>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:char-conj">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">18</span>
+    <span class="lemma_thmtitle">Class function</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-char-mathlib.html#lem:char-conj">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000029"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_conj" class="lean_decl">FDRep.char_conj</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    \(\chi _V(hgh^{-1}) = \chi _V(g)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000029">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <span class="ttfamily">FDRep.char_conj</span>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:char-iso">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">19</span>
+    <span class="lemma_thmtitle">Iso-invariance</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-char-mathlib.html#lem:char-iso">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000030"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+          <li><a href="sect0002.html#def:rep-equiv">Definition 6</a></li>
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_iso" class="lean_decl">FDRep.char_iso</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    \(V \cong W\) in <span class="ttfamily">FDRep k G</span> \(\Rightarrow \) \(\chi _V = \chi _W\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000030">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <span class="ttfamily">FDRep.char_iso</span>. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:avg-char">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">20</span>
+    <span class="theorem_thmtitle">Average of \(\chi _V\)</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-char-mathlib.html#thm:avg-char">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000031"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
           
           <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
           
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation" class="lean_decl">Representation</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">Representation k G V</span>, defined as the abbreviation <span class="ttfamily">G →* (V →ₗ[k] V)</span>, lives in <span class="ttfamily">Mathlib.RepresentationTheory.Basic</span>. Throughout the blueprint <span class="ttfamily">ρ : Representation k G V</span> stands for the action of \(G\) on a \(k\)-module \(V\). </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:as-module">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">3</span>
-    <span class="definition_thmtitle">\(\rho .\mathrm{asModule}\)</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#def:as-module">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
           
         </ul>
     
@@ -265,7 +518,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.asModule" class="lean_decl">Representation.asModule</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.average_char_eq_finrank_invariants" class="lean_decl">FDRep.average_char_eq_finrank_invariants</a></li>
           
         </ul>
     
@@ -275,18 +528,30 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>    Each <span class="ttfamily">Representation k G V</span> has a canonically associated <span class="ttfamily">(MonoidAlgebra k G)</span>-module <span class="ttfamily">ρ.asModule</span>; this is the same carrier \(V\) with \(k[G]\)-action \(\big(\sum _g a_g g\big)\cdot v = \sum _g a_g\, \rho (g)v\). Conversely, any <span class="ttfamily">Module (MonoidAlgebra k G) M</span> gives a representation <span class="ttfamily">Representation.ofModule M</span>. </p>
+  <div class="theorem_thmcontent">
+  <p>    \(|G|^{-1}\sum _{g \in G}\chi _V(g) = \mathrm{finrank}_k\, V^G\). </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:subrepresentation">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="proof_wrapper" id="a0000000031">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
     </span>
-    <span class="definition_thmlabel">4</span>
-    <span class="definition_thmtitle">Subrepresentation</span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <span class="ttfamily">FDRep.average_char_eq_finrank_invariants</span>. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:hom-via-char">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">21</span>
+    <span class="theorem_thmtitle">Hom-space dimension via characters</span>
     <div class="thm_header_extras">
 
     
@@ -294,7 +559,10 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0002.html#def:subrepresentation">#</a>
+    <a class="icon proof" href="sec-char-mathlib.html#thm:hom-via-char">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000032"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -309,136 +577,12 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Subrepresentation" class="lean_decl">Subrepresentation</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    A <span class="ttfamily">Subrepresentation ρ</span> is a \(k\)-submodule of \(V\) closed under \(\rho (g)\) for every \(g \in G\) (file <span class="ttfamily">Mathlib.RepresentationTheory.Subrepresentation</span>). The map <span class="ttfamily">Subrepresentation.subrepresentationSubmoduleOrderIso</span> is an order-preserving bijection between <span class="ttfamily">Subrepresentation ρ</span> and <span class="ttfamily">Submodule (MonoidAlgebra k G) ρ.asModule</span>, so subrepresentations and \(k[G]\)-submodules are interchangeable. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:intertwiner">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">5</span>
-    <span class="definition_thmtitle">Intertwining map</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#def:intertwiner">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IntertwiningMap" class="lean_decl">Representation.IntertwiningMap</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">ρ.IntertwiningMap σ</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.Intertwining</span>) is the bundled type of \(k\)-linear maps \(V \to W\) that commute with \(\rho \) and \(\sigma \); it has <span class="ttfamily">FunLike</span> and <span class="ttfamily">LinearMapClass</span> instances and a \(k\)-module structure. <span class="ttfamily">Representation.IntertwiningMap.equivAlgEnd</span> identifies <span class="ttfamily">ρ.IntertwiningMap ρ</span> with the \(k\)-algebra of \(G\)-equivariant endomorphisms. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:rep-equiv">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">6</span>
-    <span class="definition_thmtitle">Isomorphism of representations</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#def:rep-equiv">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
+          <li><a href="sec-char-mathlib.html#thm:avg-char">Theorem 20</a></li>
           
           <li><a href="sect0002.html#def:intertwiner">Definition 5</a></li>
           
+          <li><a href="sec-char-mathlib.html#thm:avg-char">Theorem 20</a></li>
+          
         </ul>
     
       </div>
@@ -457,7 +601,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.Equiv" class="lean_decl">Representation.Equiv</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.card_inv_mul_sum_char_mul_char_eq_finrank" class="lean_decl">Representation.card_inv_mul_sum_char_mul_char_eq_finrank</a></li>
           
         </ul>
     
@@ -467,18 +611,30 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">ρ.Equiv σ</span> is the bundled type of \(k\)-linear isomorphisms \(V \simeq W\) that intertwine \(\rho \) and \(\sigma \) (<span class="ttfamily">Mathlib.RepresentationTheory.Intertwining</span>). </p>
+  <div class="theorem_thmcontent">
+  <p>    \(|G|^{-1}\sum _{g}\chi _V(g)\chi _W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G\). </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:irreducible">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="proof_wrapper" id="a0000000032">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
     </span>
-    <span class="definition_thmlabel">7</span>
-    <span class="definition_thmtitle">Irreducible representation</span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <span class="ttfamily">Representation.card_inv_mul_sum_char_mul_char_eq_finrank</span>. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:char-ortho">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">22</span>
+    <span class="theorem_thmtitle">Character orthonormality</span>
     <div class="thm_header_extras">
 
     
@@ -486,7 +642,10 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0002.html#def:irreducible">#</a>
+    <a class="icon proof" href="sec-char-mathlib.html#thm:char-ortho">#</a>
+    
+    <a class="icon proof" href="sec-char-mathlib.html#a0000000033"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -501,7 +660,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:subrepresentation">Definition 4</a></li>
+          <li><a href="sec-char-mathlib.html#thm:hom-via-char">Theorem 21</a></li>
+          
+          <li><a href="sect0004.html#thm:schur-fdrep">Theorem 12</a></li>
+          
+          <li><a href="sec-char-mathlib.html#thm:hom-via-char">Theorem 21</a></li>
+          
+          <li><a href="sect0004.html#thm:schur-fdrep">Theorem 12</a></li>
           
         </ul>
     
@@ -521,7 +686,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible" class="lean_decl">Representation.IsIrreducible</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_orthonormal" class="lean_decl">FDRep.char_orthonormal</a></li>
           
         </ul>
     
@@ -531,72 +696,23 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">ρ.IsIrreducible</span>, an abbreviation for <span class="ttfamily">IsSimpleOrder (Subrepresentation ρ)</span>, says \(\rho \) is non-trivial and has no proper non-zero subrepresentation (<span class="ttfamily">Mathlib.RepresentationTheory.Irreducible</span>). <span class="ttfamily">Representation.irreducible_iff_isSimpleModule_asModule</span> provides the equivalence with <span class="ttfamily">IsSimpleModule (MonoidAlgebra k G) ρ.asModule</span>, and the corresponding instance is registered (so simplicity of the \(k[G]\)-module is automatic). </p>
+  <div class="theorem_thmcontent">
+  <p>    For \(V, W : \texttt{FDRep k G}\) both simple, </p>
+<div class="displaymath" id="a0000000034">
+  \[  |G|^{-1}\sum _g \chi _V(g)\chi _W(g^{-1}) \; =\;  \begin{cases}  1 &  V \cong W,\\ 0 &  \text{otherwise.}\end{cases}  \]
+</div>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:fdrep">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="proof_wrapper" id="a0000000033">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
     </span>
-    <span class="definition_thmlabel">8</span>
-    <span class="definition_thmtitle"><span class="ttfamily">FDRep k G</span></span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#def:fdrep">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep" class="lean_decl">FDRep</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
+    <span class="expand-proof">▶</span>
   </div>
-  <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">FDRep k G</span> (<span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>) is the \(k\)-linear abelian symmetric monoidal category of finite-dimensional \(k\)-linear representations of \(G\). For \(V : \texttt{FDRep k G}\) the underlying space is \(V\) (via coercion), the action is <span class="ttfamily">V.ρ</span>, and <span class="ttfamily">[CategoryTheory.Simple V]</span> encodes simplicity in this category. All the character-theoretic Mathlib lemmas (Section&#160;<a href="sec-char-mathlib.html">4.1</a>) are stated in <span class="ttfamily">FDRep</span>. </p>
+  <div class="proof_content">
+  <p> <span class="ttfamily">FDRep.char_orthonormal</span>. </p>
 
   </div>
 </div>
@@ -611,11 +727,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0001.html" title="Standing hypotheses"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-characters.html" title="Characters and Their Orthogonality"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-setup.html" title="Setup and Hypotheses"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-characters.html" title="Characters and Their Orthogonality"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

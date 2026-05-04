@@ -63,29 +63,25 @@
 <div id="statements">
 
     
-    <div class="dep-modal-container" id="cor:avg-formula_modal">
+    <div class="dep-modal-container" id="cor:char-separates_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:avg-formula" style="display: none">
+  <div class="thm" id="cor:char-separates" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">12</span><span class="corollary_thmtitle">Averaging formula</span></div>
-    <div class="thm_thmcontent"><p>    For any finite-dimensional representation \(\rho \) of \(G\), </p>
-<div class="displaymath" id="a0000000024">
-  \[  \frac{1}{|G|} \sum _{g \in G} \chi _\rho (g) \; =\;  \dim _k V^G,  \]
-</div>
-<p> where \(V^G = \{ v \in V : \rho (g)v = v\  \forall g\} \) is the space of \(G\)-invariants. </p>
+      <span class="corollary_thmlabel">35</span><span class="corollary_thmtitle">Characters separate isomorphism classes</span></div>
+    <div class="thm_thmcontent"><p>    \(V \cong W\) in \(\texttt{FDRep k G}\) iff \(\chi _V = \chi _W\). </p>
 </div>
 
-    <a class="latex_link" href="sect0002.html#cor:avg-formula">LaTeX</a>
+    <a class="latex_link" href="sect0012.html#cor:char-separates">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.average_char_eq_finrank_invariants">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.iso_iff_character_eq">Lean</a>
     
     
   
@@ -97,37 +93,25 @@
 
 
     
-    <div class="dep-modal-container" id="cor:inner-prod-hom_modal">
+    <div class="dep-modal-container" id="cor:fdrep-semisimple_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:inner-prod-hom" style="display: none">
+  <div class="thm" id="cor:fdrep-semisimple" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">16</span><span class="corollary_thmtitle">Scalar product equals dimension of Hom-space</span></div>
-    <div class="thm_thmcontent"><p>    For any two finite-dimensional representations \(\rho , \sigma \) of \(G\), </p>
-<div class="displaymath" id="a0000000029">
-  \[  \langle \chi _\rho , \chi _\sigma \rangle _G \; =\;  \dim _k \mathrm{Hom}_G(\rho , \sigma ).  \]
-</div>
+      <span class="corollary_thmlabel">11</span><span class="corollary_thmtitle">Every \(V : \texttt{FDRep k G}\) is semisimple</span></div>
+    <div class="thm_thmcontent"><p>    For every \(V : \texttt{FDRep k G}\), <span class="ttfamily">V.ρ.asModule</span> is a semisimple <span class="ttfamily">MonoidAlgebra k G</span>-module and is finite as a \(k[G]\)-module. </p>
 </div>
 
-    <a class="latex_link" href="sect0003.html#cor:inner-prod-hom">LaTeX</a>
+    <a class="latex_link" href="sect0003.html#cor:fdrep-semisimple">LaTeX</a>
     
     
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.scalar_product_char_eq_finrank_equivariant" class="lean_decl">FDRep.scalar_product_char_eq_finrank_equivariant</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.card_inv_mul_sum_char_mul_char_eq_finrank" class="lean_decl">Representation.card_inv_mul_sum_char_mul_char_eq_finrank</a></li>
-        
-      </ul>
-  </div>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.isSemisimpleModule_asModule">Lean</a>
     
     
   
@@ -139,25 +123,25 @@
 
 
     
-    <div class="dep-modal-container" id="cor:irr-iso-orthogonal_modal">
+    <div class="dep-modal-container" id="cor:irred-test_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:irr-iso-orthogonal" style="display: none">
+  <div class="thm" id="cor:irred-test" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">20</span><span class="corollary_thmtitle">Non-isomorphic irreducible subrepresentations are linearly disjoint</span></div>
-    <div class="thm_thmcontent"><p>    If \(W_1, W_2 \subseteq V\) are irreducible subrepresentations with \(\rho \! \restriction _{W_1} \not\cong \rho \! \restriction _{W_2}\), then \(W_1 \cap W_2 = 0\). </p>
+      <span class="corollary_thmlabel">34</span><span class="corollary_thmtitle">Irreducibility test</span></div>
+    <div class="thm_thmcontent"><p>    \(V : \texttt{FDRep k G}\) is simple iff \(|G|^{-1}\sum _g \chi _V(g)\chi _V(g^{-1}) = 1\). </p>
 </div>
 
-    <a class="latex_link" href="sect0004.html#cor:irr-iso-orthogonal">LaTeX</a>
+    <a class="latex_link" href="sect0012.html#cor:irred-test">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/subrep_noniso_orthogonal">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.irreducible_iff_inner_self_eq_one">Lean</a>
     
     
   
@@ -169,25 +153,25 @@
 
 
     
-    <div class="dep-modal-container" id="cor:irred-criterion_modal">
+    <div class="dep-modal-container" id="cor:kG-semisimple-ring_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:irred-criterion" style="display: none">
+  <div class="thm" id="cor:kG-semisimple-ring" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">28</span><span class="corollary_thmtitle">Irreducibility criterion</span></div>
-    <div class="thm_thmcontent"><p>    A representation \(\rho \) is irreducible if and only if \(\langle \chi _\rho , \chi _\rho \rangle _G = 1\). </p>
+      <span class="corollary_thmlabel">10</span><span class="corollary_thmtitle">\({k[G]}\) is a semisimple ring</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">IsSemisimpleRing (MonoidAlgebra k G)</span> holds. </p>
 </div>
 
-    <a class="latex_link" href="sect0005.html#cor:irred-criterion">LaTeX</a>
+    <a class="latex_link" href="sect0003.html#cor:kG-semisimple-ring">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/irreducibilityCriterion">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.instIsSemisimpleRing">Lean</a>
     
     
   
@@ -199,29 +183,28 @@
 
 
     
-    <div class="dep-modal-container" id="cor:multiplicity_modal">
+    <div class="dep-modal-container" id="cor:moduleForm-PeterWeyl-Mathlib_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:multiplicity" style="display: none">
+  <div class="thm" id="cor:moduleForm-PeterWeyl-Mathlib" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">26</span><span class="corollary_thmtitle">Multiplicity formula</span></div>
-    <div class="thm_thmcontent"><p>    If \(V \cong \bigoplus _{\xi \in \hat G} V_\xi ^{\oplus m_\xi }\), then </p>
-<div class="displaymath" id="a0000000040">
-  \[  m_\xi \; =\;  \langle \chi _V, \chi _\xi \rangle _G \; =\;  \frac{1}{|G|}\sum _{g \in G} \chi _V(g)\,  \chi _\xi (g^{-1}).  \]
+      <span class="corollary_thmlabel">25</span><span class="corollary_thmtitle">Module-form Peter–Weyl, Mathlib version</span></div>
+    <div class="thm_thmcontent"><p>    For any <span class="ttfamily">IsSemisimpleModule R M</span> with <span class="ttfamily">Module.Finite R M</span>, there exist \(n \in \mathbb N\), simple submodules \((S_i)_{i {\lt} n}\) of \(M\), and dimensions \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), such that </p>
+<div class="displaymath" id="a0000000037">
+  \[  \mathrm{End}_R M \; \simeq _{R_0\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}\bigl(\mathrm{End}_R S_i\bigr).  \]
 </div>
-<p> In particular, two representations are isomorphic if and only if they have the same character. </p>
 </div>
 
-    <a class="latex_link" href="sect0005.html#cor:multiplicity">LaTeX</a>
+    <a class="latex_link" href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/multiplicityFormula">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsSemisimpleModule.exists_end_algEquiv_pi_matrix_end">Lean</a>
     
     
   
@@ -233,28 +216,58 @@
 
 
     
-    <div class="dep-modal-container" id="cor:schur-ortho_modal">
+    <div class="dep-modal-container" id="cor:sum-of-squares_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="cor:schur-ortho" style="display: none">
+  <div class="thm" id="cor:sum-of-squares" style="display: none">
     <div class="thm_thmheading">
       <span class="corollary_thmcaption">
       Corollary
       </span>
-      <span class="corollary_thmlabel">11</span><span class="corollary_thmtitle">Non-isomorphic irreducibles have orthogonal matrix coefficients</span></div>
-    <div class="thm_thmcontent"><p>    Let \(\rho \) and \(\sigma \) be irreducible representations and let \(A\) be any linear map \(V_\rho \to V_\rho \). The averaged operator \(\int _G \rho (g) A \rho (g)^{-1}\) equals \(\frac{\mathrm{tr}(A)}{\dim V_\rho } \cdot \mathrm{id}\). In particular, for \(f \in k^G\), </p>
-<div class="displaymath" id="a0000000022">
-  \[  \frac{1}{|G|}\sum _{g \in G} \rho (g)_{ij}\, \overline{\sigma (g)_{kl}} \; =\;  \frac{\delta _{\rho \sigma }\, \delta _{ik}\, \delta _{jl}}{\dim V_\rho }.  \]
+      <span class="corollary_thmlabel">31</span><span class="corollary_thmtitle">Sum of squares of dimensions</span></div>
+    <div class="thm_thmcontent"><p>    Under the standing hypotheses, with \((d_i)_i\) the dimensions appearing in Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">30</a>, </p>
+<div class="displaymath" id="a0000000045">
+  \[  |G| \; =\;  \sum _{i {\lt} n} d_i^{\, 2}.  \]
 </div>
 </div>
 
-    <a class="latex_link" href="sect0002.html#cor:schur-ortho">LaTeX</a>
+    <a class="latex_link" href="sect0010.html#cor:sum-of-squares">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.scalar_product_char_eq_finrank_equivariant">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.sum_sq_dim_eq_card">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:as-module_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:as-module" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">3</span><span class="definition_thmtitle">\(\rho .\mathrm{asModule}\)</span></div>
+    <div class="thm_thmcontent"><p>    Each <span class="ttfamily">Representation k G V</span> has a canonically associated <span class="ttfamily">(MonoidAlgebra k G)</span>-module <span class="ttfamily">ρ.asModule</span>; this is the same carrier \(V\) with \(k[G]\)-action \(\big(\sum _g a_g g\big)\cdot v = \sum _g a_g\, \rho (g)v\). Conversely, any <span class="ttfamily">Module (MonoidAlgebra k G) M</span> gives a representation <span class="ttfamily">Representation.ofModule M</span>. </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#def:as-module">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.asModule">Lean</a>
     
     
   
@@ -277,36 +290,14 @@
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">13</span><span class="definition_thmtitle">Character</span></div>
-    <div class="thm_thmcontent"><p>    The <em>character</em> of a finite-dimensional representation \(\rho \colon G \to \mathrm{GL}(V)\) is the function \(\chi _\rho \colon G \to k\), \(\quad g \mapsto \mathrm{tr}_V(\rho (g))\). </p>
-<p>Basic properties already in Mathlib: </p>
-<ul class="itemize">
-  <li><p><span class="ttfamily">FDRep.char_iso</span>: isomorphic reps have equal characters. </p>
-</li>
-  <li><p><span class="ttfamily">FDRep.char_conj</span>: \(\chi _\rho (hgh^{-1}) = \chi _\rho (g)\) (characters are class functions). </p>
-</li>
-  <li><p><span class="ttfamily">FDRep.char_one</span>: \(\chi _\rho (1) = \dim _k V\). </p>
-</li>
-  <li><p><span class="ttfamily">FDRep.char_tensor</span>: \(\chi _{\rho \otimes \sigma } = \chi _\rho \cdot \chi _\sigma \). </p>
-</li>
-  <li><p><span class="ttfamily">FDRep.char_dual</span>: \(\chi _{\rho ^\vee }(g) = \chi _\rho (g^{-1})\). </p>
-</li>
-</ul>
+      <span class="definition_thmlabel">16</span><span class="definition_thmtitle">Character of \(V : \texttt{FDRep k G}\)</span></div>
+    <div class="thm_thmcontent"><p>    \(\chi _V(g) = \mathrm{tr}(V.\rho (g))\), defined as <span class="ttfamily">FDRep.character V g</span>. </p>
 </div>
 
-    <a class="latex_link" href="sect0003.html#def:character">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#def:character">LaTeX</a>
     
     
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.character" class="lean_decl">FDRep.character</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.character" class="lean_decl">Representation.character</a></li>
-        
-      </ul>
-  </div>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.character">Lean</a>
     
     
   
@@ -318,25 +309,25 @@
 
 
     
-    <div class="dep-modal-container" id="def:class-fn_modal">
+    <div class="dep-modal-container" id="def:cl-G_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:class-fn" style="display: none">
+  <div class="thm" id="def:cl-G" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">24</span><span class="definition_thmtitle">Class function</span></div>
-    <div class="thm_thmcontent"><p>    A <em>class function</em> on \(G\) is a function \(f \colon G \to k\) that is constant on conjugacy classes: \(f(hgh^{-1}) = f(g)\) for all \(g, h \in G\). The space of class functions is denoted \(\mathrm{Cl}(G) \subseteq k^G\). </p>
+      <span class="definition_thmlabel">36</span><span class="definition_thmtitle">Class functions</span></div>
+    <div class="thm_thmcontent"><p>    \(\mathrm{Cl}(G) := \{ f : G \to k \, \mid \,  \forall g, h.\  f(hgh^{-1}) = f(g)\} \), a \(k\)-subspace of \(k^G\). </p>
 </div>
 
-    <a class="latex_link" href="sect0005.html#def:class-fn">LaTeX</a>
+    <a class="latex_link" href="sect0013.html#def:cl-G">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/classFunctions">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/ClassFunction">Lean</a>
     
     
   
@@ -348,28 +339,25 @@
 
 
     
-    <div class="dep-modal-container" id="def:class-fn-inner-product_modal">
+    <div class="dep-modal-container" id="def:fdrep_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:class-fn-inner-product" style="display: none">
+  <div class="thm" id="def:fdrep" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">14</span><span class="definition_thmtitle">Inner product of class functions</span></div>
-    <div class="thm_thmcontent"><p>    The <em>inner product of class functions</em> \(f, h \colon G \to k\) is </p>
-<div class="displaymath" id="a0000000025">
-  \[  \langle f, h \rangle _G \; :=\;  \frac{1}{|G|} \sum _{g \in G} f(g)\,  h(g^{-1}).  \]
-</div>
+      <span class="definition_thmlabel">8</span><span class="definition_thmtitle"><span class="ttfamily">FDRep k G</span></span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">FDRep k G</span> (<span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>) is the \(k\)-linear abelian symmetric monoidal category of finite-dimensional \(k\)-linear representations of \(G\). For \(V : \texttt{FDRep k G}\) the underlying space is \(V\) (via coercion), the action is <span class="ttfamily">V.ρ</span>, and <span class="ttfamily">[CategoryTheory.Simple V]</span> encodes simplicity in this category. All the character-theoretic Mathlib lemmas (Section&#160;<a href="sec-char-mathlib.html">4.1</a>) are stated in <span class="ttfamily">FDRep</span>. </p>
 </div>
 
-    <a class="latex_link" href="sect0003.html#def:class-fn-inner-product">LaTeX</a>
+    <a class="latex_link" href="sect0002.html#def:fdrep">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/classFunctionInnerProduct">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep">Lean</a>
     
     
   
@@ -381,164 +369,25 @@
 
 
     
-    <div class="dep-modal-container" id="def:direct-sum_modal">
+    <div class="dep-modal-container" id="def:intertwiner_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:direct-sum" style="display: none">
+  <div class="thm" id="def:intertwiner" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">7</span><span class="definition_thmtitle">Direct sum of representations</span></div>
-    <div class="thm_thmcontent"><p>    The <em>direct sum</em> \(\rho \oplus \sigma \) is the representation on \(V \oplus W\) acting diagonally. </p>
+      <span class="definition_thmlabel">5</span><span class="definition_thmtitle">Intertwining map</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">ρ.IntertwiningMap σ</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.Intertwining</span>) is the bundled type of \(k\)-linear maps \(V \to W\) that commute with \(\rho \) and \(\sigma \); it has <span class="ttfamily">FunLike</span> and <span class="ttfamily">LinearMapClass</span> instances and a \(k\)-module structure. <span class="ttfamily">Representation.IntertwiningMap.equivAlgEnd</span> identifies <span class="ttfamily">ρ.IntertwiningMap ρ</span> with the \(k\)-algebra of \(G\)-equivariant endomorphisms. </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#def:direct-sum">LaTeX</a>
-    
-    
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.sum">Lean</a>
-    
-    
-  
-    
-  </div>
-    
-      </div>
-    </div>
-
-
-    
-    <div class="dep-modal-container" id="def:fd-rep_modal">
-      <div class="dep-modal-content">
-          <button class="dep-closebtn">
-<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        
-  <div class="thm" id="def:fd-rep" style="display: none">
-    <div class="thm_thmheading">
-      <span class="definition_thmcaption">
-      Definition
-      </span>
-      <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Finite-dimensional representation</span></div>
-    <div class="thm_thmcontent"><p>    Let \(G\) be a finite group and \(k\) an algebraically closed field of characteristic not dividing \(|G|\) (e.g. \(k = \mathbb {C}\)). A <em>finite-dimensional \(k\)-linear representation</em> of \(G\) is a group homomorphism \(\rho \colon G \to \mathrm{GL}(V)\) for a finite-dimensional \(k\)-vector space \(V\). </p>
-<p>In Mathlib this is <span class="ttfamily">Representation k G V</span>, defined as <span class="ttfamily">G →* (V →ₗ[k] V)</span>. The category of such representations is <span class="ttfamily">FDRep k G</span>. </p>
-</div>
-
-    <a class="latex_link" href="sect0001.html#def:fd-rep">LaTeX</a>
-    
-    
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation" class="lean_decl">Representation</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep" class="lean_decl">FDRep</a></li>
-        
-      </ul>
-  </div>
-    
-    
-  
-    
-  </div>
-    
-      </div>
-    </div>
-
-
-    
-    <div class="dep-modal-container" id="def:finite-group_modal">
-      <div class="dep-modal-content">
-          <button class="dep-closebtn">
-<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        
-  <div class="thm" id="def:finite-group" style="display: none">
-    <div class="thm_thmheading">
-      <span class="definition_thmcaption">
-      Definition
-      </span>
-      <span class="definition_thmlabel">1</span><span class="definition_thmtitle">Finite group</span></div>
-    <div class="thm_thmcontent"><p>   A <em>finite group</em> is a group \(G\) equipped with a <span class="ttfamily">Fintype</span> instance, i.e. a decidable enumeration of its elements. We write \(|G|\) for <span class="ttfamily">Fintype.card G</span>. </p>
-</div>
-
-    <a class="latex_link" href="sect0001.html#def:finite-group">LaTeX</a>
-    
-    
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Fintype" class="lean_decl">Fintype</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Group" class="lean_decl">Group</a></li>
-        
-      </ul>
-  </div>
-    
-    
-  
-    
-  </div>
-    
-      </div>
-    </div>
-
-
-    
-    <div class="dep-modal-container" id="def:intertwining_modal">
-      <div class="dep-modal-content">
-          <button class="dep-closebtn">
-<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        
-  <div class="thm" id="def:intertwining" style="display: none">
-    <div class="thm_thmheading">
-      <span class="definition_thmcaption">
-      Definition
-      </span>
-      <span class="definition_thmlabel">4</span><span class="definition_thmtitle">Intertwining map</span></div>
-    <div class="thm_thmcontent"><p>    An <em>intertwining map</em> (equivariant map, \(G\)-map) between \(\rho \) and \(\sigma \) is a \(k\)-linear map \(T \colon V \to W\) satisfying \(T \circ \rho (g) = \sigma (g) \circ T\) for all \(g \in G\). The space of all such maps is <span class="ttfamily">Representation.IntertwiningMap ρ σ</span>. </p>
-</div>
-
-    <a class="latex_link" href="sect0001.html#def:intertwining">LaTeX</a>
+    <a class="latex_link" href="sect0002.html#def:intertwiner">LaTeX</a>
     
     
   <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IntertwiningMap">Lean</a>
-    
-    
-  
-    
-  </div>
-    
-      </div>
-    </div>
-
-
-    
-    <div class="dep-modal-container" id="def:irr-set_modal">
-      <div class="dep-modal-content">
-          <button class="dep-closebtn">
-<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        
-  <div class="thm" id="def:irr-set" style="display: none">
-    <div class="thm_thmheading">
-      <span class="definition_thmcaption">
-      Definition
-      </span>
-      <span class="definition_thmlabel">17</span><span class="definition_thmtitle">Unitary dual / irrep index set</span></div>
-    <div class="thm_thmcontent"><p>    We denote by \(\hat G\) a set of representatives of isomorphism classes of irreducible finite-dimensional \(k\)-representations of \(G\). For each \(\xi \in \hat G\), let \(V_\xi \) denote the underlying vector space and \(d_\xi := \dim _k V_\xi \). </p>
-</div>
-
-    <a class="latex_link" href="sect0004.html#def:irr-set">LaTeX</a>
-    
-    
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.SimpleIrreps">Lean</a>
     
     
   
@@ -561,24 +410,14 @@
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">6</span><span class="definition_thmtitle">Irreducible representation</span></div>
-    <div class="thm_thmcontent"><p>    A representation \(\rho \) on \(V \neq 0\) is <em>irreducible</em> if \(V\) has no proper non-zero \(G\)-invariant subspaces. </p>
-<p>In Mathlib: <span class="ttfamily">Representation.IsIrreducible ρ</span>. The categorical counterpart for <span class="ttfamily">FDRep k G</span> is the typeclass <span class="ttfamily">CategoryTheory.Simple V</span>. </p>
+      <span class="definition_thmlabel">7</span><span class="definition_thmtitle">Irreducible representation</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">ρ.IsIrreducible</span>, an abbreviation for <span class="ttfamily">IsSimpleOrder (Subrepresentation ρ)</span>, says \(\rho \) is non-trivial and has no proper non-zero subrepresentation (<span class="ttfamily">Mathlib.RepresentationTheory.Irreducible</span>). <span class="ttfamily">Representation.irreducible_iff_isSimpleModule_asModule</span> provides the equivalence with <span class="ttfamily">IsSimpleModule (MonoidAlgebra k G) ρ.asModule</span>, and the corresponding instance is registered (so simplicity of the \(k[G]\)-module is automatic). </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#def:irreducible">LaTeX</a>
+    <a class="latex_link" href="sect0002.html#def:irreducible">LaTeX</a>
     
     
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible" class="lean_decl">Representation.IsIrreducible</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/CategoryTheory.Simple" class="lean_decl">CategoryTheory.Simple</a></li>
-        
-      </ul>
-  </div>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible">Lean</a>
     
     
   
@@ -590,22 +429,22 @@
 
 
     
-    <div class="dep-modal-container" id="def:isotypic_modal">
+    <div class="dep-modal-container" id="def:isotypicComponent_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:isotypic" style="display: none">
+  <div class="thm" id="def:isotypicComponent" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">18</span><span class="definition_thmtitle">Isotypic component</span></div>
-    <div class="thm_thmcontent"><p>    For \(\xi \in \hat G\) and a representation \(\rho \) on \(V\), the <em>\(\xi \)-isotypic component</em> \(V_{\! (\xi )}\) is the sum of all subrepresentations of \(V\) isomorphic to \(\rho _\xi \). </p>
+      <span class="definition_thmlabel">23</span><span class="definition_thmtitle"><span class="ttfamily">isotypicComponent</span></span></div>
+    <div class="thm_thmcontent"><p>    For a simple \(R\)-module \(S\), <span class="ttfamily">isotypicComponent R M S</span> is the sum of all submodules of \(M\) isomorphic to \(S\) (<span class="ttfamily">Mathlib.RingTheory.SimpleModule.Isotypic</span>). </p>
 </div>
 
-    <a class="latex_link" href="sect0004.html#def:isotypic">LaTeX</a>
+    <a class="latex_link" href="sect0006.html#def:isotypicComponent">LaTeX</a>
     
     
   <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/isotypicComponent">Lean</a>
@@ -620,34 +459,25 @@
 
 
     
-    <div class="dep-modal-container" id="def:rep-iso_modal">
+    <div class="dep-modal-container" id="def:regular_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:rep-iso" style="display: none">
+  <div class="thm" id="def:regular" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">3</span><span class="definition_thmtitle">Isomorphism of representations</span></div>
-    <div class="thm_thmcontent"><p>    Two representations \(\rho \colon G \to \mathrm{GL}(V)\) and \(\sigma \colon G \to \mathrm{GL}(W)\) are <em>isomorphic</em> if there exists a \(k\)-linear isomorphism \(\phi \colon V \xrightarrow {\sim } W\) such that \(\phi \circ \rho (g) = \sigma (g) \circ \phi \) for all \(g \in G\). In Mathlib this is <span class="ttfamily">Representation.Equiv</span>. </p>
+      <span class="definition_thmlabel">26</span><span class="definition_thmtitle">Left regular representation</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">Representation.leftRegular k G : Representation k G ((G →₀ k))</span>. Its bundled form is <span class="ttfamily">Rep.ofMulAction k G G : Rep k G</span>, with the same underlying \(k[G]\)-module as <span class="ttfamily">MonoidAlgebra k G</span> acting on itself by left multiplication. </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#def:rep-iso">LaTeX</a>
+    <a class="latex_link" href="sect0007.html#def:regular">LaTeX</a>
     
     
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.Equiv" class="lean_decl">Representation.Equiv</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/CategoryTheory.Iso" class="lean_decl">CategoryTheory.Iso</a></li>
-        
-      </ul>
-  </div>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.leftRegular">Lean</a>
     
     
   
@@ -659,25 +489,25 @@
 
 
     
-    <div class="dep-modal-container" id="def:subrep_modal">
+    <div class="dep-modal-container" id="def:rep-equiv_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="def:subrep" style="display: none">
+  <div class="thm" id="def:rep-equiv" style="display: none">
     <div class="thm_thmheading">
       <span class="definition_thmcaption">
       Definition
       </span>
-      <span class="definition_thmlabel">5</span><span class="definition_thmtitle">Subrepresentation and invariant subspace</span></div>
-    <div class="thm_thmcontent"><p>    A <em>subrepresentation</em> of \(\rho \colon G \to \mathrm{GL}(V)\) is a \(G\)-invariant \(k\)-subspace \(W \subseteq V\), i.e. \(\rho (g)(W) \subseteq W\) for all \(g \in G\). </p>
+      <span class="definition_thmlabel">6</span><span class="definition_thmtitle">Isomorphism of representations</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">ρ.Equiv σ</span> is the bundled type of \(k\)-linear isomorphisms \(V \simeq W\) that intertwine \(\rho \) and \(\sigma \) (<span class="ttfamily">Mathlib.RepresentationTheory.Intertwining</span>). </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#def:subrep">LaTeX</a>
+    <a class="latex_link" href="sect0002.html#def:rep-equiv">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.Subrepresentation">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.Equiv">Lean</a>
     
     
   
@@ -689,29 +519,117 @@
 
 
     
-    <div class="dep-modal-container" id="lem:weyl-avg_modal">
+    <div class="dep-modal-container" id="def:representation_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="lem:weyl-avg" style="display: none">
+  <div class="thm" id="def:representation" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Representation</span></div>
+    <div class="thm_thmcontent"><p>    <span class="ttfamily">Representation k G V</span>, defined as the abbreviation <span class="ttfamily">G →* (V →ₗ[k] V)</span>, lives in <span class="ttfamily">Mathlib.RepresentationTheory.Basic</span>. Throughout the blueprint <span class="ttfamily">ρ : Representation k G V</span> stands for the action of \(G\) on a \(k\)-module \(V\). </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#def:representation">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:standing-hypotheses_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:standing-hypotheses" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">1</span><span class="definition_thmtitle">Standing hypotheses</span></div>
+    <div class="thm_thmcontent"><p>  In Lean 4 / Mathlib these are: </p>
+<div class="centered"> <span class="ttfamily">[Group G] [Fintype G] [Field k] [IsAlgClosed k] [Invertible ((Fintype.card G : k))]</span>. </div>
+<p> The invertibility hypothesis is equivalent to <span class="ttfamily">NeZero ((Nat.card G : k))</span> and to \(\mathrm{char}(k) \nmid |G|\); the prototypical case is \(k = \mathbb C\). We write \(|G|\) for <span class="ttfamily">Fintype.card G</span>. </p>
+</div>
+
+    <a class="latex_link" href="sect0001.html#def:standing-hypotheses">LaTeX</a>
+    
+    
+  
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:subrepresentation_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:subrepresentation" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">4</span><span class="definition_thmtitle">Subrepresentation</span></div>
+    <div class="thm_thmcontent"><p>    A <span class="ttfamily">Subrepresentation ρ</span> is a \(k\)-submodule of \(V\) closed under \(\rho (g)\) for every \(g \in G\) (file <span class="ttfamily">Mathlib.RepresentationTheory.Subrepresentation</span>). The map <span class="ttfamily">Subrepresentation.subrepresentationSubmoduleOrderIso</span> is an order-preserving bijection between <span class="ttfamily">Subrepresentation ρ</span> and <span class="ttfamily">Submodule (MonoidAlgebra k G) ρ.asModule</span>, so subrepresentations and \(k[G]\)-submodules are interchangeable. </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#def:subrepresentation">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Subrepresentation">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:char-conj_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:char-conj" style="display: none">
     <div class="thm_thmheading">
       <span class="lemma_thmcaption">
       Lemma
       </span>
-      <span class="lemma_thmlabel">8</span><span class="lemma_thmtitle">Weyl averaging trick</span></div>
-    <div class="thm_thmcontent"><p>    Let \(\rho \colon G \to \mathrm{GL}(V)\) be a finite-dimensional representation and \(\pi \colon W \to V\) a \(k\)-linear retraction of a \(G\)-equivariant inclusion \(i \colon V \hookrightarrow W\). The averaged map </p>
-<div class="displaymath" id="a0000000010">
-  \[  \bar\pi \; :=\;  \frac{1}{|G|} \sum _{g \in G} \rho (g)^{-1} \circ \pi \circ \rho (g)  \]
-</div>
-<p> is a \(G\)-equivariant retraction of \(i\). </p>
+      <span class="lemma_thmlabel">18</span><span class="lemma_thmtitle">Class function</span></div>
+    <div class="thm_thmcontent"><p>    \(\chi _V(hgh^{-1}) = \chi _V(g)\). </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#lem:weyl-avg">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#lem:char-conj">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/LinearMap.sumOfConjugatesEquivariant">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_conj">Lean</a>
     
     
   
@@ -723,25 +641,25 @@
 
 
     
-    <div class="dep-modal-container" id="prop:isotypic-ortho_modal">
+    <div class="dep-modal-container" id="lem:char-iso_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="prop:isotypic-ortho" style="display: none">
+  <div class="thm" id="lem:char-iso" style="display: none">
     <div class="thm_thmheading">
-      <span class="proposition_thmcaption">
-      Proposition
+      <span class="lemma_thmcaption">
+      Lemma
       </span>
-      <span class="proposition_thmlabel">19</span><span class="proposition_thmtitle">Isotypic components are pairwise orthogonal</span></div>
-    <div class="thm_thmcontent"><p>    For \(\xi \neq \xi '\) in \(\hat G\), any subrepresentation isomorphic to \(\rho _\xi \) is orthogonal (in the Hom sense: no nonzero equivariant maps) to any subrepresentation isomorphic to \(\rho _{\xi '}\). </p>
+      <span class="lemma_thmlabel">19</span><span class="lemma_thmtitle">Iso-invariance</span></div>
+    <div class="thm_thmcontent"><p>    \(V \cong W\) in <span class="ttfamily">FDRep k G</span> \(\Rightarrow \) \(\chi _V = \chi _W\). </p>
 </div>
 
-    <a class="latex_link" href="sect0004.html#prop:isotypic-ortho">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#lem:char-iso">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/isotypicComponent_orthogonal">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_iso">Lean</a>
     
     
   
@@ -753,31 +671,25 @@
 
 
     
-    <div class="dep-modal-container" id="prop:isotypic-structure_modal">
+    <div class="dep-modal-container" id="lem:char-one_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="prop:isotypic-structure" style="display: none">
+  <div class="thm" id="lem:char-one" style="display: none">
     <div class="thm_thmheading">
-      <span class="proposition_thmcaption">
-      Proposition
+      <span class="lemma_thmcaption">
+      Lemma
       </span>
-      <span class="proposition_thmlabel">21</span><span class="proposition_thmtitle">Structure of isotypic component</span></div>
-    <div class="thm_thmcontent"><p>    For \(\xi \in \hat G\), the isotypic component \(V_{\! (\xi )}\) satisfies: </p>
-<ol class="enumerate">
-  <li><p>\(V_{\! (\xi )} \cong \rho _\xi ^{\oplus m_\xi }\) for a uniquely determined non-negative integer \(m_\xi \) (the <em>multiplicity</em> of \(\rho _\xi \) in \(\rho \)). </p>
-</li>
-  <li><p>\(\dim _k V_{\! (\xi )} = m_\xi \cdot d_\xi \). </p>
-</li>
-</ol>
+      <span class="lemma_thmlabel">17</span><span class="lemma_thmtitle">\(\chi _V(1) = \dim V\)</span></div>
+    <div class="thm_thmcontent">
 </div>
 
-    <a class="latex_link" href="sect0004.html#prop:isotypic-structure">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#lem:char-one">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/isotypicComponent_iso_power">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_one">Lean</a>
     
     
   
@@ -789,25 +701,115 @@
 
 
     
-    <div class="dep-modal-container" id="thm:char-basis_modal">
+    <div class="dep-modal-container" id="lem:char-regular_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="thm:char-basis" style="display: none">
+  <div class="thm" id="lem:char-regular" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">27</span><span class="lemma_thmtitle">\(\chi _{k[G]}\) is supported at \(1\)</span></div>
+    <div class="thm_thmcontent"><p>    \(\chi _{k[G]}(g) = |G|\) if \(g = 1\) and \(0\) otherwise. </p>
+</div>
+
+    <a class="latex_link" href="sect0007.html#lem:char-regular">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.character_leftRegular">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:dim-cl_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:dim-cl" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">37</span><span class="lemma_thmtitle">\(\dim \mathrm{Cl}(G) = \) #conjugacy classes</span></div>
+    <div class="thm_thmcontent"><p>    \(\dim _k \mathrm{Cl}(G) = |\mathrm{ConjClasses}\  G|\). </p>
+</div>
+
+    <a class="latex_link" href="sect0013.html#lem:dim-cl">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/ClassFunction.finrank_eq_conjClasses">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:divalg-of-isAlgClosed_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:divalg-of-isAlgClosed" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">29</span><span class="lemma_thmtitle">Finite-dim division algebra over alg-closed \(k\) equals \(k\)</span></div>
+    <div class="thm_thmcontent"><p>    Let \(k\) be an algebraically closed field and \(D\) a finite-dimensional division \(k\)-algebra. Then the canonical map \(k \to D\) is a \(k\)-algebra isomorphism. </p>
+</div>
+
+    <a class="latex_link" href="sect0009.html#lem:divalg-of-isAlgClosed">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsAlgClosed.divisionRing_algEquiv">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:avg-char_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:avg-char" style="display: none">
     <div class="thm_thmheading">
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">25</span><span class="theorem_thmtitle">Irreducible characters form an orthonormal basis for class functions</span></div>
-    <div class="thm_thmcontent"><p>    The characters \(\{ \chi _\xi \} _{\xi \in \hat G}\) form an orthonormal basis for \(\mathrm{Cl}(G)\) with respect to the inner product \(\langle \cdot , \cdot \rangle _G\). In particular, \(|\hat G| = \dim _k \mathrm{Cl}(G) = \# \{ \text{conjugacy classes of } G\} \). </p>
+      <span class="theorem_thmlabel">20</span><span class="theorem_thmtitle">Average of \(\chi _V\)</span></div>
+    <div class="thm_thmcontent"><p>    \(|G|^{-1}\sum _{g \in G}\chi _V(g) = \mathrm{finrank}_k\, V^G\). </p>
 </div>
 
-    <a class="latex_link" href="sect0005.html#thm:char-basis">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#thm:avg-char">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/irreducibleCharacters_orthonormalBasis">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.average_char_eq_finrank_invariants">Lean</a>
     
     
   
@@ -830,26 +832,17 @@
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">15</span><span class="theorem_thmtitle">Schur orthogonality of characters</span></div>
-    <div class="thm_thmcontent"><p>    Let \(G\) be a finite group, \(k\) an algebraically closed field with \(\mathrm{char}(k) \nmid |G|\). For irreducible representations \(\rho , \sigma \) of \(G\), </p>
-<div class="displaymath" id="a0000000027">
-  \[  \langle \chi _\rho , \chi _\sigma \rangle _G \; =\;  \begin{cases}  1 &  \text{if } \rho \cong \sigma , \\ 0 &  \text{otherwise.} \end{cases}  \]
+      <span class="theorem_thmlabel">22</span><span class="theorem_thmtitle">Character orthonormality</span></div>
+    <div class="thm_thmcontent"><p>    For \(V, W : \texttt{FDRep k G}\) both simple, </p>
+<div class="displaymath" id="a0000000034">
+  \[  |G|^{-1}\sum _g \chi _V(g)\chi _W(g^{-1}) \; =\;  \begin{cases}  1 &  V \cong W,\\ 0 &  \text{otherwise.}\end{cases}  \]
 </div>
 </div>
 
-    <a class="latex_link" href="sect0003.html#thm:char-ortho">LaTeX</a>
+    <a class="latex_link" href="sec-char-mathlib.html#thm:char-ortho">LaTeX</a>
     
     
-  <div class="tooltip">
-      <span class="lean_link">Lean</span>
-      <ul class="tooltip_list">
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_orthonormal" class="lean_decl">FDRep.char_orthonormal</a></li>
-        
-           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.char_orthonormal" class="lean_decl">Representation.char_orthonormal</a></li>
-        
-      </ul>
-  </div>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.char_orthonormal">Lean</a>
     
     
   
@@ -861,28 +854,55 @@
 
 
     
-    <div class="dep-modal-container" id="thm:dim-identity_modal">
+    <div class="dep-modal-container" id="thm:char-span_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="thm:dim-identity" style="display: none">
+  <div class="thm" id="thm:char-span" style="display: none">
     <div class="thm_thmheading">
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">27</span><span class="theorem_thmtitle">Sum of squares of dimensions</span></div>
-    <div class="thm_thmcontent"><p>    For any finite group \(G\), </p>
-<div class="displaymath" id="a0000000042">
-  \[  |G| \; =\;  \sum _{\xi \in \hat G} d_\xi ^2 \; =\;  \sum _{\xi \in \hat G} (\dim _k V_\xi )^2.  \]
-</div>
+      <span class="theorem_thmlabel">38</span><span class="theorem_thmtitle">Irreducible characters span \(\mathrm{Cl}(G)\)</span></div>
+    <div class="thm_thmcontent"><p>    The set \(\{ \chi _V : V \in \texttt{FDRep k G},\  \texttt{Simple}\  V\} \) spans \(\mathrm{Cl}(G)\) over \(k\). </p>
 </div>
 
-    <a class="latex_link" href="sect0005.html#thm:dim-identity">LaTeX</a>
+    <a class="latex_link" href="sect0013.html#thm:char-span">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/sumSquaresDimensions">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.span_irreducibleCharacters_eq_top">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:hom-via-char_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:hom-via-char" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">21</span><span class="theorem_thmtitle">Hom-space dimension via characters</span></div>
+    <div class="thm_thmcontent"><p>    \(|G|^{-1}\sum _{g}\chi _V(g)\chi _W(g^{-1}) = \mathrm{finrank}_k(V \to W)_G\). </p>
+</div>
+
+    <a class="latex_link" href="sec-char-mathlib.html#thm:hom-via-char">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.card_inv_mul_sum_char_mul_char_eq_finrank">Lean</a>
     
     
   
@@ -905,18 +925,23 @@
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">22</span><span class="theorem_thmtitle">Isotypic decomposition</span></div>
-    <div class="thm_thmcontent"><p>    Every finite-dimensional representation \(\rho \) of \(G\) decomposes as </p>
-<div class="displaymath" id="a0000000034">
-  \[  V \; \cong \;  \bigoplus _{\xi \in \hat G} V_{\! (\xi )} \; \cong \;  \bigoplus _{\xi \in \hat G} \rho _\xi ^{\oplus m_\xi },  \]
-</div>
-<p> and this decomposition is unique (the multiplicities \(m_\xi \) are uniquely determined). </p>
+      <span class="theorem_thmlabel">24</span><span class="theorem_thmtitle">Isotypic components are independent and exhaust</span></div>
+    <div class="thm_thmcontent"><p>    For any <span class="ttfamily">IsSemisimpleModule R M</span>, the family <span class="ttfamily">isotypicComponents R M</span> is <span class="ttfamily">sSupIndep</span> and its <span class="ttfamily">sSup</span> is \(\top \). Combined with <span class="ttfamily">IsIsotypic.linearEquiv_fun</span>, every isotypic component is isomorphic to \(S^n\) for the corresponding simple \(S\) and some \(n \in \mathbb N\). </p>
 </div>
 
-    <a class="latex_link" href="sect0004.html#thm:isotypic-decomp">LaTeX</a>
+    <a class="latex_link" href="sect0006.html#thm:isotypic-decomp">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/isotypicDecomposition">Lean</a>
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/sSupIndep_isotypicComponents" class="lean_decl">sSupIndep_isotypicComponents</a></li>
+        
+           <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/sSup_isotypicComponents" class="lean_decl">sSup_isotypicComponents</a></li>
+        
+      </ul>
+  </div>
     
     
   
@@ -939,14 +964,14 @@
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">9</span><span class="theorem_thmtitle">Maschke’s theorem</span></div>
-    <div class="thm_thmcontent"><p>    Every finite-dimensional representation of a finite group \(G\) over a field \(k\) with \(\mathrm{char}(k) \nmid |G|\) is <em>semisimple</em>: it decomposes as a direct sum of irreducible subrepresentations. </p>
+      <span class="theorem_thmlabel">9</span><span class="theorem_thmtitle">Maschke: every \({k[G]}\)-module is semisimple</span></div>
+    <div class="thm_thmcontent"><p>    Under the standing hypotheses (Definition&#160;<a href="sect0001.html#def:standing-hypotheses">1</a>), for every <span class="ttfamily">Module (MonoidAlgebra k G) V</span> we have <span class="ttfamily">IsSemisimpleModule (MonoidAlgebra k G) V</span>: every \(k[G]\)-submodule has a \(k[G]\)-complement. </p>
 </div>
 
-    <a class="latex_link" href="sect0001.html#thm:maschke">LaTeX</a>
+    <a class="latex_link" href="sect0003.html#thm:maschke">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.isSemisimple">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.Submodule.instIsSemisimpleModule">Lean</a>
     
     
   
@@ -958,32 +983,28 @@
 
 
     
-    <div class="dep-modal-container" id="thm:peter-weyl-finite_modal">
+    <div class="dep-modal-container" id="thm:multiplicity-formula_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="thm:peter-weyl-finite" style="display: none">
+  <div class="thm" id="thm:multiplicity-formula" style="display: none">
     <div class="thm_thmheading">
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">23</span><span class="theorem_thmtitle">Peter–Weyl theorem for finite groups</span></div>
-    <div class="thm_thmcontent"><p>    Let \(k[G]\) denote the group algebra, viewed as the regular representation of \(G\) by left multiplication. Then </p>
-<div class="displaymath" id="a0000000036">
-  \[  k[G] \; \cong \;  \bigoplus _{\xi \in \hat G}\;  \rho _\xi ^{\oplus d_\xi } \quad \text{as left $G$-representations,}  \]
-</div>
-<p> where \(d_\xi = \dim _k V_\xi \). Equivalently, as two-sided \(k[G]\)-modules, </p>
-<div class="displaymath" id="a0000000037">
-  \[  k[G] \; \cong \;  \bigoplus _{\xi \in \hat G} \mathrm{End}_k(V_\xi ).  \]
+      <span class="theorem_thmlabel">33</span><span class="theorem_thmtitle">Multiplicity formula</span></div>
+    <div class="thm_thmcontent"><p>    Let \(V : \texttt{FDRep k G}\) and \(\xi \) a simple \(V_\xi : \texttt{FDRep k G}\). Write \(m_\xi \) for the multiplicity of \(V_\xi \) in the isotypic decomposition of \(V\) (Theorem&#160;<a href="sect0006.html#thm:isotypic-decomp">24</a>). Then </p>
+<div class="displaymath" id="a0000000049">
+  \[  m_\xi \; =\;  |G|^{-1}\sum _{g} \chi _V(g)\chi _{V_\xi }(g^{-1}) \; =\;  \mathrm{finrank}_k\bigl(V_\xi \to V\bigr)_G.  \]
 </div>
 </div>
 
-    <a class="latex_link" href="sect0004.html#thm:peter-weyl-finite">LaTeX</a>
+    <a class="latex_link" href="sect0012.html#thm:multiplicity-formula">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.finite">Lean</a>
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.multiplicity_eq_inner_char">Lean</a>
     
     
   
@@ -995,29 +1016,253 @@
 
 
     
-    <div class="dep-modal-container" id="thm:schur_modal">
+    <div class="dep-modal-container" id="thm:num-irreps_modal">
       <div class="dep-modal-content">
           <button class="dep-closebtn">
 <svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
 </button>
         
-  <div class="thm" id="thm:schur" style="display: none">
+  <div class="thm" id="thm:num-irreps" style="display: none">
     <div class="thm_thmheading">
       <span class="theorem_thmcaption">
       Theorem
       </span>
-      <span class="theorem_thmlabel">10</span><span class="theorem_thmtitle">Schur’s Lemma</span></div>
-    <div class="thm_thmcontent"><p>    Let \(\rho \) and \(\sigma \) be irreducible finite-dimensional representations of \(G\) over an algebraically closed field \(k\). Then </p>
-<div class="displaymath" id="a0000000020">
-  \[  \dim _k \mathrm{Hom}_G(\rho , \sigma ) \; =\;  \begin{cases}  1 &  \text{if } \rho \cong \sigma , \\ 0 &  \text{otherwise.} \end{cases}  \]
-</div>
-<p> In particular, any \(G\)-map between non-isomorphic irreducibles is zero, and any \(G\)-endomorphism of an irreducible is a scalar. </p>
+      <span class="theorem_thmlabel">39</span><span class="theorem_thmtitle">Number of irreducibles = number of conjugacy classes</span></div>
+    <div class="thm_thmcontent"><p>    The number of isomorphism classes of simple objects of \(\texttt{FDRep k G}\) equals \(|\mathrm{ConjClasses}\  G|\). </p>
 </div>
 
-    <a class="latex_link" href="sect0002.html#thm:schur">LaTeX</a>
+    <a class="latex_link" href="sect0013.html#thm:num-irreps">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.num_simple_eq_num_conjClasses">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:peter-weyl-module_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:peter-weyl-module" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">32</span><span class="theorem_thmtitle">Module form of Peter–Weyl</span></div>
+    <div class="thm_thmcontent"><p>    Under the standing hypotheses there exist \(n \in \mathbb N\), simple subrepresentations \((V_i)_{i {\lt} n}\) of the regular representation, and multiplicities \((d_i)_{i {\lt} n}\) with each \(d_i = \dim _k V_i \ne 0\), such that </p>
+<div class="displaymath" id="a0000000047">
+  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq \;  \bigoplus _{i {\lt} n} V_i^{\, \oplus d_i}  \]
+</div>
+<p> as \(k[G]\)-modules. Equivalently: every irreducible appears in \(k[G]\) with multiplicity equal to its \(k\)-dimension, and these are all the irreducibles. </p>
+</div>
+
+    <a class="latex_link" href="sect0011.html#thm:peter-weyl-module">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.regular_decomposition">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:peter-weyl-ring_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:peter-weyl-ring" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">30</span><span class="theorem_thmtitle">Peter–Weyl for finite groups, ring form</span></div>
+    <div class="thm_thmcontent"><p>    Under the standing hypotheses there exist \(n \in \mathbb N\) and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
+<div class="displaymath" id="a0000000043">
+  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(k).  \]
+</div>
+</div>
+
+    <a class="latex_link" href="sect0009.html#thm:peter-weyl-ring">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/PeterWeyl.groupAlgebra_algEquiv_pi_matrix">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:schur-distinct_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:schur-distinct" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">15</span><span class="theorem_thmtitle">Schur for distinct irreducibles</span></div>
+    <div class="thm_thmcontent"><p>    If \(\rho , \sigma \) are both irreducible and there is no \(G\)-equivariant isomorphism between them (i.e. <span class="ttfamily">IsEmpty (ρ.Equiv σ)</span>), then <span class="ttfamily">Subsingleton (ρ.IntertwiningMap σ)</span>; equivalently, every intertwiner \(\rho \to \sigma \) is zero. </p>
+</div>
+
+    <a class="latex_link" href="sect0005.html#thm:schur-distinct">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible.instSubsingletonIntertwiningMapOfIsEmptyEquiv">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:schur-fdrep_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:schur-fdrep" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">12</span><span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span></div>
+    <div class="thm_thmcontent"><p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
+<div class="displaymath" id="a0000000023">
+  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
+</div>
+<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
+</div>
+
+    <a class="latex_link" href="sect0004.html#thm:schur-fdrep">LaTeX</a>
     
     
   <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:schur-finrank-self_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:schur-finrank-self" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">14</span><span class="theorem_thmtitle">Schur, dimension form</span></div>
+    <div class="thm_thmcontent"><p>    For \(\rho \) as above, \(\mathrm{finrank}_k\,  \rho .\mathrm{IntertwiningMap}\, \rho = 1\). </p>
+</div>
+
+    <a class="latex_link" href="sect0005.html#thm:schur-finrank-self">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible.finrank_intertwiningMap_self">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:schur-scalar_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:schur-scalar" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">13</span><span class="theorem_thmtitle">Schur, scalar form</span></div>
+    <div class="thm_thmcontent"><p>    For \(\rho \) irreducible and finite-dimensional over an algebraically closed field \(k\), the canonical algebra map </p>
+<div class="displaymath" id="a0000000025">
+  \[  k \; \longrightarrow \;  \mathrm{End}_G(\rho ) \; =\;  \rho .\mathrm{IntertwiningMap}\, \rho  \]
+</div>
+<p> is bijective. Hence \(\mathrm{End}_G(\rho ) \simeq _{\! k\! \mathrm{-alg}} k\). </p>
+</div>
+
+    <a class="latex_link" href="sect0005.html#thm:schur-scalar">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.IsIrreducible.algebraMap_intertwiningMap_bijective_of_isAlgClosed">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:wedderburn-kG_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:wedderburn-kG" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">28</span><span class="theorem_thmtitle">Wedderburn–Artin for \({k[G]}\)</span></div>
+    <div class="thm_thmcontent"><p>    Under the standing hypotheses there exist \(n \in \mathbb N\), division \(k\)-algebras \((D_i)_{i {\lt} n}\) each finite over \(k\), and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
+<div class="displaymath" id="a0000000040">
+  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(D_i).  \]
+</div>
+</div>
+
+    <a class="latex_link" href="sect0008.html#thm:wedderburn-kG">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing_finite">Lean</a>
     
     
   
@@ -1045,7 +1290,7 @@ graphContainer.graphviz({useWorker: true})
     .width(width)
     .height(height)
     .fit(true)
-    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"prop:isotypic-structure"	[label="isotypic-structure",		shape=ellipse];	"thm:isotypic-decomp"	[label="isotypic-decomp",		shape=ellipse];	"prop:isotypic-structure" -> "thm:isotypic-decomp"	[style=dashed];	"thm:peter-weyl-finite"	[label="peter-weyl-finite",		shape=ellipse];	"thm:isotypic-decomp" -> "thm:peter-weyl-finite"	[style=dashed];	"thm:char-basis"	[label="char-basis",		shape=ellipse];	"thm:peter-weyl-finite" -> "thm:char-basis"	[style=dashed];	"thm:dim-identity"	[label="dim-identity",		shape=ellipse];	"thm:peter-weyl-finite" -> "thm:dim-identity"	[style=dashed];	"lem:weyl-avg"	[color=darkgreen,		fillcolor="#1CAC78",		label="weyl-avg",		shape=ellipse,		style=filled];	"thm:maschke"	[color=darkgreen,		fillcolor="#A3D6FF",		label=maschke,		shape=ellipse,		style=filled];	"lem:weyl-avg" -> "thm:maschke"	[style=dashed];	"thm:maschke" -> "prop:isotypic-structure"	[style=dashed];	"def:finite-group"	[color=darkgreen,		fillcolor="#B0ECA3",		label="finite-group",		shape=box,		style=filled];	"def:fd-rep"	[color=darkgreen,		fillcolor="#B0ECA3",		label="fd-rep",		shape=box,		style=filled];	"def:finite-group" -> "def:fd-rep"	[style=dashed];	"def:class-fn"	[color=blue,		fillcolor="#A3D6FF",		label="class-fn",		shape=box,		style=filled];	"def:finite-group" -> "def:class-fn"	[style=dashed];	"def:fd-rep" -> "lem:weyl-avg"	[style=dashed];	"def:rep-iso"	[color=darkgreen,		fillcolor="#B0ECA3",		label="rep-iso",		shape=box,		style=filled];	"def:fd-rep" -> "def:rep-iso"	[style=dashed];	"def:intertwining"	[color=darkgreen,		fillcolor="#B0ECA3",		label=intertwining,		shape=box,		style=filled];	"def:fd-rep" -> "def:intertwining"	[style=dashed];	"def:subrep"	[color=darkgreen,		fillcolor="#B0ECA3",		label=subrep,		shape=box,		style=filled];	"def:fd-rep" -> "def:subrep"	[style=dashed];	"def:direct-sum"	[color=darkgreen,		fillcolor="#B0ECA3",		label="direct-sum",		shape=box,		style=filled];	"def:fd-rep" -> "def:direct-sum"	[style=dashed];	"def:character"	[color=darkgreen,		fillcolor="#B0ECA3",		label=character,		shape=box,		style=filled];	"def:fd-rep" -> "def:character"	[style=dashed];	"def:class-fn" -> "thm:char-basis"	[style=dashed];	"def:irr-set"	[color=blue,		fillcolor="#A3D6FF",		label="irr-set",		shape=box,		style=filled];	"def:rep-iso" -> "def:irr-set"	[style=dashed];	"thm:schur"	[color=darkgreen,		fillcolor="#1CAC78",		label=schur,		shape=ellipse,		style=filled];	"def:intertwining" -> "thm:schur"	[style=dashed];	"def:irreducible"	[color=darkgreen,		fillcolor="#B0ECA3",		label=irreducible,		shape=box,		style=filled];	"def:subrep" -> "def:irreducible"	[style=dashed];	"def:direct-sum" -> "thm:maschke"	[style=dashed];	"def:class-fn-inner-product"	[color=blue,		fillcolor="#A3D6FF",		label="class-fn-inner-product",		shape=box,		style=filled];	"def:character" -> "def:class-fn-inner-product"	[style=dashed];	"cor:inner-prod-hom"	[color=darkgreen,		fillcolor="#1CAC78",		label="inner-prod-hom",		shape=ellipse,		style=filled];	"def:class-fn-inner-product" -> "cor:inner-prod-hom"	[style=dashed];	"thm:char-ortho"	[color=darkgreen,		fillcolor="#1CAC78",		label="char-ortho",		shape=ellipse,		style=filled];	"def:class-fn-inner-product" -> "thm:char-ortho"	[style=dashed];	"cor:inner-prod-hom" -> "thm:peter-weyl-finite";	"thm:char-ortho" -> "thm:char-basis"	[style=dashed];	"cor:multiplicity"	[label=multiplicity,		shape=ellipse];	"thm:char-basis" -> "cor:multiplicity"	[style=dashed];	"def:isotypic"	[label=isotypic,		shape=box];	"def:irr-set" -> "def:isotypic"	[style=dashed];	"def:isotypic" -> "prop:isotypic-structure"	[style=dashed];	"prop:isotypic-ortho"	[label="isotypic-ortho",		shape=ellipse];	"def:isotypic" -> "prop:isotypic-ortho"	[style=dashed];	"thm:schur" -> "prop:isotypic-structure"	[style=dashed];	"thm:schur" -> "cor:inner-prod-hom";	"cor:schur-ortho"	[color=darkgreen,		fillcolor="#A3D6FF",		label="schur-ortho",		shape=ellipse,		style=filled];	"thm:schur" -> "cor:schur-ortho"	[style=dashed];	"cor:avg-formula"	[color=darkgreen,		fillcolor="#1CAC78",		label="avg-formula",		shape=ellipse,		style=filled];	"thm:schur" -> "cor:avg-formula"	[style=dashed];	"cor:irr-iso-orthogonal"	[color=blue,		fillcolor="#A3D6FF",		label="irr-iso-orthogonal",		shape=ellipse,		style=filled];	"thm:schur" -> "cor:irr-iso-orthogonal"	[style=dashed];	"cor:avg-formula" -> "thm:char-ortho";	"cor:irr-iso-orthogonal" -> "prop:isotypic-ortho"	[style=dashed];	"def:irreducible" -> "thm:maschke"	[style=dashed];	"def:irreducible" -> "def:irr-set"	[style=dashed];	"def:irreducible" -> "thm:schur"	[style=dashed];	"prop:isotypic-ortho" -> "thm:isotypic-decomp"	[style=dashed];	"cor:irred-criterion"	[label="irred-criterion",		shape=ellipse];	"cor:multiplicity" -> "cor:irred-criterion"	[style=dashed];}`)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:char-iso"	[color=darkgreen,		fillcolor="#1CAC78",		label="char-iso",		shape=ellipse,		style=filled];	"cor:char-separates"	[label="char-separates",		shape=ellipse];	"lem:char-iso" -> "cor:char-separates"	[style=dashed];	"thm:avg-char"	[color=darkgreen,		fillcolor="#1CAC78",		label="avg-char",		shape=ellipse,		style=filled];	"thm:hom-via-char"	[color=darkgreen,		fillcolor="#1CAC78",		label="hom-via-char",		shape=ellipse,		style=filled];	"thm:avg-char" -> "thm:hom-via-char"	[style=dashed];	"thm:char-ortho"	[color=darkgreen,		fillcolor="#1CAC78",		label="char-ortho",		shape=ellipse,		style=filled];	"thm:hom-via-char" -> "thm:char-ortho"	[style=dashed];	"thm:multiplicity-formula"	[label="multiplicity-formula",		shape=ellipse];	"thm:hom-via-char" -> "thm:multiplicity-formula"	[style=dashed];	"thm:num-irreps"	[label="num-irreps",		shape=ellipse];	"thm:char-ortho" -> "thm:num-irreps"	[style=dashed];	"cor:irred-test"	[label="irred-test",		shape=ellipse];	"thm:char-ortho" -> "cor:irred-test"	[style=dashed];	"thm:multiplicity-formula" -> "cor:char-separates"	[style=dashed];	"thm:multiplicity-formula" -> "cor:irred-test"	[style=dashed];	"lem:char-conj"	[color=darkgreen,		fillcolor="#1CAC78",		label="char-conj",		shape=ellipse,		style=filled];	"thm:char-span"	[label="char-span",		shape=ellipse];	"lem:char-conj" -> "thm:char-span"	[style=dashed];	"thm:char-span" -> "thm:num-irreps"	[style=dashed];	"lem:char-regular"	[color=blue,		fillcolor="#A3D6FF",		label="char-regular",		shape=ellipse,		style=filled];	"def:subrepresentation"	[color=darkgreen,		fillcolor="#B0ECA3",		label=subrepresentation,		shape=box,		style=filled];	"def:irreducible"	[color=darkgreen,		fillcolor="#B0ECA3",		label=irreducible,		shape=box,		style=filled];	"def:subrepresentation" -> "def:irreducible"	[style=dashed];	"thm:schur-distinct"	[color=darkgreen,		fillcolor="#1CAC78",		label="schur-distinct",		shape=ellipse,		style=filled];	"def:irreducible" -> "thm:schur-distinct"	[style=dashed];	"def:isotypicComponent"	[color=darkgreen,		fillcolor="#B0ECA3",		label=isotypicComponent,		shape=box,		style=filled];	"def:irreducible" -> "def:isotypicComponent"	[style=dashed];	"thm:schur-scalar"	[color=darkgreen,		fillcolor="#1CAC78",		label="schur-scalar",		shape=ellipse,		style=filled];	"def:irreducible" -> "thm:schur-scalar"	[style=dashed];	"thm:isotypic-decomp"	[color=darkgreen,		fillcolor="#1CAC78",		label="isotypic-decomp",		shape=ellipse,		style=filled];	"def:isotypicComponent" -> "thm:isotypic-decomp"	[style=dashed];	"thm:schur-finrank-self"	[color=darkgreen,		fillcolor="#1CAC78",		label="schur-finrank-self",		shape=ellipse,		style=filled];	"thm:schur-scalar" -> "thm:schur-finrank-self"	[style=dashed];	"def:rep-equiv"	[color=darkgreen,		fillcolor="#B0ECA3",		label="rep-equiv",		shape=box,		style=filled];	"def:rep-equiv" -> "lem:char-iso"	[style=dashed];	"def:rep-equiv" -> "thm:schur-distinct"	[style=dashed];	"def:regular"	[color=darkgreen,		fillcolor="#B0ECA3",		label=regular,		shape=box,		style=filled];	"def:regular" -> "lem:char-regular"	[style=dashed];	"thm:peter-weyl-ring"	[label="peter-weyl-ring",		shape=ellipse];	"thm:peter-weyl-module"	[label="peter-weyl-module",		shape=ellipse];	"thm:peter-weyl-ring" -> "thm:peter-weyl-module"	[style=dashed];	"cor:sum-of-squares"	[label="sum-of-squares",		shape=ellipse];	"thm:peter-weyl-ring" -> "cor:sum-of-squares"	[style=dashed];	"thm:peter-weyl-module" -> "thm:multiplicity-formula"	[style=dashed];	"thm:peter-weyl-module" -> "thm:char-span"	[style=dashed];	"def:fdrep"	[color=darkgreen,		fillcolor="#B0ECA3",		label=fdrep,		shape=box,		style=filled];	"def:character"	[color=darkgreen,		fillcolor="#B0ECA3",		label=character,		shape=box,		style=filled];	"def:fdrep" -> "def:character"	[style=dashed];	"thm:schur-fdrep"	[color=darkgreen,		fillcolor="#1CAC78",		label="schur-fdrep",		shape=ellipse,		style=filled];	"def:fdrep" -> "thm:schur-fdrep"	[style=dashed];	"cor:fdrep-semisimple"	[color=blue,		fillcolor="#A3D6FF",		label="fdrep-semisimple",		shape=ellipse,		style=filled];	"def:fdrep" -> "cor:fdrep-semisimple"	[style=dashed];	"def:character" -> "lem:char-iso"	[style=dashed];	"def:character" -> "thm:avg-char"	[style=dashed];	"def:character" -> "lem:char-conj"	[style=dashed];	"def:character" -> "lem:char-regular"	[style=dashed];	"lem:char-one"	[color=darkgreen,		fillcolor="#1CAC78",		label="char-one",		shape=ellipse,		style=filled];	"def:character" -> "lem:char-one"	[style=dashed];	"thm:schur-fdrep" -> "thm:char-ortho"	[style=dashed];	"thm:schur-fdrep" -> "thm:multiplicity-formula"	[style=dashed];	"thm:schur-fdrep" -> "thm:schur-distinct";	"cor:moduleForm-PeterWeyl-Mathlib"	[color=darkgreen,		fillcolor="#9CEC8B",		label="moduleForm-PeterWeyl-Mathlib",		shape=ellipse,		style=filled];	"cor:fdrep-semisimple" -> "cor:moduleForm-PeterWeyl-Mathlib"	[style=dashed];	"cor:moduleForm-PeterWeyl-Mathlib" -> "thm:peter-weyl-module"	[style=dashed];	"lem:dim-cl"	[label="dim-cl",		shape=ellipse];	"lem:dim-cl" -> "thm:num-irreps"	[style=dashed];	"thm:wedderburn-kG"	[color=darkgreen,		fillcolor="#1CAC78",		label="wedderburn-kG",		shape=ellipse,		style=filled];	"thm:wedderburn-kG" -> "thm:peter-weyl-ring"	[style=dashed];	"def:cl-G"	[color=blue,		fillcolor="#A3D6FF",		label="cl-G",		shape=box,		style=filled];	"def:cl-G" -> "lem:dim-cl"	[style=dashed];	"lem:divalg-of-isAlgClosed"	[color=blue,		fillcolor="#A3D6FF",		label="divalg-of-isAlgClosed",		shape=ellipse,		style=filled];	"lem:divalg-of-isAlgClosed" -> "thm:peter-weyl-ring"	[style=dashed];	"def:standing-hypotheses"	[color=darkgreen,		fillcolor="#B0ECA3",		label="standing-hypotheses",		shape=box,		style=filled];	"def:standing-hypotheses" -> "def:cl-G"	[style=dashed];	"def:standing-hypotheses" -> "lem:divalg-of-isAlgClosed"	[style=dashed];	"def:representation"	[color=darkgreen,		fillcolor="#B0ECA3",		label=representation,		shape=box,		style=filled];	"def:standing-hypotheses" -> "def:representation"	[style=dashed];	"def:representation" -> "def:subrepresentation"	[style=dashed];	"def:representation" -> "def:regular"	[style=dashed];	"def:representation" -> "def:fdrep"	[style=dashed];	"def:intertwiner"	[color=darkgreen,		fillcolor="#B0ECA3",		label=intertwiner,		shape=box,		style=filled];	"def:representation" -> "def:intertwiner"	[style=dashed];	"def:as-module"	[color=darkgreen,		fillcolor="#B0ECA3",		label="as-module",		shape=box,		style=filled];	"def:representation" -> "def:as-module"	[style=dashed];	"def:intertwiner" -> "thm:hom-via-char"	[style=dashed];	"def:intertwiner" -> "thm:schur-scalar"	[style=dashed];	"def:intertwiner" -> "def:rep-equiv"	[style=dashed];	"def:as-module" -> "def:isotypicComponent"	[style=dashed];	"thm:maschke"	[color=darkgreen,		fillcolor="#1CAC78",		label=maschke,		shape=ellipse,		style=filled];	"def:as-module" -> "thm:maschke"	[style=dashed];	"thm:maschke" -> "thm:isotypic-decomp"	[style=dashed];	"thm:maschke" -> "cor:fdrep-semisimple"	[style=dashed];	"cor:kG-semisimple-ring"	[color=darkgreen,		fillcolor="#1CAC78",		label="kG-semisimple-ring",		shape=ellipse,		style=filled];	"thm:maschke" -> "cor:kG-semisimple-ring"	[style=dashed];	"cor:kG-semisimple-ring" -> "thm:wedderburn-kG"	[style=dashed];}`)
     .on("end", interactive);
 
 latexLabelEscaper = function(label) {

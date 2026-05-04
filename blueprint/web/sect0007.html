@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Categorical form (<span class="ttfamily">FDRep</span>)</title>
-<link rel="next" href="sect0005.html" title="Bundled IntertwiningMap form" />
-<link rel="prev" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="up" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
+<title>The regular representation</title>
+<link rel="next" href="sect0008.html" title="Wedderburn form of k[G]" />
+<link rel="prev" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
+<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -55,11 +55,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
  </li>
 <li class="">
@@ -88,11 +88,11 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class=" active current">
   <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
  </li>
 <li class="">
@@ -151,14 +151,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000005">3.1 Categorical form (<span class="ttfamily">FDRep</span>)</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:schur-fdrep">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000008">6.1 The regular representation</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:regular">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
     </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">Schur, \(\mathrm{finrank}\) form</span>
+    <span class="definition_thmlabel">26</span>
+    <span class="definition_thmtitle">Left regular representation</span>
     <div class="thm_header_extras">
 
     
@@ -166,10 +166,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0004.html#thm:schur-fdrep">#</a>
-    
-    <a class="icon proof" href="sect0004.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0007.html#def:regular">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -184,13 +181,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
           
         </ul>
     
@@ -210,7 +201,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.finrank_hom_simple_simple" class="lean_decl">FDRep.finrank_hom_simple_simple</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/Representation.leftRegular" class="lean_decl">Representation.leftRegular</a></li>
           
         </ul>
     
@@ -220,16 +211,81 @@
     
         </div>
   </div>
-  <div class="theorem_thmcontent">
-  <p>    Let \(V, W : \texttt{FDRep k G}\) both carry <span class="ttfamily">[CategoryTheory.Simple]</span>. Then </p>
-<div class="displaymath" id="a0000000023">
-  \[  \mathrm{finrank}_k(V \to W) \; =\;  \begin{cases}  1 &  \text{if } V \cong W,\\ 0 &  \text{otherwise.} \end{cases}  \]
-</div>
-<p> This is <span class="ttfamily">FDRep.finrank_hom_simple_simple</span> (file <span class="ttfamily">Mathlib.RepresentationTheory.FDRep</span>). </p>
+  <div class="definition_thmcontent">
+  <p>    <span class="ttfamily">Representation.leftRegular k G : Representation k G ((G →₀ k))</span>. Its bundled form is <span class="ttfamily">Rep.ofMulAction k G G : Rep k G</span>, with the same underlying \(k[G]\)-module as <span class="ttfamily">MonoidAlgebra k G</span> acting on itself by left multiplication. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000022">
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:char-regular">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">27</span>
+    <span class="lemma_thmtitle">\(\chi _{k[G]}\) is supported at \(1\)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0007.html#lem:char-regular">#</a>
+    
+    <a class="icon proof" href="sect0007.html#a0000000038"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0007.html#def:regular">Definition 26</a></li>
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+          <li><a href="sec-char-mathlib.html#def:character">Definition 16</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.character_leftRegular" class="lean_decl">FDRep.character_leftRegular</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    \(\chi _{k[G]}(g) = |G|\) if \(g = 1\) and \(0\) otherwise. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000038">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -237,7 +293,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Cited directly. The Mathlib proof is the standard one: a non-zero map between simples has trivial kernel and trivial cokernel hence is an isomorphism, so \(V \to W\) is either \(0\) or \(\cong V \to V\), and on \(V \to V\) algebraic closedness gives an eigenvalue \(\lambda \), forcing \(T - \lambda \mathrm{id} = 0\). </p>
+  <p> In the basis \(\{ \delta _h : h \in G\} \), the matrix of left translation by \(g\) is the permutation matrix for \(h \mapsto gh\). Its trace counts fixed points: \(h = gh\) iff \(g = 1\), in which case all \(|G|\) basis vectors are fixed. </p>
 
   </div>
 </div>
@@ -252,11 +308,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0005.html" title="Bundled IntertwiningMap form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0008.html" title="Wedderburn form of \(k[G]\)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

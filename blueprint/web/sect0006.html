@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Maschke’s theorem in Mathlib</title>
-<link rel="next" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="prev" href="chap-maschke.html" title="Maschke and Semisimplicity" />
-<link rel="up" href="chap-maschke.html" title="Maschke and Semisimplicity" />
+<title>Mathlib’s isotypic API</title>
+<link rel="next" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
+<link rel="prev" href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib" />
+<link rel="up" href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -45,11 +45,11 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
   <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
  </li>
 
@@ -78,11 +78,11 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active">
   <a href="chap-isotypic.html"><span class="toc_ref">5</span> <span class="toc_entry">Isotypic Decomposition via Mathlib</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class=" active current">
   <a href="sect0006.html"><span class="toc_ref">5.1</span> <span class="toc_entry">Mathlib’s isotypic API</span></a>
  </li>
 
@@ -151,14 +151,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">2.1 Maschke’s theorem in Mathlib</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:maschke">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000007">5.1 Mathlib’s isotypic API</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:isotypicComponent">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
     </span>
-    <span class="theorem_thmlabel">9</span>
-    <span class="theorem_thmtitle">Maschke: every \({k[G]}\)-module is semisimple</span>
+    <span class="definition_thmlabel">23</span>
+    <span class="definition_thmtitle"><span class="ttfamily">isotypicComponent</span></span>
     <div class="thm_header_extras">
 
     
@@ -166,10 +166,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:maschke">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0006.html#def:isotypicComponent">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -184,13 +181,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
           <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
+          <li><a href="sect0002.html#def:irreducible">Definition 7</a></li>
           
         </ul>
     
@@ -210,7 +203,80 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.Submodule.instIsSemisimpleModule" class="lean_decl">MonoidAlgebra.Submodule.instIsSemisimpleModule</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/isotypicComponent" class="lean_decl">isotypicComponent</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    For a simple \(R\)-module \(S\), <span class="ttfamily">isotypicComponent R M S</span> is the sum of all submodules of \(M\) isomorphic to \(S\) (<span class="ttfamily">Mathlib.RingTheory.SimpleModule.Isotypic</span>). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:isotypic-decomp">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">24</span>
+    <span class="theorem_thmtitle">Isotypic components are independent and exhaust</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0006.html#thm:isotypic-decomp">#</a>
+    
+    <a class="icon proof" href="sect0006.html#a0000000035"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          
+          <li><a href="sect0006.html#def:isotypicComponent">Definition 23</a></li>
+          
+          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/sSupIndep_isotypicComponents" class="lean_decl">sSupIndep_isotypicComponents</a></li>
+          
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/sSup_isotypicComponents" class="lean_decl">sSup_isotypicComponents</a></li>
           
         </ul>
     
@@ -221,11 +287,11 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Under the standing hypotheses (Definition&#160;<a href="sect0001.html#def:standing-hypotheses">1</a>), for every <span class="ttfamily">Module (MonoidAlgebra k G) V</span> we have <span class="ttfamily">IsSemisimpleModule (MonoidAlgebra k G) V</span>: every \(k[G]\)-submodule has a \(k[G]\)-complement. </p>
+  <p>    For any <span class="ttfamily">IsSemisimpleModule R M</span>, the family <span class="ttfamily">isotypicComponents R M</span> is <span class="ttfamily">sSupIndep</span> and its <span class="ttfamily">sSup</span> is \(\top \). Combined with <span class="ttfamily">IsIsotypic.linearEquiv_fun</span>, every isotypic component is isomorphic to \(S^n\) for the corresponding simple \(S\) and some \(n \in \mathbb N\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000019">
+<div class="proof_wrapper" id="a0000000035">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -233,17 +299,17 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> This is the registered instance <span class="ttfamily">MonoidAlgebra.Submodule.instIsSemisimpleModule</span> in <span class="ttfamily">Mathlib.RepresentationTheory.Maschke</span>, with hypotheses <span class="ttfamily">[Field k] [Group G] [Finite G] [NeZero (Nat.card G : k)]</span>. The Mathlib proof uses <span class="ttfamily">LinearMap.equivariantProjection</span> (averaging \(\pi \) over \(G\)) plus <span class="ttfamily">LinearMap.equivariantProjection_condition</span>. </p>
+  <p> Cited from Mathlib: <span class="ttfamily">sSupIndep_isotypicComponents</span> and <span class="ttfamily">sSup_isotypicComponents</span> (in <span class="ttfamily">Mathlib.RingTheory.SimpleModule.Isotypic</span>); the per-component description is <span class="ttfamily">IsIsotypic.linearEquiv_fun</span>. </p>
 
   </div>
 </div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:kG-semisimple-ring">
+<div class="corollary_thmwrapper theorem-style-plain" id="cor:moduleForm-PeterWeyl-Mathlib">
   <div class="corollary_thmheading">
     <span class="corollary_thmcaption">
     Corollary
     </span>
-    <span class="corollary_thmlabel">10</span>
-    <span class="corollary_thmtitle">\({k[G]}\) is a semisimple ring</span>
+    <span class="corollary_thmlabel">25</span>
+    <span class="corollary_thmtitle">Module-form Peter–Weyl, Mathlib version</span>
     <div class="thm_header_extras">
 
     
@@ -251,9 +317,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:kG-semisimple-ring">#</a>
+    <a class="icon proof" href="sect0006.html#cor:moduleForm-PeterWeyl-Mathlib">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0006.html#a0000000036"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -271,7 +337,9 @@
           
           <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0003.html#cor:fdrep-semisimple">Corollary 11</a></li>
+          
+          <li><a href="sect0003.html#cor:fdrep-semisimple">Corollary 11</a></li>
           
         </ul>
     
@@ -291,7 +359,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/MonoidAlgebra.instIsSemisimpleRing" class="lean_decl">MonoidAlgebra.instIsSemisimpleRing</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/IsSemisimpleModule.exists_end_algEquiv_pi_matrix_end" class="lean_decl">IsSemisimpleModule.exists_end_algEquiv_pi_matrix_end</a></li>
           
         </ul>
     
@@ -302,11 +370,14 @@
         </div>
   </div>
   <div class="corollary_thmcontent">
-  <p>    <span class="ttfamily">IsSemisimpleRing (MonoidAlgebra k G)</span> holds. </p>
+  <p>    For any <span class="ttfamily">IsSemisimpleModule R M</span> with <span class="ttfamily">Module.Finite R M</span>, there exist \(n \in \mathbb N\), simple submodules \((S_i)_{i {\lt} n}\) of \(M\), and dimensions \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), such that </p>
+<div class="displaymath" id="a0000000037">
+  \[  \mathrm{End}_R M \; \simeq _{R_0\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}\bigl(\mathrm{End}_R S_i\bigr).  \]
+</div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000020">
+<div class="proof_wrapper" id="a0000000036">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -314,88 +385,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> By definition, <span class="ttfamily">IsSemisimpleRing R := IsSemisimpleModule R R</span>. Specialise Theorem&#160;<a href="sect0003.html#thm:maschke">9</a> to \(V := \texttt{MonoidAlgebra k G}\). </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:fdrep-semisimple">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">11</span>
-    <span class="corollary_thmtitle">Every \(V : \texttt{FDRep k G}\) is semisimple</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#cor:fdrep-semisimple">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/docs/find/#doc/FDRep.isSemisimpleModule_asModule" class="lean_decl">FDRep.isSemisimpleModule_asModule</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="corollary_thmcontent">
-  <p>    For every \(V : \texttt{FDRep k G}\), <span class="ttfamily">V.ρ.asModule</span> is a semisimple <span class="ttfamily">MonoidAlgebra k G</span>-module and is finite as a \(k[G]\)-module. </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000021">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> Direct from Theorem&#160;<a href="sect0003.html#thm:maschke">9</a>; finiteness over \(k[G]\) follows from finiteness over \(k\) (which is built into <span class="ttfamily">FDRep</span>) since \(k\) is a subring of \(k[G]\). </p>
+  <p> This is <span class="ttfamily">IsSemisimpleModule.exists_end_algEquiv_pi_matrix_end</span> in <span class="ttfamily">Mathlib.RingTheory.SimpleModule.WedderburnArtin</span>. </p>
 
   </div>
 </div>
@@ -410,11 +400,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-isotypic.html" title="Isotypic Decomposition via Mathlib"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 
