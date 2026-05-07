@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Find declaration — Peter–Weyl Lean</title>
+<meta name="robots" content="noindex">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         max-width: 40em; margin: 4em auto; padding: 0 1em; color: #222; }
+  code { background: #f4f4f4; padding: 0.1em 0.4em; border-radius: 3px;
+         font-size: 0.95em; }
+  a { color: #0366d6; }
+  .err { color: #d73a49; }
+  .muted { color: #586069; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<h1>Find declaration</h1>
+<p id="status" class="muted">Looking up declaration&hellip;</p>
+<p id="result"></p>
+<p class="muted">
+  This page redirects blueprint citations of the form
+  <code>find/#doc/&lt;name&gt;</code> to the corresponding GitHub source
+  location.  See the
+  <a href="../blueprint/">blueprint</a> or
+  <a href="../">project home</a>.
+</p>
+
+<script>
+const decls = {
+  "ContinuousLinearMap.imagPart": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L136",
+  "ContinuousLinearMap.realPart": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L130",
+  "IsCompactOperator.adjoint": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L119",
+  "PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.exists_eigenvalue": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L82",
+  "PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.spectralDecomposition": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L60",
+  "PeterWeyl.IsBump": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/ApproxIdentity.lean#L51",
+  "PeterWeyl.IsSymmetricKernel": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L124",
+  "PeterWeyl.L2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L143",
+  "PeterWeyl.L2.completeSpace": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L148",
+  "PeterWeyl.L2_norm_le_Linfty_norm": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L167",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.add": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L143",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.adjoint": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L188",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.eigenspace_isInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L215",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.realPart_imagPart": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L201",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.smul": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L159",
+  "PeterWeyl.UnitaryRep.IsIntertwiner.sub": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L151",
+  "PeterWeyl.UnitaryRep.IsIrreducible.compact_intertwiner_eq_zero_of_not_equiv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L376",
+  "PeterWeyl.UnitaryRep.IsIrreducible.compact_selfAdjoint_intertwiner_eq_smul_or_zero": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L229",
+  "PeterWeyl.UnitaryRep.IsIrreducible.intertwiner_self_eq_smul": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L263",
+  "PeterWeyl.UnitaryRep.adjoint_eq_inv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Schur.lean#L171",
+  "PeterWeyl.UnitaryRep.exists_irreducible_subspace_acting_nontrivially": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L228",
+  "PeterWeyl.UnitaryRep.exists_irreducible_subspace_of_finiteDim": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L166",
+  "PeterWeyl.continuousMapToL2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L152",
+  "PeterWeyl.continuousMapToL2_denseRange": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L158",
+  "PeterWeyl.convOp": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L100",
+  "PeterWeyl.convOp_adjoint": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L128",
+  "PeterWeyl.convOp_bump_tendsto_id": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/ApproxIdentity.lean#L105",
+  "PeterWeyl.convOp_comm_rightReg": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L108",
+  "PeterWeyl.convOp_isCompactOperator": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L154",
+  "PeterWeyl.convOp_isIntertwiner": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L117",
+  "PeterWeyl.convOp_isSelfAdjoint": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L138",
+  "PeterWeyl.convPtwise": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L57",
+  "PeterWeyl.convPtwise_L2_norm_bound": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L86",
+  "PeterWeyl.convPtwise_continuous": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L74",
+  "PeterWeyl.convPtwise_norm_le_L2_L2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Convolution.lean#L61",
+  "PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeyl.lean#L142",
+  "PeterWeyl.exists_bump": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/ApproxIdentity.lean#L67",
+  "PeterWeyl.exists_eigenspace_separating": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L109",
+  "PeterWeyl.exists_separating_irreducible": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L265",
+  "PeterWeyl.exists_symmetric_bump_separating": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L81",
+  "PeterWeyl.groupAlgebra_algEquiv_pi_matrix": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeyl.lean#L156",
+  "PeterWeyl.haarBase": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L58",
+  "PeterWeyl.haarBase_isHaarMeasure": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L61",
+  "PeterWeyl.haarProb": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L66",
+  "PeterWeyl.haarProb_inv_eq_self": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L135",
+  "PeterWeyl.haarProb_isHaarMeasure": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L88",
+  "PeterWeyl.haarProb_isInvInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L121",
+  "PeterWeyl.haarProb_isMulLeftInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L102",
+  "PeterWeyl.haarProb_isMulRightInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L106",
+  "PeterWeyl.haarProb_isProbabilityMeasure": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Basic.lean#L93",
+  "PeterWeyl.instIsSemisimpleRing_groupAlgebra": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeyl.lean#L98",
+  "PeterWeyl.instModuleFinite_groupAlgebra": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeyl.lean#L103",
+  "PeterWeyl.isHilbertSum_isotypicComponents": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L294",
+  "PeterWeyl.isotypicComponent": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L190",
+  "PeterWeyl.isotypicComponent_aux": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L163",
+  "PeterWeyl.isotypicComponent_aux_eq_of_equiv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L175",
+  "PeterWeyl.isotypicComponent_hasOrthogonalProjection": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L314",
+  "PeterWeyl.isotypicComponent_isInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L199",
+  "PeterWeyl.isotypicComponent_orthogonal": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L222",
+  "PeterWeyl.isotypicComponents_topologicalClosure_eq_top": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L267",
+  "PeterWeyl.leftReg": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L259",
+  "PeterWeyl.leftReg_comm_rightReg": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L301",
+  "PeterWeyl.leftTransL2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L223",
+  "PeterWeyl.leftTransL2_isUnitary": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L232",
+  "PeterWeyl.leftTransL2_mulHom": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L242",
+  "PeterWeyl.leftTransL2_strongContinuous": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L249",
+  "PeterWeyl.norm_sq_eq_sum_isotypic_norm_sq": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L334",
+  "PeterWeyl.rightReg": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L287",
+  "PeterWeyl.rightReg_faithful": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Separating.lean#L62",
+  "PeterWeyl.rightTransL2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L276",
+  "PeterWeyl.sum_sq_dim_eq_card": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeyl.lean#L193",
+  "UnitaryRep": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L38",
+  "UnitaryRep.Equiv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L206",
+  "UnitaryRep.Equiv.refl": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L90",
+  "UnitaryRep.Equiv.symm": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L103",
+  "UnitaryRep.Equiv.trans": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L113",
+  "UnitaryRep.Intertwiner": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L187",
+  "UnitaryRep.IrrSkeleton": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L143",
+  "UnitaryRep.IrreducibleClass": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L63",
+  "UnitaryRep.IrreducibleClass.setoid": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L126",
+  "UnitaryRep.IrreducibleClass.toSkeleton": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L147",
+  "UnitaryRep.IsEquiv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L200",
+  "UnitaryRep.IsIntertwiner": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L182",
+  "UnitaryRep.IsInvariant": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L99",
+  "UnitaryRep.IsInvariant.orthogonalComplement": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L104",
+  "UnitaryRep.IsIrreducible": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L169",
+  "UnitaryRep.Subrep": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L117",
+  "UnitaryRep.Subrep.completeSpace_toSubmodule": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L131",
+  "UnitaryRep.Subrep.restrict": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L136",
+  "UnitaryRep.apply_inv_apply": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L90",
+  "UnitaryRep.contragredient": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L216",
+  "UnitaryRep.inner_apply": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L75",
+  "UnitaryRep.matrixCoeff": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L69",
+  "UnitaryRep.matrixCoeffSet": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L258",
+  "UnitaryRep.matrixCoeffSet_separatesPoints": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L88",
+  "UnitaryRep.matrixCoeffSubalgebra": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L277",
+  "UnitaryRep.matrixCoeffSubalgebra_dense_L2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L183",
+  "UnitaryRep.matrixCoeffSubalgebra_separatesPoints": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L153",
+  "UnitaryRep.matrixCoeffSubalgebra_topologicalClosure_eq_top": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L173",
+  "UnitaryRep.matrixCoeff_add_eq_directSum": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L135",
+  "UnitaryRep.matrixCoeff_bounded": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L85",
+  "UnitaryRep.matrixCoeff_conj_eq_contragredient": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L230",
+  "UnitaryRep.matrixCoeff_continuous": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L78",
+  "UnitaryRep.matrixCoeff_continuousMap": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L94",
+  "UnitaryRep.matrixCoeff_inner_eq": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Orthogonality.lean#L162",
+  "UnitaryRep.matrixCoeff_inner_eq_zero_of_not_equiv": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Orthogonality.lean#L94",
+  "UnitaryRep.matrixCoeff_left_translate": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L58",
+  "UnitaryRep.matrixCoeff_memL2": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L113",
+  "UnitaryRep.matrixCoeff_mem_isotypicComponent": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Isotypic.lean#L252",
+  "UnitaryRep.matrixCoeff_mul_eq_tensor": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L189",
+  "UnitaryRep.matrixCoeff_one_eq_trivial": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L239",
+  "UnitaryRep.norm_apply": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L79",
+  "UnitaryRep.opNorm_apply_le_one": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L83",
+  "UnitaryRep.restrict_matrixCoeff_eq_matrixCoeff": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Density.lean#L73",
+  "UnitaryRep.smul_matrixCoeff": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L151",
+  "UnitaryRep.tensor": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/MatrixCoeff.lean#L176",
+  "UnitaryRep.trivial": "https://github.com/JonCYeh/peter-weyl-lean/blob/main/PeterWeylComp/Rep.lean#L60"
+};
+
+function lookup() {
+  const hash = window.location.hash || "";
+  const m = hash.match(/^#doc\/(.+)$/);
+  const status = document.getElementById("status");
+  const result = document.getElementById("result");
+  if (!m) {
+    status.textContent = "No declaration in URL fragment.";
+    result.innerHTML = "Expected URL of the form <code>#doc/&lt;Name&gt;</code>.";
+    return;
+  }
+  const name = decodeURIComponent(m[1]);
+  const url = decls[name];
+  if (url) {
+    status.textContent = "Redirecting to source…";
+    result.innerHTML = "<code>" + name + "</code> &rarr; <a href=\"" + url + "\">" + url + "</a>";
+    window.location.replace(url);
+  } else {
+    status.innerHTML = '<span class="err">Declaration <code>' + name +
+      '</code> not found in the project index.</span>';
+    result.innerHTML = "It may be a Mathlib declaration; search at " +
+      '<a href="https://leanprover-community.github.io/mathlib4_docs/find/' + hash + '">' +
+      'leanprover-community.github.io/mathlib4_docs</a>.';
+  }
+}
+
+window.addEventListener("hashchange", lookup);
+lookup();
+</script>
+</body>
+</html>

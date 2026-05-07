@@ -16,7 +16,14 @@
 
 \home{https://JonCYeh.github.io/peter-weyl-lean}
 \github{https://github.com/JonCYeh/peter-weyl-lean}
-\dochome{https://leanprover-community.github.io/mathlib4_docs}
+% leanblueprint generates link targets of the form
+%   {dochome}/find/#doc/{name}
+% Pointing this at Mathlib (the leanblueprint default) gives 404s for
+% our PeterWeyl/UnitaryRep declarations.  Instead we point it at the
+% project's own root, where home_page/find/index.html (a static
+% redirect page) parses the #doc/{name} fragment and forwards the
+% browser to the GitHub source location of the declaration.
+\dochome{https://JonCYeh.github.io/peter-weyl-lean}
 
 \title{Peter Weyl Lean}
 \author{JonCYeh}
