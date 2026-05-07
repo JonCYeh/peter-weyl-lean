@@ -1,5 +1,5 @@
 name = "PeterWeyl"
-defaultTargets = ["PeterWeyl"]
+defaultTargets = ["PeterWeyl", "PeterWeylComp"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -21,3 +21,19 @@ git = "https://github.com/leanprover-community/mathlib4.git"
 
 [[lean_lib]]
 name = "PeterWeyl"
+
+[[lean_lib]]
+name = "PeterWeylComp"
+roots = [
+  "PeterWeylComp.Basic",
+  "PeterWeylComp.Rep",
+  "PeterWeylComp.Convolution",
+  "PeterWeylComp.ApproxIdentity",
+  "PeterWeylComp.Schur",
+  "PeterWeylComp.MatrixCoeff",
+  "PeterWeylComp.Separating",
+  "PeterWeylComp.Density",
+  "PeterWeylComp.Orthogonality",
+  "PeterWeylComp.Isotypic",
+]
+globs = ["PeterWeylComp.+"]

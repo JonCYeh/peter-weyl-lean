@@ -1,1202 +1,1843 @@
-% content-compact.tex --- leanblueprint for the Peter-Weyl theorem for
-% compact (Hausdorff) topological groups, following T. Tao,
-%   https://terrytao.wordpress.com/2011/01/23/the-peter-weyl-theorem-and-non-abelian-fourier-analysis-on-compact-groups/
+% content-compact-v2.tex --- Modular leanblueprint for Peter--Weyl on
+% compact (Hausdorff) topological groups, optimized for LLM translation
+% into Lean 4 / Mathlib4.
 %
-% DESIGN: As detailed as possible, building from the ground up. Items are
-% tagged for Mathlib readiness:
-%   [ML]  = already in Mathlib (use \mathlibok and \leanok where applicable).
-%   [~ML] = a trivial wrapper around something already in Mathlib.
-%   [NEW] = not yet in Mathlib; needs local proof.
+% TRANSLATION-READY DESIGN PRINCIPLES.
 %
-% Compared with the finite-group blueprint, the compact case requires
-% substantial new infrastructure:
-%   * Mathlib's `Representation` is purely algebraic; there is no built-in
-%     "continuous unitary representation of a topological group on a Hilbert
-%     space". We define one (UnitaryRep).
-%   * Mathlib has `IsCompactOperator` (predicate) but **no spectral theorem
-%     for compact self-adjoint operators in infinite dimensions**. We will
-%     state the spectral theorem as [NEW]; an actual formalisation must
-%     either prove it or use a workaround (e.g. via the cyclic-vector
-%     reduction).
-%   * Convolution on a compact group is in `Mathlib.Analysis.LConvolution`
-%     and `Mathlib.Analysis.Convolution`, but the specific facts we need
-%     (convolution by a continuous function is a compact operator on L^2,
-%     etc.) are mostly [NEW].
+% Every locally-introduced statement (i.e. everything not directly cited
+% from Mathlib) is written as an *atomic* lemma:
+%   - one syntactic conclusion (no "X is closed and invariant"; instead
+%     two lemmas, one per claim);
+%   - all variables typed explicitly in the statement;
+%   - the `\uses{}` graph lists *exactly* the prior items used in the
+%     proof (precise dependency context);
+%   - proofs are decomposed into a chain of named sub-lemmas, each
+%     corresponding to one `have` line in Lean.
 %
-% Key Mathlib files used:
-%   Mathlib/MeasureTheory/Group/Measure.lean          IsHaarMeasure, IsMulLeftInvariant
-%   Mathlib/MeasureTheory/Measure/Haar/{Basic, Unique}.lean
-%   Mathlib/MeasureTheory/Function/L2Space.lean       L^2(G), inner product
-%   Mathlib/Analysis/InnerProductSpace/{Defs, Basic, l2Space}.lean
-%   Mathlib/Analysis/Normed/Operator/Compact.lean     IsCompactOperator
-%   Mathlib/Topology/ContinuousMap/StoneWeierstrass.lean
-%   Mathlib/Analysis/Convolution.lean, Mathlib/Analysis/LConvolution.lean
+% Every locally-defined object has a `\lean{...}` directive giving its
+% intended Lean name in a coherent namespace.
 %
-% Standing setup throughout:
-%   G : Type*, [Group G] [TopologicalSpace G] [TopologicalGroup G]
-%       [CompactSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G]
-%   μ : Measure G with [μ.IsHaarMeasure] and probability normalisation
-%       (μ univ = 1).
-%   k : RCLike (= ℝ or ℂ); throughout we work over ℂ.
+% External black-box assumptions (not in Mathlib at our knowledge cutoff
+% Jan 2026) are explicitly marked with the `assumption` environment.
+% This currently contains exactly one item: the compact-self-adjoint
+% spectral theorem.  Everything else is either Mathlib-cited or proved
+% locally from prior items.
+%
+% Status tags in code comments:
+%   [ML]  = already in Mathlib; statement uses \mathlibok, \leanok.
+%   [~ML] = trivial wrapper around something already in Mathlib.
+%   [NEW] = locally-developed; needs to be formalised in this project.
+%   [EXT] = external assumption (black box).
 
-\chapter{Setup, Haar Measure, and Hilbert-Space Framework}
-\label{chap:c-setup}
+\chapter{Setup, Haar Measure, $L^2(G)$}
+\label{chap:c2-setup}
 
 \section{Standing hypotheses}
 
-\begin{definition}[Standing hypotheses for compact Peter--Weyl]
-  \label{def:c-standing}
+\begin{definition}[Standing hypotheses for the compact group $G$]
+  \label{def:c2-G}
   \mathlibok
-  Throughout the blueprint, $G$ denotes a Hausdorff compact topological
-  group, written multiplicatively, with identity $1_G$. In Lean we use
+  We fix once and for all a type $G$ with the typeclass instances
   \begin{center}
     \texttt{[Group G] [TopologicalSpace G] [IsTopologicalGroup G]
       [CompactSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G]}.
   \end{center}
-  The scalar field is $k = \mathbb C$ (more precisely
-  \texttt{[RCLike k]} so the same blueprint covers the real case after the
-  obvious complexification step).  The Haar measure is denoted $\mu$ and
-  is normalised to be a probability measure ($\mu(G) = 1$).
+  Throughout the blueprint, ``$G$'' refers to such a group.
 \end{definition}
 
-\section{Haar measure on a compact group}
+\begin{definition}[Standing hypotheses on the scalar field]
+  \label{def:c2-scalars}
+  \mathlibok
+  We work over $\mathbb C$. (One may instead use \texttt{[RCLike k]}
+  to cover real and complex cases simultaneously, but for clarity we
+  fix $k = \mathbb C$.)
+\end{definition}
 
-\begin{theorem}[Existence and uniqueness of Haar measure]
-  \label{thm:c-haar-exists}
-  \lean{MeasureTheory.Measure.haarMeasure, MeasureTheory.Measure.IsHaarMeasure}
+\section{Haar measure and the probability normalization}
+
+\begin{definition}[Haar probability measure $\mu_G$]
+  \label{def:c2-haar-prob}
+  \lean{PeterWeyl.haarProb}
+  \leanok
+  % [~ML] Wraps Mathlib's haarMeasure with a probability normalization.
+  \uses{def:c2-G}
+  Let $\mu_G : \mathrm{Measure}\,G$ denote the unique left-invariant regular
+  Borel probability measure on $G$. Concretely: take Mathlib's
+  \texttt{MeasureTheory.Measure.haarMeasure} (with any compact set of
+  positive measure as the normalization parameter) and rescale by
+  $1 / \mu(G)$ via \texttt{haarScalarFactor} so that $\mu_G(G) = 1$.
+\end{definition}
+
+\begin{theorem}[$\mu_G$ is a Haar measure]
+  \label{thm:c2-haar-isHaar}
+  \lean{PeterWeyl.haarProb_isHaarMeasure}
   \mathlibok
   \leanok
-  \uses{def:c-standing}
-  Every locally compact Hausdorff topological group $G$ admits a left-invariant
-  regular Borel measure that is finite on compact sets and positive on
-  non-empty open sets, unique up to a positive scalar.  In Lean this is
-  the constant \texttt{MeasureTheory.Measure.haarMeasure} (the file
-  \texttt{Mathlib.MeasureTheory.Measure.Haar.Basic}); the typeclass
-  \texttt{IsHaarMeasure $\mu$} packages all the invariance and regularity
-  conditions; uniqueness is in
-  \texttt{Mathlib.MeasureTheory.Measure.Haar.Unique} via
-  \texttt{haarScalarFactor} and
-  \texttt{isMulLeftInvariant\_eq\_smul\_of\_regular}.
+  \uses{def:c2-haar-prob}
+  \texttt{$\mu_G$.IsHaarMeasure} holds.
 \end{theorem}
 
-\begin{proof}\leanok\uses{def:c-standing}
-  Direct citation of the existence and uniqueness theorems in Mathlib's
-  Haar files.
-\end{proof}
-
-\begin{corollary}[Haar measure is finite for compact $G$]
-  \label{cor:c-haar-finite}
-  \lean{MeasureTheory.IsFiniteMeasure}
-  \mathlibok
+\begin{theorem}[$\mu_G$ is a probability measure]
+  \label{thm:c2-haar-isProb}
+  \lean{PeterWeyl.haarProb_isProbabilityMeasure}
   \leanok
-  \uses{thm:c-haar-exists}
-  Since $G$ is compact and $\mu$ is finite on compact sets, $\mu(G) < \infty$.
-  We may rescale so that $\mu(G) = 1$ (probability normalisation), and we
-  do so throughout.
-\end{corollary}
-
-\begin{proof}\leanok
-  \uses{thm:c-haar-exists}
-  \texttt{IsFiniteMeasureOnCompacts} is part of the \texttt{IsHaarMeasure}
-  bundle. Rescale via
-  \texttt{MeasureTheory.Measure.haarScalarFactor}.
-\end{proof}
-
-\begin{theorem}[Right-invariance of Haar measure on compact $G$]
-  \label{thm:c-haar-right-invariant}
-  \lean{MeasureTheory.Measure.IsMulRightInvariant}
-  \mathlibok
-  \leanok
-  \uses{thm:c-haar-exists, cor:c-haar-finite}
-  On a compact (Hausdorff) topological group, every left Haar measure is
-  also right-invariant: $\mu(Sg) = \mu(S)$ for every measurable $S$ and
-  $g \in G$. (Equivalently, compact groups are unimodular.)
+  \uses{def:c2-haar-prob}
+  \texttt{IsProbabilityMeasure $\mu_G$}: $\mu_G(G) = 1$.
 \end{theorem}
 
-\begin{proof}\leanok
-  \uses{thm:c-haar-exists}
-  Mathlib's \texttt{IsHaarMeasure.IsMulRightInvariant} (or the
-  \texttt{IsHaarMeasure.unimodular}-style lemma) handles this. The
-  classical proof: the modular function $\Delta : G \to (0, \infty)$ is a
-  continuous group homomorphism; on a compact group its image is a
-  compact subgroup of $(0, \infty)$ which is just $\{1\}$, so
-  $\Delta \equiv 1$.
-\end{proof}
-
-\begin{theorem}[Inversion-invariance of Haar measure]
-  \label{thm:c-haar-inv}
-  \lean{MeasureTheory.Measure.inv}
+\begin{theorem}[$\mu_G$ is left-invariant]
+  \label{thm:c2-haar-leftInv}
+  \lean{PeterWeyl.haarProb_isMulLeftInvariant}
   \mathlibok
   \leanok
-  \uses{thm:c-haar-right-invariant}
-  Pushforward of $\mu$ under $g \mapsto g^{-1}$ equals $\mu$.
+  \uses{thm:c2-haar-isHaar}
+  \texttt{$\mu_G$.IsMulLeftInvariant}.
 \end{theorem}
 
-\begin{proof}\leanok
-  \uses{thm:c-haar-right-invariant}
-  \texttt{Measure.inv\_eq\_self\_of\_isHaarMeasure} (or the corresponding
-  Mathlib name for unimodular groups).
-\end{proof}
+\begin{theorem}[$\mu_G$ is right-invariant]
+  \label{thm:c2-haar-rightInv}
+  \lean{PeterWeyl.haarProb_isMulRightInvariant}
+  \mathlibok
+  \leanok
+  \uses{thm:c2-haar-isHaar, def:c2-G}
+  \texttt{$\mu_G$.IsMulRightInvariant}. (Compact groups are unimodular;
+  Mathlib's \texttt{IsHaarMeasure} on a compact group derives this.)
+\end{theorem}
+
+\begin{theorem}[$\mu_G$ is inversion-invariant]
+  \label{thm:c2-haar-inv}
+  \lean{PeterWeyl.haarProb_inv_eq_self}
+  \mathlibok
+  \leanok
+  \uses{thm:c2-haar-rightInv}
+  $\mu_G.\mathrm{inv} = \mu_G$. (Mathlib lemma:
+  \texttt{Measure.inv\_eq\_self\_of\_isMulRightInvariant} or equivalent.)
+\end{theorem}
 
 \section{The Hilbert space $L^2(G)$}
 
 \begin{definition}[$L^2(G)$]
-  \label{def:c-L2}
-  \lean{MeasureTheory.Lp}
+  \label{def:c2-L2}
+  \lean{PeterWeyl.L2}
+  \leanok
   \mathlibok
-  \uses{def:c-standing, thm:c-haar-exists}
-  $L^2(G) := \texttt{Lp $\mathbb C$ 2 $\mu$}$, the Lebesgue $L^2$ space of
-  $\mathbb C$-valued square-integrable functions on $G$ modulo a.e.\
-  equality, equipped with the inner product
-  $\langle f, h \rangle := \int_G f(x)\overline{h(x)}\,d\mu(x)$.
-  In Lean this is from \texttt{Mathlib.MeasureTheory.Function.L2Space}; the
-  typeclass instance \texttt{L2.innerProductSpace} provides the inner
-  product, and \texttt{MeasureTheory.Lp.completeSpace} provides
-  completeness.
+  \uses{def:c2-haar-prob, def:c2-scalars}
+  $L^2(G) := \texttt{Lp $\mathbb C$ 2 $\mu_G$}$, the Bochner $L^2$ space of
+  $\mathbb C$-valued square-integrable equivalence classes of functions on
+  $G$, with inner product
+  $\langle f, h\rangle := \int_G f(g)\overline{h(g)}\,d\mu_G(g)$.
+
+  Mathlib provides the structure (file
+  \texttt{Mathlib.MeasureTheory.Function.L2Space}) including the
+  inner-product instance \texttt{L2.innerProductSpace}, the norm
+  $\|f\|_{L^2}^2 = \int |f|^2 d\mu_G$, and completeness
+  (\texttt{MeasureTheory.Lp.completeSpace}).
 \end{definition}
 
-\begin{theorem}[$C(G)$ is dense in $L^2(G)$]
-  \label{thm:c-CG-dense}
-  \lean{MeasureTheory.Lp.continuousMap_dense}
+\begin{theorem}[$L^2(G)$ is a Hilbert space]
+  \label{thm:c2-L2-Hilbert}
+  \lean{PeterWeyl.L2.completeSpace}
   \mathlibok
   \leanok
-  \uses{def:c-L2}
-  Continuous functions $C(G) \hookrightarrow L^2(G)$ form a dense subspace.
+  \uses{def:c2-L2}
+  \texttt{CompleteSpace $L^2(G)$}.
 \end{theorem}
 
-\begin{proof}\leanok\uses{def:c-L2}
-  Mathlib's general
-  \texttt{MeasureTheory.Lp.continuousMap\_dense} (via mollification /
-  outer regularity); valid for any finite regular Borel measure on a
-  Polish space, hence in particular for compact Hausdorff $G$.
-\end{proof}
-
-\begin{theorem}[$C(G) \subseteq L^\infty(G) \subseteq L^2(G) \subseteq L^1(G)$]
-  \label{thm:c-Lp-inclusions}
-  \lean{MeasureTheory.MemLp.mono_exponent_of_isFiniteMeasure}
+\begin{theorem}[$C(G) \hookrightarrow L^2(G)$ as a continuous linear map]
+  \label{thm:c2-CG-into-L2}
+  \lean{PeterWeyl.continuousMapToL2}
   \mathlibok
   \leanok
-  \uses{cor:c-haar-finite, def:c-L2}
-  Since $\mu$ is finite, $L^p$ inclusions go the natural way:
-  $\|f\|_{L^p} \leq \mu(G)^{1/p - 1/q} \|f\|_{L^q}$ for $p \leq q$.
-  Continuous functions on a compact $G$ are bounded so are in
-  $L^\infty$.
+  \uses{def:c2-L2, def:c2-G}
+  There is a continuous linear map
+  $\iota_{C \to L^2} : C(G, \mathbb C) \to L^2(G)$ taking a continuous
+  function to its $L^2$-equivalence class.
+  Mathlib's \texttt{ContinuousMap.toLp} provides this.
 \end{theorem}
 
-\begin{proof}\leanok\uses{cor:c-haar-finite}
-  Mathlib's \texttt{MeasureTheory.MemLp.mono\_exponent\_of\_isFiniteMeasure}.
-\end{proof}
+\begin{theorem}[$\iota_{C \to L^2}$ has dense range]
+  \label{thm:c2-CG-dense-L2}
+  \lean{PeterWeyl.continuousMapToL2_denseRange}
+  \mathlibok
+  \leanok
+  \uses{thm:c2-CG-into-L2}
+  The range of $\iota_{C \to L^2}$ is dense in $L^2(G)$. (Mathlib:
+  \texttt{MeasureTheory.Lp.continuousMap\_dense} or
+  \texttt{ContinuousMap.toLp\_denseRange} on a finite regular measure.)
+\end{theorem}
+
+\begin{theorem}[$\|\cdot\|_{L^2} \leq \|\cdot\|_{L^\infty}$ on $L^2(G)$]
+  \label{thm:c2-Lp-monotone}
+  \lean{PeterWeyl.L2_norm_le_Linfty_norm}
+  \mathlibok
+  \leanok
+  \uses{def:c2-L2, thm:c2-haar-isProb}
+  For any $f \in C(G, \mathbb C)$,
+  $\|\iota_{C\to L^2}(f)\|_{L^2} \leq \|f\|_\infty$. (Follows from
+  \texttt{MeasureTheory.MemLp.mono\_exponent\_of\_isFiniteMeasure} or
+  the direct integration estimate using $\mu_G(G) = 1$.)
+\end{theorem}
 
 
 \chapter{Continuous Unitary Representations}
-\label{chap:c-rep}
+\label{chap:c2-rep}
 
-Mathlib's \texttt{Representation k G V} is purely algebraic: there is no
-continuity assumption and no Hilbert-space structure. We must add a layer
-of definitions for the Peter--Weyl theorem.  All items in this chapter are
-\texttt{[NEW]} unless flagged otherwise.
+This chapter develops the bundled type \texttt{UnitaryRep} and its
+basic API.  Mathlib has \texttt{Representation k G V} (purely algebraic,
+no continuity) but does not have continuous unitary representations on
+general Hilbert spaces; everything in this chapter is \texttt{[NEW]}.
+
+\section{The structure}
 
 \begin{definition}[Continuous unitary representation]
-  \label{def:c-unitary-rep}
+  \label{def:c2-UnitaryRep}
   \lean{UnitaryRep}
-  % [NEW] Local definition; not in Mathlib.
-  \uses{def:c-standing}
-  A \emph{continuous unitary representation} of $G$ on a (complex) Hilbert
-  space $H$ is a group homomorphism $\rho : G \to U(H)$ to the unitary
-  group of $H$, that is continuous when $U(H)$ is given the strong
-  operator topology.  In Lean we encode this as a structure
-  \texttt{UnitaryRep $\mathbb C$ G H} bundling
-  \texttt{toMonoidHom : G $\to$* (H $\to$L[$\mathbb C$] H)}, an
-  \texttt{isUnitary} field, and a \texttt{continuous} field with respect
-  to the strong operator topology on
-  \texttt{H $\to$L[$\mathbb C$] H}.
+  \leanok
+  % [NEW]
+  \uses{def:c2-G, def:c2-scalars}
+  A \emph{continuous unitary representation} of $G$ on a complex Hilbert
+  space $H$ is a structure
+  \texttt{UnitaryRep G H} bundling:
+  \begin{itemize}
+    \item \texttt{toMonoidHom : G $\to$* (H $\to$L[$\mathbb C$] H)}, the
+      underlying group homomorphism into bounded operators;
+    \item \texttt{isUnitary : $\forall$ g : G, IsUnitary (toMonoidHom g)},
+      where \texttt{IsUnitary T} is shorthand for
+      \texttt{T.adjoint $\circ$L T = ContinuousLinearMap.id};
+    \item \texttt{strongContinuous :
+      $\forall$ v : H, Continuous (fun g $\Rightarrow$ toMonoidHom g v)},
+      strong-operator continuity.
+  \end{itemize}
+  We write $\rho : \texttt{UnitaryRep G H}$ for such an object and
+  $\rho(g) v := \rho.\texttt{toMonoidHom}\ g\ v$.
+
+  Hypotheses on $H$ throughout: \texttt{[NormedAddCommGroup H]
+  [InnerProductSpace $\mathbb C$ H] [CompleteSpace H]}.
 \end{definition}
 
-\begin{remark}
-  Equivalently, by a standard argument, strong operator continuity of
-  $\rho$ is implied by either of: (a) continuity of
-  $g \mapsto \rho(g) v$ for every $v \in H$; (b) continuity of
-  $(g, v) \mapsto \rho(g) v$. We will use (a) as our default working
-  definition; see Lemma~\ref{lem:c-strong-vs-weak-cts}.
-\end{remark}
-
-\begin{lemma}[Strong vs weak operator continuity]
-  \label{lem:c-strong-vs-weak-cts}
-  \lean{UnitaryRep.continuous_iff_continuous_apply}
+\begin{theorem}[$\rho(g)$ preserves inner products]
+  \label{thm:c2-rho-inner}
+  \lean{UnitaryRep.inner_apply}
+  \leanok
   % [NEW]
-  \uses{def:c-unitary-rep}
-  For a homomorphism $\rho : G \to U(H)$, the following are equivalent:
-  \begin{enumerate}
-    \item $\rho$ is continuous in the strong operator topology;
-    \item for every $v \in H$ the orbit map $g \mapsto \rho(g) v$ is
-      continuous;
-    \item the action map $G \times H \to H$, $(g, v) \mapsto \rho(g) v$
-      is jointly continuous.
-  \end{enumerate}
-\end{lemma}
-
-\begin{proof}
-  \uses{def:c-unitary-rep}
-  Standard. (1) $\Leftrightarrow$ (2) is the definition of the strong
-  operator topology. (2) $\Rightarrow$ (3) uses uniform boundedness of
-  $\|\rho(g)\| = 1$ together with the $\varepsilon/3$ argument.
-  (3) $\Rightarrow$ (2) is obvious.
-\end{proof}
-
-\begin{definition}[The left regular representation $\lambda$]
-  \label{def:c-regular-rep}
-  \lean{UnitaryRep.leftRegular}
-  % [NEW]
-  \uses{def:c-L2, def:c-unitary-rep}
-  The \emph{left regular representation} $\lambda : G \to U(L^2(G))$ is
-  defined by $(\lambda(g) f)(x) := f(g^{-1} x)$ on a continuous
-  representative, extended by continuity to all of $L^2(G)$.
-\end{definition}
-
-\begin{theorem}[$\lambda$ is a continuous unitary representation]
-  \label{thm:c-regular-unitary-cts}
-  \lean{UnitaryRep.leftRegular_isUnitaryRep}
-  % [NEW]
-  \uses{def:c-regular-rep, thm:c-haar-exists, thm:c-haar-right-invariant}
-  $\lambda(g)$ is unitary on $L^2(G)$ for each $g$ (by left-invariance of
-  $\mu$). The map $g \mapsto \lambda(g)$ is strongly continuous (using
-  density of $C(G)$ in $L^2(G)$ together with uniform continuity of any
-  continuous function on a compact group).
+  \uses{def:c2-UnitaryRep}
+  For $\rho : \texttt{UnitaryRep G H}$, $g : G$, and $u, v : H$,
+  $\langle \rho(g) u, \rho(g) v\rangle = \langle u, v\rangle$.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-haar-exists, thm:c-CG-dense}
-  Unitarity: change of variables under left translation preserves $\mu$
-  by Theorem~\ref{thm:c-haar-exists}.
-  Strong continuity: for $f \in C(G)$, the orbit map
-  $g \mapsto \lambda(g) f$ is continuous in $L^2$ by uniform continuity
-  of $f$ on the compact group $G$ (Heine--Cantor); for general
-  $f \in L^2$, use density of $C(G)$ from Theorem~\ref{thm:c-CG-dense}
-  and the uniform bound $\|\lambda(g)\| = 1$ via an
-  $\varepsilon/3$-argument.
+  \uses{def:c2-UnitaryRep}
+  Compute $\langle \rho(g)u, \rho(g)v\rangle
+   = \langle \rho(g)^*\rho(g) u, v\rangle$, then use \texttt{isUnitary}
+  to replace $\rho(g)^*\rho(g)$ by $\mathrm{Id}$.
 \end{proof}
 
-\begin{definition}[Right regular representation]
-  \label{def:c-right-reg}
-  \lean{UnitaryRep.rightRegular}
+\begin{theorem}[$\rho(g)$ is norm-preserving]
+  \label{thm:c2-rho-norm}
+  \lean{UnitaryRep.norm_apply}
+  \leanok
   % [NEW]
-  \uses{def:c-L2, def:c-unitary-rep}
-  $(\rho(g) f)(x) := f(xg)$. Same proofs as for $\lambda$ show $\rho$ is
-  a continuous unitary representation. The two representations
-  \emph{commute}: $\lambda(g)\rho(h) = \rho(h)\lambda(g)$ for all
-  $g, h \in G$.
+  \uses{thm:c2-rho-inner}
+  $\|\rho(g) v\| = \|v\|$ for all $g, v$.
+\end{theorem}
+
+\begin{proof}\uses{thm:c2-rho-inner}
+  $\|\rho(g)v\|^2 = \langle\rho(g)v, \rho(g)v\rangle =
+   \langle v, v\rangle = \|v\|^2$ by Theorem~\ref{thm:c2-rho-inner}.
+\end{proof}
+
+\begin{theorem}[$\rho(g)$ has operator norm $\leq 1$]
+  \label{thm:c2-rho-opNorm}
+  \lean{UnitaryRep.opNorm_apply_le_one}
+  \leanok
+  % [NEW]
+  \uses{thm:c2-rho-norm}
+  $\|\rho(g)\|_{\mathrm{op}} \leq 1$.
+\end{theorem}
+
+\begin{proof}\uses{thm:c2-rho-norm}
+  By Theorem~\ref{thm:c2-rho-norm}, $\|\rho(g)v\| \leq 1 \cdot \|v\|$
+  for every $v$, so $\|\rho(g)\|_\mathrm{op} \leq 1$ by
+  the definition of operator norm.
+\end{proof}
+
+\section{Subrepresentations}
+
+\begin{definition}[Predicate ``closed subspace is $\rho$-invariant'']
+  \label{def:c2-isInvariant}
+  \lean{UnitaryRep.IsInvariant}
+  \leanok
+  % [NEW]
+  \uses{def:c2-UnitaryRep}
+  Given $\rho : \texttt{UnitaryRep G H}$ and a closed linear subspace
+  $V$ of $H$ (Mathlib type \texttt{Submodule $\mathbb C$ H}), define
+  \texttt{$\rho$.IsInvariant V} to mean:
+  $\forall g : G,\ \forall v \in V,\ \rho(g) v \in V$.
 \end{definition}
 
-\begin{definition}[Subrepresentation]
-  \label{def:c-subrep}
-  \lean{UnitaryRep.Subrep}
+\begin{theorem}[Orthogonal complement of an invariant subspace is invariant]
+  \label{thm:c2-orthCompl-invariant}
+  \lean{UnitaryRep.IsInvariant.orthogonalComplement}
+  \leanok
   % [NEW]
-  \uses{def:c-unitary-rep}
-  A \emph{subrepresentation} of a unitary representation $(\rho, H)$ is a
-  closed $\rho$-invariant subspace $V \leq H$. Subrepresentations are
-  closed under taking orthogonal complements (since unitary operators
-  preserve orthogonality and closed subspaces).
-\end{definition}
-
-\begin{lemma}[Orthogonal complement of a subrepresentation]
-  \label{lem:c-subrep-orthcomp}
-  \lean{UnitaryRep.Subrep.orthogonalComplement}
-  % [NEW]
-  \uses{def:c-subrep}
-  If $V$ is a closed $\rho$-invariant subspace, then $V^\perp$ is also
-  $\rho$-invariant. Hence $H = V \oplus V^\perp$ as a direct sum of
-  subrepresentations.
-\end{lemma}
+  \uses{def:c2-isInvariant, thm:c2-rho-inner}
+  Let $V$ be a closed subspace of $H$ with $\rho.\texttt{IsInvariant}\ V$.
+  Then $\rho.\texttt{IsInvariant}\ V^\perp$.
+\end{theorem}
 
 \begin{proof}
-  \uses{def:c-subrep}
-  $\rho(g)$ is unitary, so it preserves the inner product:
-  if $w \in V^\perp$ and $v \in V$, then
-  $\langle \rho(g)w, v \rangle = \langle w, \rho(g^{-1})v \rangle = 0$
-  since $\rho(g^{-1})v \in V$. Thus $\rho(g)w \in V^\perp$.
+  \uses{thm:c2-rho-inner, def:c2-isInvariant}
+  Let $w \in V^\perp$ and $g \in G$; we show $\rho(g) w \in V^\perp$.
+  Pick $v \in V$. By Theorem~\ref{thm:c2-rho-inner},
+  $\langle \rho(g) w, v\rangle
+    = \langle w, \rho(g^{-1}) v\rangle$.
+  Since $V$ is $\rho$-invariant by hypothesis,
+  $\rho(g^{-1}) v \in V$, so the right-hand side is $0$ because
+  $w \perp V$. Hence $\rho(g)w \perp v$ for every $v \in V$, i.e.\
+  $\rho(g)w \in V^\perp$.
 \end{proof}
 
-\begin{definition}[Irreducible representation]
-  \label{def:c-irrep}
-  \lean{UnitaryRep.IsIrreducible}
+\begin{definition}[Subrepresentation as a structure]
+  \label{def:c2-Subrep}
+  \lean{UnitaryRep.Subrep}
+  \leanok
   % [NEW]
-  \uses{def:c-subrep}
-  A continuous unitary representation $(\rho, H)$ is \emph{irreducible}
-  if $H \neq 0$ and the only closed $\rho$-invariant subspaces are
-  $\{0\}$ and $H$ itself.
+  \uses{def:c2-isInvariant}
+  \texttt{UnitaryRep.Subrep $\rho$} is the type of pairs
+  $(V, \texttt{hV})$ where $V$ is a closed subspace of $H$ and
+  $\texttt{hV} : \rho.\texttt{IsInvariant}\ V$.
 \end{definition}
 
-\begin{definition}[Intertwiner]
-  \label{def:c-intertwiner}
-  \lean{UnitaryRep.Intertwiner}
+\begin{definition}[Restriction $\rho|_V$]
+  \label{def:c2-restrict}
+  \lean{UnitaryRep.Subrep.restrict}
+  \leanok
   % [NEW]
-  \uses{def:c-unitary-rep}
-  An \emph{intertwiner} between two continuous unitary representations
-  $(\rho, H)$ and $(\sigma, K)$ is a bounded linear map $T : H \to K$
-  with $T \rho(g) = \sigma(g) T$ for all $g$. We write
-  $\mathrm{Hom}_G(\rho, \sigma)$ for the space of such intertwiners.
+  \uses{def:c2-Subrep}
+  Given $W : \texttt{UnitaryRep.Subrep $\rho$}$, the restriction
+  $\rho|_W : \texttt{UnitaryRep G $W$}$ is given by
+  $(\rho|_W)(g)(v) := \langle \rho(g) v, \cdot\rangle_W$, with the
+  inherited Hilbert-space structure on $W$ as a closed subspace.
+  Strong continuity, unitarity, and homomorphism property are inherited.
+\end{definition}
+
+\section{Irreducibility}
+
+\begin{definition}[Irreducible representation, predicate form]
+  \label{def:c2-IsIrreducible}
+  \lean{UnitaryRep.IsIrreducible}
+  \leanok
+  % [NEW]
+  \uses{def:c2-isInvariant, def:c2-UnitaryRep}
+  $\rho.\texttt{IsIrreducible}$ is the conjunction of
+  \begin{itemize}
+    \item \texttt{nontrivial : Nontrivial H}, equivalently $H \neq 0$;
+    \item \texttt{minimal : $\forall$ V : Submodule $\mathbb C$ H,
+      IsClosed V $\to$ $\rho$.IsInvariant V $\to$ V = $\bot$ $\vee$ V = $\top$}.
+  \end{itemize}
+\end{definition}
+
+
+\section{Intertwiners and equivalences}
+
+\begin{definition}[Intertwiner predicate]
+  \label{def:c2-isIntertwiner}
+  \lean{UnitaryRep.IsIntertwiner}
+  \leanok
+  % [NEW]
+  \uses{def:c2-UnitaryRep}
+  Let $\rho : \texttt{UnitaryRep G H}$ and $\sigma : \texttt{UnitaryRep G K}$.
+  A bounded linear map $T : H \to_L K$ is an \emph{intertwiner}
+  ($T.\texttt{IsIntertwiner $\rho$ $\sigma$}$) if
+  $\forall g : G, T \circ_L \rho(g) = \sigma(g) \circ_L T$.
+\end{definition}
+
+\begin{definition}[Space of intertwiners]
+  \label{def:c2-Intertwiner}
+  \lean{UnitaryRep.Intertwiner}
+  \leanok
+  % [NEW]
+  \uses{def:c2-isIntertwiner}
+  $\texttt{UnitaryRep.Intertwiner $\rho$ $\sigma$}$ is the bundled type
+  $\{T : H \to_L K \mid T.\texttt{IsIntertwiner $\rho$ $\sigma$}\}$,
+  registered as a $\mathbb C$-module subspace of $H \to_L K$.
+\end{definition}
+
+\begin{definition}[Predicate ``$T$ is a unitary equivalence'']
+  \label{def:c2-isEquiv}
+  \lean{UnitaryRep.IsEquiv}
+  \leanok
+  % [NEW]
+  \uses{def:c2-isIntertwiner}
+  An intertwiner $T : H \to_L K$ is a \emph{unitary equivalence} if
+  it is also a surjective isometry, equivalently $T^* T = \mathrm{Id}_H$
+  and $T T^* = \mathrm{Id}_K$.
 \end{definition}
 
 \begin{definition}[Equivalence of representations]
-  \label{def:c-equiv-rep}
+  \label{def:c2-Equiv}
   \lean{UnitaryRep.Equiv}
-  % [NEW]
-  \uses{def:c-intertwiner}
-  $(\rho, H) \cong (\sigma, K)$ if there exists a unitary intertwiner
-  $H \to K$.
-\end{definition}
-
-
-\chapter{Schur's Lemma in the Compact Setting}
-\label{chap:c-schur}
-
-\section{Schur's lemma for irreducible unitary representations}
-
-\begin{theorem}[Schur's lemma, scalar form]
-  \label{thm:c-schur-scalar}
-  \lean{UnitaryRep.IsIrreducible.intertwiner_self_eq_scalar}
-  % [NEW]
-  \uses{def:c-irrep, def:c-intertwiner}
-  Let $(\rho, H)$ be an irreducible continuous unitary representation
-  of $G$. Then every bounded $G$-equivariant operator $T : H \to H$ is
-  a scalar: $T = \lambda \cdot \mathrm{Id}_H$ for some
-  $\lambda \in \mathbb C$.
-\end{theorem}
-
-\begin{proof}
-  \uses{def:c-irrep, def:c-intertwiner, lem:c-subrep-orthcomp}
-  Decompose $T = A + iB$ with $A := (T+T^*)/2$ and $B := (T-T^*)/(2i)$
-  self-adjoint. Each of $A, B$ commutes with $\rho$. Apply the spectral
-  theorem to $A$: every eigenspace $\ker(A - \lambda I)$ is closed and
-  $\rho$-invariant, so by irreducibility it is $\{0\}$ or $H$. Hence the
-  spectrum of $A$ is a single point and $A$ is a scalar; similarly for
-  $B$.
-
-  (For the formalisation: this proof needs the bounded-self-adjoint
-  spectral theorem. A cleaner Mathlib-friendly route is to argue via
-  cyclic vectors using only the existence of a non-trivial reducing
-  projection from approximate eigenspaces, but we follow the standard
-  spectral-theorem approach.)
-\end{proof}
-
-\begin{corollary}[Schur's lemma, distinct irreducibles]
-  \label{cor:c-schur-distinct}
-  \lean{UnitaryRep.IsIrreducible.subsingleton_intertwiner_of_not_equiv}
-  % [NEW]
-  \uses{thm:c-schur-scalar, def:c-equiv-rep}
-  If $(\rho, H)$ and $(\sigma, K)$ are irreducible and not isomorphic,
-  then $\mathrm{Hom}_G(\rho, \sigma) = 0$.
-\end{corollary}
-
-\begin{proof}
-  \uses{thm:c-schur-scalar}
-  Let $T \in \mathrm{Hom}_G(\rho, \sigma)$. Then $\overline{\ker T}$
-  is a closed $\rho$-invariant subspace of $H$, so it is $0$ or $H$.
-  Similarly $\overline{T(H)}$ is $0$ or $K$. If $T \neq 0$, then
-  $\ker T = 0$ and $\overline{T(H)} = K$. Polar decomposition $T = U|T|$
-  expresses $T$ as a unitary $U : H \to K$ times a positive operator
-  $|T| := \sqrt{T^*T}$ on $H$. By $G$-equivariance of $T$, both $U$
-  and $|T|$ are $G$-equivariant. The operator $|T| \in \mathrm{Hom}_G(\rho, \rho)$
-  is then a positive scalar by Theorem~\ref{thm:c-schur-scalar}, and $U$ is a
-  unitary intertwiner $\rho \to \sigma$, contradicting non-equivalence.
-\end{proof}
-
-
-\chapter{Convolution and Compact Self-adjoint Operators}
-\label{chap:c-convolution}
-
-This is the analytic core of Tao's proof.  Mathlib has convolution
-defined (\texttt{Mathlib.Analysis.LConvolution}, additive notation;
-\texttt{Mathlib.Analysis.Convolution}), but most of the specific facts
-we need below are \texttt{[NEW]} for compact non-abelian groups.
-
-\section{Convolution on a compact group}
-
-\begin{definition}[Convolution on a compact group]
-  \label{def:c-conv}
-  \lean{MeasureTheory.mconvolution}
-  \mathlibok
-  \uses{def:c-standing, thm:c-haar-exists}
-  For $f, g : G \to \mathbb C$ Borel-measurable, the (multiplicative)
-  convolution is
-  \[
-     (f * g)(x) := \int_G f(y) g(y^{-1}x) \, d\mu(y).
-  \]
-  Mathlib has \texttt{MeasureTheory.mconvolution} (in
-  \texttt{Mathlib.Analysis.Convolution}, set up via a continuous bilinear
-  form $L$) for general topological groups.
-\end{definition}
-
-\begin{theorem}[Young's inequality on a compact group]
-  \label{thm:c-young}
-  \lean{MeasureTheory.MemLp.convolution}
-  \mathlibok
   \leanok
-  \uses{def:c-conv, def:c-L2, thm:c-Lp-inclusions}
-  For $\mu(G) = 1$:
-  $\|f * g\|_{L^2} \leq \|f\|_{L^1}\|g\|_{L^2}$ and
-  $\|f * g\|_{L^\infty} \leq \|f\|_{L^2}\|g\|_{L^2}$. Hence
-  $L^2(G) * L^2(G) \subseteq L^\infty(G) \cap L^2(G) \subseteq C(G)$
-  (the last when $f \in L^2$ and $g \in C(G)$, or via uniform
-  approximation).
+  % [NEW]
+  \uses{def:c2-isEquiv}
+  Two representations $\rho, \sigma$ are \emph{equivalent},
+  $\rho \cong \sigma$, if there exists a $T : H \to_L K$ with
+  $T.\texttt{IsIntertwiner $\rho$ $\sigma$}$ and
+  $T.\texttt{IsEquiv}$.
+\end{definition}
+
+
+\section{The left and right regular representations}
+
+\begin{definition}[Left translation as a map on $L^2$]
+  \label{def:c2-leftTransL2}
+  \lean{PeterWeyl.leftTransL2}
+  % [NEW]
+  \uses{def:c2-L2, thm:c2-haar-leftInv}
+  For $g \in G$, the left translation $\lambda_g : L^2(G) \to L^2(G)$
+  is the unique continuous linear map sending the class of
+  $f \in C(G)$ to the class of $h \mapsto f(g^{-1} h)$. Existence:
+  on continuous functions left translation preserves the $L^2$-norm
+  by left-invariance of $\mu_G$ (Theorem~\ref{thm:c2-haar-leftInv}),
+  hence extends uniquely by continuity to all of $L^2(G)$
+  (Theorem~\ref{thm:c2-CG-dense-L2}).
+\end{definition}
+
+\begin{theorem}[$\lambda_g$ is unitary]
+  \label{thm:c2-leftTrans-unitary}
+  \lean{PeterWeyl.leftTransL2_isUnitary}
+  % [NEW]
+  \uses{def:c2-leftTransL2}
+  For each $g \in G$, $\lambda_g$ is a unitary operator on $L^2(G)$.
 \end{theorem}
 
 \begin{proof}
-  \uses{def:c-conv}
-  Direct computation; in Mathlib this follows from versions of Young's
-  inequality in \texttt{MeasureTheory.MemLp.convolution} after specialising
-  to compact groups.
+  \uses{thm:c2-haar-leftInv, thm:c2-CG-dense-L2}
+  By construction $\lambda_g$ preserves $\|\cdot\|_{L^2}$ on the dense
+  subspace of continuous functions. Continuity extends this to all of
+  $L^2(G)$. The inverse is $\lambda_{g^{-1}}$.
 \end{proof}
 
-\begin{theorem}[Convolution by an $L^2$ kernel is compact on $L^2(G)$]
-  \label{thm:c-conv-compact}
-  \lean{MeasureTheory.convolution_isCompactOperator}
-  % [NEW] Standard, but not packaged for general compact groups in Mathlib.
-  \uses{thm:c-young, def:c-L2}
-  Let $\phi \in L^2(G)$. Then the operator
-  $T_\phi : L^2(G) \to L^2(G)$, $f \mapsto f * \phi$, is a Hilbert--Schmidt
-  operator with kernel $K(x, y) = \phi(y^{-1}x) \in L^2(G \times G)$. In
-  particular $T_\phi$ is a compact operator (in the sense of Mathlib's
-  \texttt{IsCompactOperator}).
+\begin{theorem}[$\lambda$ is a group homomorphism on $L^2$]
+  \label{thm:c2-leftTrans-mulHom}
+  \lean{PeterWeyl.leftTransL2_mulHom}
+  % [NEW]
+  \uses{def:c2-leftTransL2}
+  $\lambda_{gh} = \lambda_g \circ_L \lambda_h$ and $\lambda_1 = \mathrm{Id}$.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-young}
-  The operator $T_\phi$ is given by an integral kernel
-  $K(x, y) = \phi(y^{-1}x)$. Compute its Hilbert--Schmidt norm:
+  \uses{def:c2-leftTransL2, thm:c2-CG-dense-L2}
+  Verify on the dense subspace of continuous functions, where
+  $f(\,(gh)^{-1} x\,) = f(\,h^{-1} g^{-1} x\,) = (\lambda_h f)(\,g^{-1}x\,)$.
+  Continuity extends to all of $L^2$.
+\end{proof}
+
+\begin{theorem}[The orbit map of left translation is continuous]
+  \label{thm:c2-leftTrans-strongCts}
+  \lean{PeterWeyl.leftTransL2_strongContinuous}
+  % [NEW]
+  \uses{def:c2-leftTransL2, thm:c2-leftTrans-unitary, thm:c2-CG-dense-L2}
+  For every $f \in L^2(G)$, the map
+  $g \mapsto \lambda_g f$ is continuous from $G$ to $L^2(G)$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-leftTransL2, thm:c2-leftTrans-unitary, thm:c2-CG-dense-L2}
+  Three steps.
+
+  \emph{Step 1: continuous functions are uniformly continuous on $G$.}
+  Mathlib's \texttt{CompactSpace.uniformContinuous\_of\_continuous}
+  applied to $f \in C(G, \mathbb C)$.
+
+  \emph{Step 2: convergence on continuous $f$.}
+  For $f \in C(G)$ and $\varepsilon > 0$, uniform continuity gives a
+  neighbourhood $U$ of $1_G$ with $|f(u^{-1}h) - f(h)| < \varepsilon$
+  for all $u \in U, h \in G$. Then
+  $\|\lambda_u f - f\|_{L^2}^2 \leq \varepsilon^2$ since $\mu_G(G) = 1$.
+  By group homomorphism (Theorem~\ref{thm:c2-leftTrans-mulHom}),
+  $g \mapsto \lambda_g f$ is continuous at every $g \in G$.
+
+  \emph{Step 3: extend to all $f \in L^2$.}
+  Let $f \in L^2(G)$, $\varepsilon > 0$. Pick $f' \in C(G)$ with
+  $\|f - f'\|_{L^2} < \varepsilon/3$ (Theorem~\ref{thm:c2-CG-dense-L2}).
+  By Step 2, pick a neighbourhood $U$ of $g$ in $G$ with
+  $\|\lambda_h f' - \lambda_g f'\|_{L^2} < \varepsilon/3$ for $h \in U$.
+  Triangle inequality with $\|\lambda_h\|_{\mathrm{op}} = 1$
+  (Theorem~\ref{thm:c2-leftTrans-unitary}) gives the bound for $f$.
+\end{proof}
+
+\begin{definition}[The left regular representation $\rho^L$]
+  \label{def:c2-leftReg}
+  \lean{PeterWeyl.leftReg}
+  % [NEW]
+  \uses{thm:c2-leftTrans-unitary, thm:c2-leftTrans-mulHom,
+        thm:c2-leftTrans-strongCts, def:c2-UnitaryRep}
+  The left regular representation
+  $\rho^L : \texttt{UnitaryRep G $L^2(G)$}$ is the bundling of
+  $g \mapsto \lambda_g$ together with
+  Theorems~\ref{thm:c2-leftTrans-unitary},
+  \ref{thm:c2-leftTrans-mulHom}, \ref{thm:c2-leftTrans-strongCts}.
+\end{definition}
+
+\begin{definition}[Right translation as a map on $L^2$]
+  \label{def:c2-rightTransL2}
+  \lean{PeterWeyl.rightTransL2}
+  % [NEW]
+  \uses{def:c2-L2, thm:c2-haar-rightInv}
+  For $g \in G$, $\rho_g : L^2(G) \to L^2(G)$ is the unique continuous
+  linear extension of $f \mapsto (h \mapsto f(hg))$ from $C(G)$.
+\end{definition}
+
+\begin{definition}[The right regular representation $\rho^R$]
+  \label{def:c2-rightReg}
+  \lean{PeterWeyl.rightReg}
+  % [NEW]
+  \uses{def:c2-rightTransL2, def:c2-UnitaryRep}
+  Bundled in the same way as $\rho^L$, using
+  Theorem~\ref{thm:c2-haar-rightInv} (right-invariance) in place of
+  Theorem~\ref{thm:c2-haar-leftInv}.
+\end{definition}
+
+\begin{theorem}[$\rho^L$ and $\rho^R$ commute]
+  \label{thm:c2-LR-commute}
+  \lean{PeterWeyl.leftReg_comm_rightReg}
+  % [NEW]
+  \uses{def:c2-leftReg, def:c2-rightReg}
+  For all $g, h \in G$, $\rho^L(g) \circ_L \rho^R(h) = \rho^R(h) \circ_L \rho^L(g)$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-leftReg, def:c2-rightReg, thm:c2-CG-dense-L2}
+  On the dense subspace of continuous functions:
+  $(\rho^L(g)\rho^R(h)f)(x) = f(g^{-1} x h) = (\rho^R(h)\rho^L(g)f)(x)$,
+  using associativity of the group operation. Continuity extends to all
+  of $L^2$.
+\end{proof}
+
+
+\chapter{Convolution as a Bounded Operator on $L^2(G)$}
+\label{chap:c2-conv}
+
+The goal of this chapter is to define, for $\phi \in L^2(G)$, a bounded
+linear operator $T_\phi : L^2(G) \to_L L^2(G)$ given pointwise (on a
+dense subspace) by $T_\phi f = f * \phi$, and to identify three properties
+of $T_\phi$: compactness, self-adjointness when $\phi$ is symmetric,
+and right-equivariance.
+
+\section{Pointwise convolution}
+
+\begin{definition}[Pointwise convolution]
+  \label{def:c2-conv-ptwise}
+  \lean{PeterWeyl.convPtwise}
+  \leanok
+  % [NEW] Wraps Mathlib's MeasureTheory.mconvolution.
+  \uses{def:c2-haar-prob}
+  For Borel-measurable $f, \phi : G \to \mathbb C$ such that the integral
+  below converges, define
   \[
-     \int\int |K(x,y)|^2 d\mu\,d\mu
-     = \int\int |\phi(y^{-1}x)|^2 d\mu(y)\,d\mu(x)
-     = \mu(G)\int |\phi|^2 = \|\phi\|_{L^2}^2 < \infty,
+     (f * \phi)(x) := \int_G f(y)\, \phi(y^{-1} x)\, d\mu_G(y).
   \]
-  using right-invariance (Theorem~\ref{thm:c-haar-right-invariant}) and
-  inversion-invariance of $\mu$. Hilbert--Schmidt operators are compact:
-  this requires the (currently unformalised in Mathlib for the general
-  Hilbert-Schmidt case) fact that integral operators with $L^2$ kernels
-  are compact. Equivalently: the Hilbert-Schmidt norm bounds the operator
-  norm by the trace-class lemma.
-\end{proof}
+  In Lean this is \texttt{MeasureTheory.mconvolution} applied to the
+  bilinear form $(\xi, \eta) \mapsto \xi \cdot \eta : \mathbb C \times \mathbb C \to \mathbb C$.
+\end{definition}
 
-\begin{theorem}[Self-adjointness of convolution]
-  \label{thm:c-conv-selfadjoint}
-  \lean{MeasureTheory.convolution_isSelfAdjoint}
+\begin{theorem}[Cauchy--Schwarz bound for pointwise convolution]
+  \label{thm:c2-conv-CS}
+  \lean{PeterWeyl.convPtwise_norm_le_L2_L2}
   % [NEW]
-  \uses{thm:c-conv-compact, thm:c-haar-inv}
-  Let $\phi \in L^2(G)$ satisfy $\phi(g) = \overline{\phi(g^{-1})}$ for
-  $\mu$-a.e.\ $g$. Then the operator
-  $T_\phi : f \mapsto f * \phi$ is self-adjoint on $L^2(G)$.
+  \uses{def:c2-conv-ptwise, def:c2-L2}
+  For $f, \phi \in L^2(G)$ and $x \in G$,
+  $|(f*\phi)(x)| \leq \|f\|_{L^2}\|\phi\|_{L^2}$.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-haar-inv}
-  Compute $\langle T_\phi f, h \rangle$ and
-  $\langle f, T_\phi h \rangle$ via Fubini. The condition
-  $\phi(g) = \overline{\phi(g^{-1})}$ exactly switches the two integrands
-  after a substitution $g \mapsto g^{-1}$ (using inversion invariance,
-  Theorem~\ref{thm:c-haar-inv}).
+  \uses{def:c2-conv-ptwise, thm:c2-haar-rightInv}
+  $|(f*\phi)(x)| \leq \int |f(y)|\,|\phi(y^{-1}x)|\,d\mu_G(y)
+    \leq \|f\|_{L^2} \cdot \|y\mapsto \phi(y^{-1}x)\|_{L^2}$
+  by the standard Cauchy--Schwarz inequality.
+  Right-invariance and inversion-invariance of $\mu_G$
+  (Theorems~\ref{thm:c2-haar-rightInv}, \ref{thm:c2-haar-inv}) give
+  $\|y \mapsto \phi(y^{-1}x)\|_{L^2} = \|\phi\|_{L^2}$.
 \end{proof}
 
-\begin{theorem}[Convolution commutes with right translation]
-  \label{thm:c-conv-comm-right}
-  \lean{MeasureTheory.convolution_commutes_rightRegular}
+\begin{theorem}[$f*\phi$ is continuous when $f, \phi \in L^2$]
+  \label{thm:c2-conv-cts}
+  \lean{PeterWeyl.convPtwise_continuous}
   % [NEW]
-  \uses{def:c-conv, def:c-right-reg}
-  For every $\phi \in L^2(G)$ and $g \in G$,
-  $T_\phi \circ \rho(g) = \rho(g) \circ T_\phi$.
+  \uses{thm:c2-conv-CS, thm:c2-leftTrans-strongCts}
+  For $f, \phi \in L^2(G)$, the function $x \mapsto (f*\phi)(x)$ is
+  continuous on $G$.
 \end{theorem}
 
 \begin{proof}
-  \uses{def:c-conv, def:c-right-reg}
-  Direct change of variables: for $f \in L^2(G)$,
-  $T_\phi(\rho(g)f)(x) = \int f(yg) \phi(y^{-1}x) d\mu(y)
-   = \int f(z) \phi(z^{-1} gx) d\mu(z)$
-  (substituting $z = yg$, using Theorem~\ref{thm:c-haar-right-invariant}),
-  which is $(T_\phi f)(gx) = \rho(g)(T_\phi f)(x)$.
+  \uses{thm:c2-conv-CS, thm:c2-leftTrans-strongCts}
+  Write $(f*\phi)(x) = \langle f, L^2\text{-class of }
+  (y \mapsto \phi(y^{-1} x)^*)\rangle_{L^2}$. The map
+  $x \mapsto (y \mapsto \phi(y^{-1} x)^*)$ is continuous from $G$ to
+  $L^2(G)$ (Theorem~\ref{thm:c2-leftTrans-strongCts} applied to the
+  conjugate of the inverted reflection of $\phi$). Continuity of the
+  inner product gives the result.
 \end{proof}
 
-\section{Spectral theorem for compact self-adjoint operators}
+\section{Convolution as a bounded operator}
 
-\begin{theorem}[Spectral theorem for compact self-adjoint operators]
-  \label{thm:c-spectral}
-  \lean{ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.eigenspaceDecomposition}
-  % [NEW] Mathlib has the *finite-dimensional* spectral theorem
-  %       (Mathlib.Analysis.InnerProductSpace.Spectrum) but as of the
-  %       knowledge cutoff does not have the spectral theorem for compact
-  %       self-adjoint operators in the Hilbert-space setting.
-  \uses{thm:c-conv-compact, thm:c-conv-selfadjoint}
-  Let $T$ be a non-zero compact self-adjoint operator on a complex
-  Hilbert space $H$. Then:
-  \begin{enumerate}
-    \item the spectrum $\sigma(T) \setminus \{0\}$ consists of countably
-      many real eigenvalues $\{\lambda_n\}$ with $\lambda_n \to 0$;
-    \item each non-zero eigenvalue has finite multiplicity, i.e.\ the
-      eigenspace $H_{\lambda_n} := \ker(T - \lambda_n I)$ is
-      finite-dimensional;
-    \item we have an orthogonal Hilbert-sum decomposition
-      $H = \ker T \oplus \widehat{\bigoplus}_n H_{\lambda_n}$.
-  \end{enumerate}
-  Equivalently: there exists a (countable) orthonormal basis of $H$
-  consisting of eigenvectors of $T$.
+\begin{theorem}[$L^2$ norm bound for convolution]
+  \label{thm:c2-conv-L2bound}
+  \lean{PeterWeyl.convPtwise_L2_norm_bound}
+  % [NEW]
+  \uses{thm:c2-conv-CS, thm:c2-haar-isProb}
+  For $f, \phi \in L^2(G)$, $\|f*\phi\|_{L^2} \leq \|f\|_{L^2}\|\phi\|_{L^2}$
+  (using $\mu_G(G) = 1$).
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-conv-compact}
-  Standard. Sketch: the operator norm $\|T\|$ is attained as
-  $\sup\{|\langle Tx, x \rangle|\} = \pm\lambda_1$, an eigenvalue, with
-  finite-dimensional eigenspace $H_{\lambda_1}$; pass to
-  $H_{\lambda_1}^\perp$ which is $T$-invariant, and iterate. The
-  iterating eigenvalues form a sequence going to zero by compactness
-  (any bounded set of eigenvectors with eigenvalues bounded below has
-  a convergent subsequence, but eigenvectors of distinct eigenvalues
-  are orthogonal, so a uniformly lower-bounded sequence cannot have
-  a convergent subsequence). The closure of the span of all eigenvectors
-  with non-zero eigenvalue equals $(\ker T)^\perp$.
-
-  This is a non-trivial result of functional analysis that, to the
-  author's knowledge, is not currently in Mathlib (as of knowledge
-  cutoff Jan 2026; please verify against current Mathlib state). The
-  finite-dimensional version
-  \texttt{LinearMap.IsSymmetric.diagonalization} is in
-  \texttt{Mathlib.Analysis.InnerProductSpace.Spectrum}; extending to
-  the compact-operator case is itself a substantial formalisation
-  project.
+  \uses{thm:c2-conv-CS, thm:c2-haar-isProb}
+  Square the pointwise bound from Theorem~\ref{thm:c2-conv-CS} and
+  integrate; use $\mu_G(G) = 1$.
 \end{proof}
 
-
-\chapter{Finite-Dimensionality of Eigenspaces and Existence of Irreducibles}
-\label{chap:c-finite-dim}
-
-\section{Eigenspaces of $G$-equivariant compact operators}
-
-\begin{theorem}[Eigenspaces of equivariant compact operators are
-  $G$-invariant]
-  \label{thm:c-eigenspace-invariant}
-  \lean{UnitaryRep.eigenspace_isInvariant}
+\begin{definition}[Bounded operator $T_\phi$]
+  \label{def:c2-Tphi}
+  \lean{PeterWeyl.convOp}
   % [NEW]
-  \uses{thm:c-conv-comm-right, thm:c-spectral}
-  Let $\phi \in L^2(G)$ and $T_\phi$ the convolution operator on
-  $L^2(G)$. For each $\lambda \in \mathbb C$, the eigenspace
-  $H_\lambda := \ker(T_\phi - \lambda I)$ is closed and right-translation-invariant
-  (i.e.\ a closed subrepresentation of the right regular representation).
+  \uses{thm:c2-conv-L2bound, def:c2-L2}
+  For $\phi \in L^2(G)$, define
+  $T_\phi : L^2(G) \to_L L^2(G)$ as the unique continuous linear extension
+  of the pointwise-convolution operation $f \mapsto f*\phi$ from
+  the subspace where pointwise convolution is well-defined, with norm
+  bound $\|T_\phi\|_{\mathrm{op}} \leq \|\phi\|_{L^2}$ from
+  Theorem~\ref{thm:c2-conv-L2bound}.
+\end{definition}
+
+\section{Right-equivariance of \texorpdfstring{$T_{\phi}$}{T\_phi}}
+
+\begin{theorem}[$T_\phi$ commutes with right translation]
+  \label{thm:c2-Tphi-comm-rightReg}
+  \lean{PeterWeyl.convOp_comm_rightReg}
+  % [NEW]
+  \uses{def:c2-Tphi, def:c2-rightReg}
+  For all $g \in G$ and $\phi \in L^2(G)$,
+  $T_\phi \circ_L \rho^R(g) = \rho^R(g) \circ_L T_\phi$.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-conv-comm-right}
-  $T_\phi$ commutes with $\rho(g)$ (Theorem~\ref{thm:c-conv-comm-right}),
-  so if $T_\phi v = \lambda v$ then $T_\phi(\rho(g)v) = \rho(g)T_\phi v
-  = \lambda \rho(g) v$, i.e.\ $\rho(g)v \in H_\lambda$.
+  \uses{def:c2-Tphi, def:c2-rightReg, thm:c2-CG-dense-L2}
+  Sufficient to verify on continuous $f$, where
+  \begin{align*}
+    (T_\phi(\rho^R(g) f))(x) &= \int f(y g)\,\phi(y^{-1} x)\,d\mu_G(y)\\
+      &= \int f(z)\,\phi(z^{-1} g x)\,d\mu_G(z) \quad (z = yg) \\
+      &= (T_\phi f)(gx) = (\rho^R(g) T_\phi f)(x),
+  \end{align*}
+  using right-invariance (Theorem~\ref{thm:c2-haar-rightInv}).
 \end{proof}
 
-\begin{corollary}[Every irreducible subrepresentation of $L^2(G)$ is
-  finite-dimensional]
-  \label{cor:c-irr-finite-dim}
-  \lean{UnitaryRep.subrepresentation_finiteDimensional_of_irreducible}
+\begin{corollary}[$T_\phi$ is an intertwiner $\rho^R \to \rho^R$]
+  \label{cor:c2-Tphi-intertwiner}
+  \lean{PeterWeyl.convOp_isIntertwiner}
+  \leanok
   % [NEW]
-  \uses{thm:c-eigenspace-invariant, thm:c-spectral, thm:c-conv-selfadjoint}
-  Let $V \leq L^2(G)$ be a non-zero irreducible right-translation-invariant
-  closed subspace. Then $\dim V < \infty$.
+  \uses{thm:c2-Tphi-comm-rightReg, def:c2-isIntertwiner}
+  $T_\phi.\texttt{IsIntertwiner $\rho^R$ $\rho^R$}$.
 \end{corollary}
 
 \begin{proof}
-  \uses{thm:c-eigenspace-invariant, thm:c-spectral, thm:c-conv-selfadjoint}
-  Let $0 \neq v \in V$. Pick $\phi \in C(G)$ self-adjoint
-  ($\phi(g) = \overline{\phi(g^{-1})}$) such that $T_\phi v \neq 0$
-  (such $\phi$ exists: e.g.\ a small bump function around $1_G$
-  approximates the identity, see Lemma~\ref{lem:c-approx-identity}).
-  By Theorem~\ref{thm:c-conv-compact} and
-  Theorem~\ref{thm:c-conv-selfadjoint}, $T_\phi$ is compact and
-  self-adjoint, and by the spectral theorem
-  (Theorem~\ref{thm:c-spectral}) it has at least one non-zero eigenvalue
-  $\lambda$, with $H_\lambda$ finite-dimensional.
-  By Theorem~\ref{thm:c-eigenspace-invariant} the eigenspace
-  $H_\lambda$ is right-translation-invariant, so
-  $V \cap H_\lambda$ is a non-zero (since $T_\phi v \neq 0$ for some
-  eigenfunction's spectral component lies in $V$) right-invariant
-  subspace of $V$.  By irreducibility of $V$, $V \cap H_\lambda = V$,
-  so $V \subseteq H_\lambda$, which is finite-dimensional.
+  \uses{thm:c2-Tphi-comm-rightReg}
+  Direct from the definition of intertwiner; the equation in
+  Theorem~\ref{thm:c2-Tphi-comm-rightReg} \emph{is} the intertwiner
+  condition.
 \end{proof}
 
-\begin{lemma}[Approximate identity from continuous bumps]
-  \label{lem:c-approx-identity}
-  \lean{ContinuousMap.bumpFunction_approxIdentity}
+\section{Self-adjointness of \texorpdfstring{$T_\phi$ for symmetric $\phi$}{T\_phi for symmetric phi}}
+
+\begin{definition}[Symmetric kernel]
+  \label{def:c2-symmetric}
+  \lean{PeterWeyl.IsSymmetricKernel}
+  \leanok
   % [NEW]
-  \uses{def:c-conv, thm:c-haar-exists}
-  There exists a net $\{\phi_U\}_{U \in \mathcal{N}(1_G)}$ of continuous
-  non-negative functions $\phi_U : G \to \mathbb R_{\geq 0}$, indexed by
-  open neighbourhoods $U$ of $1_G$, satisfying:
-  $\mathrm{supp}(\phi_U) \subseteq U$,
-  $\int \phi_U \, d\mu = 1$,
-  $\phi_U(g) = \phi_U(g^{-1})$, and
-  $f * \phi_U \to f$ in $L^2$ as $U \to \{1_G\}$ for every
-  $f \in L^2(G)$.
-\end{lemma}
-
-\begin{proof}
-  \uses{thm:c-haar-exists}
-  Use Urysohn's lemma to obtain continuous non-negative bump functions
-  with support in $U$, normalise the integral, symmetrise via
-  $\phi_U(g) := \tfrac12(\psi_U(g) + \psi_U(g^{-1}))$. Convergence
-  $f * \phi_U \to f$ uses uniform continuity of $f \in C(G)$ on the
-  compact group $G$ followed by density of $C(G)$ in $L^2$.
-\end{proof}
-
-
-\chapter{The Peter--Weyl Decomposition of $L^2(G)$}
-\label{chap:c-peter-weyl-L2}
-
-\section{Matrix coefficients}
-
-\begin{definition}[Matrix coefficient]
-  \label{def:c-matrix-coeff}
-  \lean{UnitaryRep.matrixCoeff}
-  % [NEW]
-  \uses{def:c-unitary-rep}
-  Given a finite-dimensional continuous unitary representation
-  $(\rho, V)$ of $G$ and vectors $u, v \in V$, the function
-  $\pi_{u,v}(g) := \langle \rho(g) u, v \rangle_V$
-  is the \emph{matrix coefficient} associated to $(\rho, u, v)$.
-  Matrix coefficients are continuous functions on $G$ and bounded
-  (by $\|u\|\,\|v\|$). Hence $\pi_{u,v} \in C(G) \cap L^2(G)$.
+  \uses{def:c2-L2}
+  $\phi \in L^2(G)$ is \emph{symmetric} if
+  $\phi(g) = \overline{\phi(g^{-1})}$ for $\mu_G$-a.e.\ $g$.
 \end{definition}
 
-\begin{lemma}[Algebra structure on matrix coefficients]
-  \label{lem:c-mc-algebra}
-  \lean{UnitaryRep.matrixCoeff_algebra}
+\begin{theorem}[Adjoint of $T_\phi$]
+  \label{thm:c2-Tphi-adj}
+  \lean{PeterWeyl.convOp_adjoint}
   % [NEW]
-  \uses{def:c-matrix-coeff}
-  The set of all matrix coefficients (over all finite-dimensional
-  continuous unitary representations of $G$) is closed under: pointwise
-  addition (taking direct sums); pointwise multiplication (taking
-  tensor products); complex conjugation (taking the contragredient
-  $\overline{\rho}$); and contains the constants (the trivial
-  representation).
-\end{lemma}
-
-\begin{proof}
-  \uses{def:c-matrix-coeff}
-  Standard verifications: e.g.\ if
-  $f_1 = \pi^{(1)}_{u_1, v_1}$ for $\rho_1$ on $V_1$ and
-  $f_2 = \pi^{(2)}_{u_2, v_2}$ for $\rho_2$ on $V_2$, then
-  $f_1 \cdot f_2 = \pi^{(\rho_1 \otimes \rho_2)}_{u_1 \otimes u_2,
-                                                 v_1 \otimes v_2}$.
-  Conjugation $\overline{f_1}$ is a matrix coefficient of the
-  contragredient representation on $V_1^*$.
-\end{proof}
-
-\begin{definition}[The matrix-coefficient subalgebra $\mathcal A$]
-  \label{def:c-mc-subalg}
-  \lean{UnitaryRep.matrixCoeffSubalgebra}
-  % [NEW]
-  \uses{lem:c-mc-algebra}
-  Let $\mathcal A := \mathrm{span}_{\mathbb C}
-   \{\pi_{u,v} : (\rho, V) \text{ fin-dim cts unitary rep},\ u, v \in V\}
-   \subseteq C(G)$.
-  By Lemma~\ref{lem:c-mc-algebra}, $\mathcal A$ is a unital
-  $*$-subalgebra of the (commutative under pointwise multiplication)
-  $*$-algebra $C(G)$. Equivalently: a star-subalgebra of the Mathlib
-  bundled type \texttt{StarSubalgebra $\mathbb C$ C(G, $\mathbb C$)}.
-\end{definition}
-
-\section{$\mathcal A$ separates points: existence of irreducibles}
-
-This is the key step in proving Peter--Weyl. Tao calls the underlying
-proposition ``every non-trivial element of $G$ acts non-trivially on some
-finite-dimensional irreducible''.
-
-\begin{theorem}[Existence of separating finite-dimensional irreducibles]
-  \label{thm:c-irreducibles-separate}
-  \lean{UnitaryRep.separatesPoints}
-  % [NEW]
-  \uses{thm:c-conv-compact, thm:c-spectral, cor:c-irr-finite-dim,
-        thm:c-eigenspace-invariant, lem:c-approx-identity}
-  For every $g \in G$ with $g \neq 1_G$, there exists a finite-dimensional
-  continuous unitary irreducible representation $(\rho, V)$ of $G$ with
-  $\rho(g) \neq \mathrm{Id}_V$.
+  \uses{def:c2-Tphi, thm:c2-haar-inv}
+  For every $\phi \in L^2(G)$ and $f, h \in L^2(G)$,
+  $\langle T_\phi f, h\rangle =
+   \langle f, T_{\widetilde\phi} h\rangle$,
+  where $\widetilde\phi(g) := \overline{\phi(g^{-1})}$.
+  Equivalently, $(T_\phi)^* = T_{\widetilde\phi}$.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-conv-compact, thm:c-spectral, cor:c-irr-finite-dim,
-        lem:c-approx-identity, def:c-regular-rep}
-  Following Tao. Pick $g \neq 1_G$. By compactness and Hausdorffness,
-  pick disjoint open neighbourhoods $U \ni 1_G$ and $V \ni g$, and a
-  continuous symmetric non-negative bump $\phi$ supported in $U$ with
-  $\int \phi = 1$.
+  \uses{def:c2-Tphi, thm:c2-haar-inv}
+  Compute via Fubini:
+  $\langle T_\phi f, h\rangle =
+   \int\int f(y) \phi(y^{-1}x) \overline{h(x)}\,d\mu_G(y)\,d\mu_G(x)$,
+  swap the order, change variable $x \mapsto y x$ using right-invariance,
+  then use $\phi(z) = \overline{\widetilde\phi(z^{-1})}$ and inversion-invariance
+  (Theorem~\ref{thm:c2-haar-inv}) to arrive at $\langle f, T_{\widetilde\phi} h\rangle$.
+\end{proof}
 
-  Then $T_\phi(\mathbf{1}_{V}) = \mathbf{1}_V * \phi$ is supported in
-  $V \cdot U$ (which is disjoint from a smaller neighbourhood of
-  $1_G$), so the function $T_\phi(\mathbf{1}_V) - \mathbf{1}_V$ is
-  non-zero. Pick a non-zero eigenvalue $\lambda$ of $T_\phi$ such that
-  $H_\lambda$ is not contained in the $g$-fixed subspace of $L^2(G)$
-  (this is possible since the spans of all $H_\lambda$ are dense in
-  $(\ker T_\phi)^\perp$ by Theorem~\ref{thm:c-spectral}, and $g$ acts
-  non-trivially on $L^2(G)$ via the right regular representation
-  $\rho(g)$, since $\rho(g) \mathbf{1}_V \neq \mathbf{1}_V$ when
-  $V$ is small).
+\begin{corollary}[$T_\phi$ self-adjoint when $\phi$ symmetric]
+  \label{cor:c2-Tphi-selfadj}
+  \lean{PeterWeyl.convOp_isSelfAdjoint}
+  % [NEW]
+  \uses{thm:c2-Tphi-adj, def:c2-symmetric}
+  If $\phi$ is symmetric (Definition~\ref{def:c2-symmetric}), then
+  $T_\phi$ is self-adjoint, i.e.\
+  $T_\phi^* = T_\phi$.
+\end{corollary}
 
-  By Theorem~\ref{thm:c-eigenspace-invariant} the eigenspace
-  $H_\lambda$ is finite-dimensional and right-$G$-invariant.  Decompose
-  $H_\lambda$ into irreducible subrepresentations (possible since
-  $H_\lambda$ is a finite-dimensional unitary representation, which is
-  semisimple by Lemma~\ref{lem:c-subrep-orthcomp}). At least one
-  irreducible component $V \subseteq H_\lambda$ has $\rho(g) \neq
-  \mathrm{Id}_V$ (else $g$ acts trivially on $H_\lambda$, contradicting
-  the choice).
+\begin{proof}
+  \uses{thm:c2-Tphi-adj, def:c2-symmetric}
+  Symmetry says $\widetilde\phi = \phi$ a.e., so by
+  Theorem~\ref{thm:c2-Tphi-adj} $T_\phi^* = T_{\widetilde\phi} = T_\phi$.
+\end{proof}
+
+\section{Compactness of \texorpdfstring{$T_\phi$}{T\_phi}}
+
+\begin{theorem}[$T_\phi$ is a compact operator]
+  \label{thm:c2-Tphi-compact}
+  \lean{PeterWeyl.convOp_isCompactOperator}
+  % [NEW]
+  \uses{def:c2-Tphi, thm:c2-haar-rightInv, thm:c2-haar-isProb}
+  For every $\phi \in L^2(G)$, the operator $T_\phi$ is compact in the
+  sense of Mathlib's \texttt{IsCompactOperator}.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-Tphi, thm:c2-haar-rightInv, thm:c2-haar-isProb}
+  Routine but technical: $T_\phi$ is a Hilbert--Schmidt integral
+  operator with kernel $K(x, y) = \phi(y^{-1} x)$. Its
+  Hilbert--Schmidt norm is
+  $\|K\|_{L^2(G\times G)}^2 = \int\int |\phi(y^{-1}x)|^2 = \|\phi\|_{L^2}^2$
+  (by right- and inversion-invariance,
+  Theorems~\ref{thm:c2-haar-rightInv}, \ref{thm:c2-haar-inv}).
+  Hilbert--Schmidt operators are compact in any Hilbert space.
+
+  In Lean, this requires either (i) the abstract result
+  ``Hilbert--Schmidt operators are compact'' applied to $K$, or
+  (ii) a direct proof via approximation by finite-rank operators using
+  density of $C(G \times G)$ in $L^2(G \times G)$ and continuity of
+  $\phi \mapsto T_\phi$ (norm bound from
+  Theorem~\ref{thm:c2-conv-L2bound}). Approach (ii) avoids needing
+  Hilbert--Schmidt theory and is preferred.
+
+  \emph{Sketch of (ii) for the formaliser:}
+  \begin{enumerate}
+    \item For $\phi \in C(G)$, the operator $T_\phi$ has finite rank
+      after approximation: choose a partition of unity to write
+      $\phi = \sum_i c_i \mathbf 1_{A_i}$ approximately, giving
+      $T_\phi \approx \sum_i c_i (\text{rank-1 piece})$.
+    \item Continuous functions are dense in $L^2(G)$, so $T_\phi$ for
+      $\phi \in L^2$ is the operator-norm limit of finite-rank
+      operators (using the bound
+      $\|T_{\phi_1} - T_{\phi_2}\|_\mathrm{op} \leq \|\phi_1 - \phi_2\|_{L^2}$
+      from Definition~\ref{def:c2-Tphi}).
+    \item Compact operators form a closed subspace of bounded operators
+      (Mathlib's \texttt{isClosed\_setOf\_isCompactOperator}). Hence
+      $T_\phi$ is compact.
+  \end{enumerate}
+\end{proof}
+
+
+\chapter{Approximate Identities}
+\label{chap:c2-approxId}
+
+We need a family of symmetric continuous bumps $\{\phi_U\}$ supported in
+shrinking neighbourhoods of $1_G$, with $T_{\phi_U} \to \mathrm{Id}$
+strongly as $U \to \{1_G\}$.
+
+\begin{definition}[Continuous bump]
+  \label{def:c2-bump}
+  \lean{PeterWeyl.IsBump}
+  \leanok
+  % [NEW]
+  \uses{def:c2-G}
+  Given an open neighbourhood $U$ of $1_G$, a function
+  $\phi : G \to \mathbb R$ is a \emph{bump on $U$} if it is continuous,
+  non-negative, has support contained in $U$, satisfies
+  $\int_G \phi\, d\mu_G = 1$, and $\phi(g) = \phi(g^{-1})$ for all $g$.
+\end{definition}
+
+\begin{theorem}[Existence of continuous bumps]
+  \label{thm:c2-bump-exists}
+  \lean{PeterWeyl.exists_bump}
+  % [NEW]
+  \uses{def:c2-bump, def:c2-G}
+  For every open $U \ni 1_G$, there exists $\phi : G \to \mathbb R$ that
+  is a bump on $U$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-bump, def:c2-G}
+  Use Urysohn's lemma in the locally compact Hausdorff group $G$ to
+  obtain a continuous non-negative $\psi \in C(G)$ with
+  $\psi(1_G) > 0$ and $\mathrm{supp}\,\psi \subseteq U$.
+  Pick a smaller open $V \ni 1_G$ with $V \cup V^{-1} \subseteq U$
+  and shrink $\psi$'s support if necessary.
+  Symmetrize: set $\psi^*(g) := \psi(g) + \psi(g^{-1})$.  Then
+  $\psi^*$ has support in $V \cup V^{-1} \subseteq U$ and is symmetric.
+  Normalise: $\phi := \psi^* / \int \psi^*\,d\mu_G$
+  (positive denominator because $\psi^*(1_G) > 0$ and $\psi^*$ continuous
+  non-negative implies a positive integral on any non-empty open set
+  by the open-positivity of $\mu_G$).
+\end{proof}
+
+\begin{theorem}[Convergence of bump-convolution to identity, $L^2$]
+  \label{thm:c2-bump-conv-tendsto}
+  \lean{PeterWeyl.convOp_bump_tendsto_id}
+  % [NEW]
+  \uses{def:c2-bump, def:c2-Tphi, thm:c2-leftTrans-strongCts}
+  Let $\{U_n\}$ be a countable neighbourhood basis at $1_G$ shrinking to
+  $\{1_G\}$, and $\phi_n$ a bump on $U_n$ for each $n$. Then for every
+  $f \in L^2(G)$, $T_{\phi_n} f \to f$ in $L^2$ as $n \to \infty$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-bump, def:c2-Tphi, thm:c2-leftTrans-strongCts,
+        thm:c2-CG-dense-L2}
+  Three steps.
+
+  \emph{Step 1.} For continuous $f \in C(G)$, by uniform continuity
+  (compactness, Heine--Cantor) of $f$, given $\varepsilon > 0$ pick a
+  neighbourhood $U \ni 1_G$ with $|f(u^{-1} x) - f(x)| < \varepsilon$
+  for all $u \in U, x \in G$. For $n$ large enough $\phi_n$ has support
+  in $U$, so
+  $|(T_{\phi_n} f)(x) - f(x)|
+   = |\int (f(y^{-1}x) - f(x))\phi_n(y)\,d\mu_G(y)| \leq \varepsilon$.
+  Hence $\|T_{\phi_n} f - f\|_{L^\infty} \to 0$, and a fortiori
+  $\|T_{\phi_n} f - f\|_{L^2} \to 0$ since
+  $\|\cdot\|_{L^2} \leq \|\cdot\|_{L^\infty}$ (Theorem~\ref{thm:c2-Lp-monotone}).
+
+  \emph{Step 2.} For general $f \in L^2(G)$ and $\varepsilon > 0$, pick
+  $f' \in C(G)$ with $\|f - f'\|_{L^2} < \varepsilon/3$
+  (Theorem~\ref{thm:c2-CG-dense-L2}). By Step 1, pick $N$ with
+  $\|T_{\phi_n}f' - f'\|_{L^2} < \varepsilon/3$ for $n \geq N$.
+
+  \emph{Step 3.} Triangle inequality:
+  \[
+     \|T_{\phi_n}f - f\|_{L^2} \leq
+     \|T_{\phi_n}(f - f')\|_{L^2}
+     + \|T_{\phi_n}f' - f'\|_{L^2}
+     + \|f' - f\|_{L^2}.
+  \]
+  The middle term is $< \varepsilon/3$ by choice of $N$. The first and
+  third are each $< \varepsilon/3$ using
+  $\|T_{\phi_n}\|_{\mathrm{op}} \leq \|\phi_n\|_{L^2}$
+  (Definition~\ref{def:c2-Tphi})... but $\|\phi_n\|_{L^2}$ is not
+  bounded in general! We need a refined estimate:
+  $\|T_{\phi_n}(f - f')\|_{L^2} \leq \|f - f'\|_{L^2}\cdot\|\phi_n\|_{L^1}
+   = \|f - f'\|_{L^2}$
+  using $\|\phi_n\|_{L^1} = 1$ (the normalization condition) and Young's
+  inequality with $L^2 \cdot L^1 \to L^2$. This bound is uniform in $n$.
+  Then the first term is $< \varepsilon/3$. Total: $< \varepsilon$.
+\end{proof}
+
+
+\chapter{The Compact Self-Adjoint Spectral Theorem (External)}
+\label{chap:c2-spectral}
+
+This chapter contains a single external assumption: the spectral
+theorem for compact self-adjoint operators on a complex Hilbert space.
+This is not currently in Mathlib (Jan 2026 cutoff); the formalisation
+must either supply it or assume it as a hypothesis.
+
+\begin{assumption}[Spectral theorem for compact self-adjoint operators]
+  \label{ass:c2-spectral}
+  \lean{PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.spectralDecomposition}
+  % [EXT]
+  Let $H$ be a complex Hilbert space and $T : H \to_L H$ a compact
+  self-adjoint operator (in the sense of \texttt{IsCompactOperator
+  T} and \texttt{IsSelfAdjoint T}). Then there exists an at-most-countable
+  index set $I$, a function $\lambda : I \to \mathbb R \setminus \{0\}$
+  (the non-zero eigenvalues), and for each $i \in I$ a non-zero closed
+  subspace $H_i := \ker(T - \lambda_i \mathrm{Id})$ such that:
+  \begin{enumerate}
+    \item each $H_i$ is finite-dimensional;
+    \item the family $\{H_i\}_{i \in I}$ is mutually orthogonal;
+    \item if $I$ is infinite, the sequence $|\lambda_i|$ tends to $0$;
+    \item the closure of the linear span $\bigsqcup_i H_i$ equals
+      $(\ker T)^\perp$;
+    \item equivalently, $H = \ker T \oplus \widehat{\bigoplus}_i H_i$
+      as a Hilbert sum.
+  \end{enumerate}
+\end{assumption}
+
+\begin{theorem}[Existence of a non-zero eigenvalue when $T \neq 0$]
+  \label{thm:c2-spectral-nonzero-eval}
+  \lean{PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.exists_eigenvalue}
+  \leanok
+  % [EXT, derivable from ass:c2-spectral]
+  \uses{ass:c2-spectral}
+  Let $T : H \to_L H$ be compact, self-adjoint, and non-zero. Then there
+  exists $\lambda \in \mathbb R \setminus \{0\}$ and a non-zero
+  finite-dimensional closed subspace $H_\lambda \leq H$ with
+  $T|_{H_\lambda} = \lambda \cdot \mathrm{Id}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{ass:c2-spectral}
+  By Assumption~\ref{ass:c2-spectral}, $H = \ker T \oplus \widehat{\bigoplus}_i H_i$.
+  If $T \neq 0$, then $T$ is non-zero on $(\ker T)^\perp$, so the family
+  $\{H_i\}_i$ is non-empty (otherwise the closure of their span would be
+  $\{0\} \neq (\ker T)^\perp$). Pick any $i$; take $\lambda := \lambda_i$
+  and $H_\lambda := H_i$.
+\end{proof}
+
+
+\chapter{Schur's Lemma for Continuous Unitary Irreducibles}
+\label{chap:c2-schur}
+
+\section{Decomposition into self-adjoint pieces}
+
+\begin{definition}[Self-adjoint and skew parts of an operator]
+  \label{def:c2-RealImag}
+  \lean{ContinuousLinearMap.realPart, ContinuousLinearMap.imagPart}
+  % [NEW] Mostly definitional manipulation; may have a Mathlib analog.
+  \uses{def:c2-UnitaryRep}
+  For $T : H \to_L H$ on a complex Hilbert space, define
+  $\mathrm{Re}(T) := (T + T^*)/2$ and $\mathrm{Im}(T) := (T - T^*)/(2i)$,
+  both self-adjoint, with $T = \mathrm{Re}(T) + i\,\mathrm{Im}(T)$.
+\end{definition}
+
+\begin{theorem}[Equivariance descends to real and imaginary parts]
+  \label{thm:c2-RealImag-equiv}
+  \lean{PeterWeyl.UnitaryRep.IsIntertwiner.realPart_imagPart}
+  \leanok
+  % [NEW]
+  \uses{def:c2-RealImag, def:c2-isIntertwiner, thm:c2-rho-inner}
+  If $T : H \to_L H$ has $T.\texttt{IsIntertwiner $\rho$ $\rho$}$, then
+  so do $\mathrm{Re}(T)$ and $\mathrm{Im}(T)$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-RealImag, def:c2-isIntertwiner, thm:c2-rho-inner}
+  Equivariance for $T^*$: from
+  $T \rho(g) = \rho(g) T$, take adjoints to get
+  $\rho(g)^* T^* = T^* \rho(g)^*$. By unitarity (Theorem~\ref{thm:c2-rho-inner}),
+  $\rho(g)^* = \rho(g^{-1})$. So $T^* \rho(g^{-1}) = \rho(g^{-1}) T^*$
+  for every $g$, equivalently $T^*$ intertwines $\rho$ with itself.
+  Linear combinations preserve the intertwining property.
+\end{proof}
+
+\section{Self-adjoint equivariant operator on irreducible is scalar}
+
+\begin{theorem}[Eigenspaces of an equivariant operator are invariant]
+  \label{thm:c2-eigenspace-invariant}
+  \lean{PeterWeyl.UnitaryRep.IsIntertwiner.eigenspace_isInvariant}
+  \leanok
+  % [NEW]
+  \uses{def:c2-isIntertwiner, def:c2-isInvariant}
+  Let $T : H \to_L H$ be such that $T.\texttt{IsIntertwiner $\rho$ $\rho$}$,
+  and $\lambda \in \mathbb C$. Then $\rho.\texttt{IsInvariant}\,\ker(T - \lambda\,\mathrm{Id})$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-isIntertwiner, def:c2-isInvariant}
+  If $T v = \lambda v$ then
+  $T(\rho(g) v) = \rho(g)(Tv) = \lambda \rho(g) v$.
+\end{proof}
+
+\begin{theorem}[Self-adjoint equivariant compact operator on an
+  irreducible has a single non-zero eigenvalue or is zero]
+  \label{thm:c2-irrep-selfadj-scalar}
+  \lean{PeterWeyl.UnitaryRep.IsIrreducible.compact_selfAdjoint_intertwiner_eq_smul_or_zero}
+  \leanok
+  % [NEW]
+  \uses{def:c2-IsIrreducible, thm:c2-eigenspace-invariant,
+        thm:c2-spectral-nonzero-eval, thm:c2-orthCompl-invariant}
+  Let $\rho : \texttt{UnitaryRep G H}$ be irreducible, and
+  $A : H \to_L H$ compact, self-adjoint, with
+  $A.\texttt{IsIntertwiner $\rho$ $\rho$}$. Then either $A = 0$, or
+  there exists $\lambda \in \mathbb R \setminus \{0\}$ with
+  $A = \lambda \cdot \mathrm{Id}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-IsIrreducible, thm:c2-eigenspace-invariant,
+        thm:c2-spectral-nonzero-eval, thm:c2-orthCompl-invariant}
+  If $A \neq 0$, by Theorem~\ref{thm:c2-spectral-nonzero-eval} there
+  exist $\lambda \neq 0$ real and a non-zero finite-dimensional
+  $H_\lambda := \ker(A - \lambda\,\mathrm{Id})$.
+  By Theorem~\ref{thm:c2-eigenspace-invariant} $H_\lambda$ is closed and
+  $\rho$-invariant. By irreducibility of $\rho$, the only closed
+  invariant subspaces are $\bot$ and $\top$; since $H_\lambda$ is
+  non-zero, $H_\lambda = \top$, i.e.\ $H_\lambda = H$. Thus
+  $A v = \lambda v$ for every $v \in H$, i.e.\ $A = \lambda \cdot \mathrm{Id}$.
+\end{proof}
+
+\section{Schur's lemma proper}
+
+\begin{theorem}[Schur's lemma, scalar form, compact case]
+  \label{thm:c2-schur-scalar}
+  \lean{PeterWeyl.UnitaryRep.IsIrreducible.intertwiner_self_eq_smul}
+  \leanok
+  % [NEW]
+  \uses{def:c2-IsIrreducible, def:c2-isIntertwiner,
+        thm:c2-RealImag-equiv, thm:c2-irrep-selfadj-scalar}
+  Suppose $\rho : \texttt{UnitaryRep G H}$ is irreducible, and let
+  $T : H \to_L H$ be \emph{compact} with
+  $T.\texttt{IsIntertwiner $\rho$ $\rho$}$. Then there exists
+  $z \in \mathbb C$ with $T = z \cdot \mathrm{Id}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-RealImag, thm:c2-RealImag-equiv,
+        thm:c2-irrep-selfadj-scalar}
+  Apply Theorem~\ref{thm:c2-RealImag-equiv} to obtain
+  $\mathrm{Re}(T), \mathrm{Im}(T)$ both self-adjoint and equivariant.
+  Their compactness follows from compactness of $T$ and
+  $T^*$ (compact operators are closed under adjoint and linear
+  combinations: Mathlib's
+  \texttt{IsCompactOperator.add},
+  \texttt{IsCompactOperator.smul},
+  \texttt{IsCompactOperator.adjoint}).
+  By Theorem~\ref{thm:c2-irrep-selfadj-scalar}, each of
+  $\mathrm{Re}(T), \mathrm{Im}(T)$ is a real scalar (or zero); their
+  combination $T = \mathrm{Re}(T) + i\,\mathrm{Im}(T)$ is a complex scalar.
+\end{proof}
+
+\begin{remark}
+  This Schur is weaker than the classical statement (which removes
+  the compactness hypothesis on $T$): we use compactness of $T$ to
+  invoke the spectral theorem
+  (Assumption~\ref{ass:c2-spectral}). The full Schur for arbitrary
+  bounded equivariant $T$ requires the spectral theorem for bounded
+  self-adjoint operators (a bigger black box), but in our application
+  every intertwiner we will encounter is compact (it factors through
+  finite-dimensional or compact-operator endpoints).
+\end{remark}
+
+\begin{theorem}[Schur for non-equivalent compact intertwiner targets]
+  \label{thm:c2-schur-distinct}
+  \lean{PeterWeyl.UnitaryRep.IsIrreducible.compact_intertwiner_eq_zero_of_not_equiv}
+  % [NEW]
+  \uses{thm:c2-schur-scalar, def:c2-Equiv,
+        thm:c2-orthCompl-invariant}
+  Let $\rho : \texttt{UnitaryRep G H}$, $\sigma : \texttt{UnitaryRep G K}$
+  both irreducible, and $T : H \to_L K$ compact with
+  $T.\texttt{IsIntertwiner $\rho$ $\sigma$}$. If $\rho \not\cong \sigma$
+  (no unitary equivalence between $\rho$ and $\sigma$), then $T = 0$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-schur-scalar, def:c2-Equiv,
+        def:c2-IsIrreducible, thm:c2-orthCompl-invariant}
+  Suppose $T \neq 0$. Since $\overline{\ker T}$ is closed and
+  $\rho$-invariant (intertwiner property gives invariance, then take
+  closure), and $\rho$ is irreducible, $\overline{\ker T} \in
+  \{0, H\}$. If $\overline{\ker T} = H$, density gives $T = 0$,
+  contradiction. So $\ker T = 0$ (the kernel itself is closed for
+  bounded $T$ already), i.e.\ $T$ is injective.
+
+  Similarly $\overline{T(H)}$ is closed and $\sigma$-invariant, so
+  $\overline{T(H)} \in \{0, K\}$ by irreducibility of $\sigma$. The case
+  $\overline{T(H)} = 0$ gives $T = 0$, contradiction; so
+  $\overline{T(H)} = K$, i.e.\ $T$ has dense range.
+
+  Consider $T^* T : H \to_L H$. It is self-adjoint, positive,
+  $\rho$-equivariant, and \emph{compact} (compact operators absorb
+  bounded ones: $T$ compact $\Rightarrow$ $T^*T$ compact). By
+  Theorem~\ref{thm:c2-schur-scalar}, $T^* T = c \cdot \mathrm{Id}$ for
+  some $c \in \mathbb C$. Positivity and $T \neq 0$ force $c > 0$.
+
+  Set $U := T / \sqrt c : H \to_L K$. Then $U^* U = \mathrm{Id}_H$, so
+  $U$ is an isometry. Density of $T(H)$ in $K$ implies density of
+  $U(H)$ in $K$, hence (since the image of an isometry is closed)
+  $U(H) = K$. So $U$ is a unitary equivalence
+  $\rho \to \sigma$, contradicting $\rho \not\cong \sigma$.
+\end{proof}
+
+
+\chapter{Matrix Coefficients}
+\label{chap:c2-matCoeff}
+
+\section{Matrix coefficient of a finite-dim representation}
+
+\begin{definition}[Matrix coefficient $\pi_{u,v}$]
+  \label{def:c2-matrixCoeff}
+  \lean{UnitaryRep.matrixCoeff}
+  \leanok
+  % [NEW]
+  \uses{def:c2-UnitaryRep}
+  Let $V$ be a finite-dimensional complex Hilbert space and
+  $\rho : \texttt{UnitaryRep G V}$. For $u, v \in V$, define
+  $\pi_{u,v}^\rho : G \to \mathbb C$ by
+  $\pi_{u,v}^\rho(g) := \langle \rho(g) u, v\rangle_V$.
+\end{definition}
+
+\begin{theorem}[Matrix coefficients are continuous]
+  \label{thm:c2-matrixCoeff-cts}
+  \lean{UnitaryRep.matrixCoeff_continuous}
+  \leanok
+  % [NEW]
+  \uses{def:c2-matrixCoeff, def:c2-UnitaryRep}
+  $\pi_{u,v}^\rho : G \to \mathbb C$ is continuous.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-matrixCoeff, def:c2-UnitaryRep}
+  Composition of (i) $g \mapsto \rho(g) u$ continuous from $G$ to $V$
+  (strong continuity, Definition~\ref{def:c2-UnitaryRep} third field);
+  (ii) $w \mapsto \langle w, v\rangle$ continuous (Cauchy--Schwarz).
+\end{proof}
+
+\begin{theorem}[Matrix coefficients are bounded]
+  \label{thm:c2-matrixCoeff-bdd}
+  \lean{UnitaryRep.matrixCoeff_bounded}
+  \leanok
+  % [NEW]
+  \uses{def:c2-matrixCoeff, thm:c2-rho-norm}
+  $|\pi_{u,v}^\rho(g)| \leq \|u\|\,\|v\|$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff, thm:c2-rho-norm}
+  Cauchy--Schwarz plus $\|\rho(g) u\| = \|u\|$ from Theorem~\ref{thm:c2-rho-norm}.
+\end{proof}
+
+\begin{corollary}[Matrix coefficients are in $C(G)$ and $L^2(G)$]
+  \label{cor:c2-matrixCoeff-CG-L2}
+  \lean{UnitaryRep.matrixCoeff_continuousMap, UnitaryRep.matrixCoeff_memL2}
+  \leanok
+  % [NEW]
+  \uses{thm:c2-matrixCoeff-cts, thm:c2-matrixCoeff-bdd, thm:c2-CG-into-L2}
+  $\pi_{u,v}^\rho$ defines an element of $C(G, \mathbb C)$ (via
+  Theorem~\ref{thm:c2-matrixCoeff-cts} bundling continuity)
+  and via $\iota_{C\to L^2}$ an element of $L^2(G)$.
+\end{corollary}
+
+\section{Algebra structure}
+
+\begin{theorem}[Sum of matrix coefficients is a matrix coefficient]
+  \label{thm:c2-mc-sum}
+  \lean{UnitaryRep.matrixCoeff_add_eq_directSum}
+  % [NEW]
+  \uses{def:c2-matrixCoeff}
+  Let $V_1, V_2$ be finite-dim Hilbert spaces with reps $\rho_1, \rho_2$.
+  For $u_i, v_i \in V_i$, the function
+  $g \mapsto \pi_{u_1, v_1}^{\rho_1}(g) + \pi_{u_2, v_2}^{\rho_2}(g)$
+  equals $\pi_{u_1 \oplus u_2, v_1 \oplus v_2}^{\rho_1 \oplus \rho_2}$
+  on $V_1 \oplus V_2$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff}
+  Direct expansion of inner product on a direct sum.
+\end{proof}
+
+\begin{theorem}[Scalar multiple of a matrix coefficient is a matrix coefficient]
+  \label{thm:c2-mc-smul}
+  \lean{UnitaryRep.smul_matrixCoeff}
+  \leanok
+  % [NEW]
+  \uses{def:c2-matrixCoeff}
+  $c \cdot \pi_{u,v}^\rho = \pi_{cu, v}^\rho$ for $c \in \mathbb C$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff}
+  $\langle\rho(g)(c u), v\rangle = c\langle\rho(g)u, v\rangle$.
+\end{proof}
+
+\begin{definition}[Tensor product of unitary reps]
+  \label{def:c2-tensor-rep}
+  \lean{UnitaryRep.tensor}
+  % [NEW]
+  \uses{def:c2-UnitaryRep}
+  Given $\rho_i : \texttt{UnitaryRep G $V_i$}$ for $i = 1, 2$ with $V_i$
+  finite-dimensional, $\rho_1 \otimes \rho_2 : \texttt{UnitaryRep G ($V_1 \otimes V_2$)}$
+  is the homomorphism $g \mapsto \rho_1(g) \otimes \rho_2(g)$ on the
+  algebraic (= Hilbert, in finite dim) tensor product, with the inner
+  product $\langle u_1\otimes u_2, v_1 \otimes v_2\rangle :=
+  \langle u_1, v_1\rangle\langle u_2, v_2\rangle$ extended linearly.
+\end{definition}
+
+\begin{theorem}[Product of matrix coefficients]
+  \label{thm:c2-mc-mul}
+  \lean{UnitaryRep.matrixCoeff_mul_eq_tensor}
+  % [NEW]
+  \uses{def:c2-matrixCoeff, def:c2-tensor-rep}
+  $\pi_{u_1, v_1}^{\rho_1}(g) \cdot \pi_{u_2, v_2}^{\rho_2}(g) =
+   \pi_{u_1 \otimes u_2, v_1 \otimes v_2}^{\rho_1 \otimes \rho_2}(g)$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff, def:c2-tensor-rep}
+  $\langle\rho_1(g) u_1, v_1\rangle\langle\rho_2(g) u_2, v_2\rangle
+   = \langle (\rho_1 \otimes \rho_2)(g)(u_1 \otimes u_2), v_1 \otimes v_2\rangle$
+  by definition of tensor product inner product.
+\end{proof}
+
+\begin{definition}[Contragredient (dual) representation]
+  \label{def:c2-contragredient}
+  \lean{UnitaryRep.contragredient}
+  % [NEW]
+  \uses{def:c2-UnitaryRep}
+  Given $\rho : \texttt{UnitaryRep G V}$ with $V$ finite-dimensional,
+  $\overline\rho : \texttt{UnitaryRep G $V^*$}$ is the homomorphism
+  $g \mapsto (\rho(g)^{-1})^* = \rho(g^{-1})^* = \rho(g)$ acting on the
+  conjugate-dual space $V^*$ via
+  $(\overline\rho(g) \ell)(v) := \overline{\ell(\rho(g)^{-1} v)}$;
+  equivalently we identify $V^*$ with the conjugate Hilbert space $\overline V$
+  (same underlying set, scalar multiplication conjugated).
+\end{definition}
+
+\begin{theorem}[Conjugate of a matrix coefficient]
+  \label{thm:c2-mc-conj}
+  \lean{UnitaryRep.matrixCoeff_conj_eq_contragredient}
+  % [NEW]
+  \uses{def:c2-matrixCoeff, def:c2-contragredient}
+  $\overline{\pi_{u,v}^\rho(g)} = \pi_{v, u}^{\overline\rho}(g)$ (under
+  the conjugate-Hilbert identification).
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff, def:c2-contragredient}
+  $\overline{\langle\rho(g)u, v\rangle} = \langle v, \rho(g) u\rangle =
+   \langle\rho(g^{-1}) v, u\rangle = \pi_{v, u}^{\overline\rho}(g)$
+  using unitarity.
+\end{proof}
+
+\begin{theorem}[The constant function $1$ is a matrix coefficient]
+  \label{thm:c2-mc-one}
+  \lean{UnitaryRep.matrixCoeff_one_eq_trivial}
+  \leanok
+  % [NEW]
+  \uses{def:c2-matrixCoeff}
+  Let $\mathbf{1} : \texttt{UnitaryRep G $\mathbb C$}$ be the trivial
+  representation $\mathbf{1}(g) = \mathrm{Id}_{\mathbb C}$. Then
+  $\pi_{1, 1}^{\mathbf 1}(g) = 1$ for all $g$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff}
+  $\langle 1, 1\rangle_{\mathbb C} = 1$ in the trivial inner product.
+\end{proof}
+
+\section{The matrix-coefficient star-subalgebra}
+
+\begin{definition}[The matrix-coefficient subset of $C(G)$]
+  \label{def:c2-MCSet}
+  \lean{UnitaryRep.matrixCoeffSet}
+  \leanok
+  % [NEW]
+  \uses{cor:c2-matrixCoeff-CG-L2}
+  $\mathcal M := \{\pi_{u,v}^\rho \mid (\rho, V)$ a finite-dim continuous
+  unitary rep of $G$, and $u, v \in V\} \subseteq C(G, \mathbb C)$.
+\end{definition}
+
+\begin{definition}[The matrix-coefficient star-subalgebra]
+  \label{def:c2-MCAlg}
+  \lean{UnitaryRep.matrixCoeffSubalgebra}
+  \leanok
+  % [NEW]
+  \uses{def:c2-MCSet, thm:c2-mc-sum, thm:c2-mc-smul, thm:c2-mc-mul,
+        thm:c2-mc-conj, thm:c2-mc-one}
+  $\mathcal A \subseteq C(G, \mathbb C)$ is the
+  \texttt{StarSubalgebra $\mathbb C$ C(G, $\mathbb C$)} generated by
+  $\mathcal M$. By
+  Theorems~\ref{thm:c2-mc-sum},
+  \ref{thm:c2-mc-smul},
+  \ref{thm:c2-mc-mul},
+  \ref{thm:c2-mc-conj},
+  \ref{thm:c2-mc-one},
+  $\mathcal A = \mathrm{span}_{\mathbb C}\,\mathcal M$ (already closed under
+  multiplication and complex conjugation), and contains the constants.
+\end{definition}
+
+
+\chapter{Existence of Separating Finite-Dim Irreducibles}
+\label{chap:c2-separating}
+
+This is the technical heart of Tao's proof. We use the spectral theorem
+on convolution operators to build a finite-dimensional irreducible
+subrepresentation of $L^2(G)$ on which a chosen $g_0 \neq 1_G$ acts
+non-trivially.
+
+\section{Setup and key intermediate lemmas}
+
+\begin{theorem}[Right regular action is faithful]
+  \label{thm:c2-rightReg-faithful}
+  \lean{PeterWeyl.rightReg_faithful}
+  % [NEW]
+  \uses{def:c2-rightReg, thm:c2-bump-exists, thm:c2-bump-conv-tendsto}
+  For every $g_0 \in G$ with $g_0 \neq 1_G$, there exists $f \in L^2(G)$
+  with $\rho^R(g_0) f \neq f$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-rightReg, thm:c2-bump-exists, thm:c2-bump-conv-tendsto,
+        def:c2-G}
+  Pick disjoint open neighbourhoods $U \ni 1_G$ and $V \ni g_0$ (using
+  $G$ Hausdorff). Pick a continuous bump $\phi$ on $U$
+  (Theorem~\ref{thm:c2-bump-exists}), and consider
+  $f := \phi$ as an element of $L^2(G)$ via $\iota_{C\to L^2}$.
+  Then $\rho^R(g_0) f$ is the class of $h \mapsto \phi(h g_0)$, which has
+  support in $U g_0^{-1}$. Pick $V$ small enough that
+  $V g_0^{-1} \cap U = \emptyset$ (possible by continuity of multiplication
+  and Hausdorffness). Then $\rho^R(g_0) f$ vanishes on a neighbourhood of
+  $1_G$ where $f$ does not, so $\rho^R(g_0) f \neq f$ in $L^2(G)$.
+\end{proof}
+
+\begin{theorem}[Existence of separating self-adjoint convolution operator]
+  \label{thm:c2-existsSepConv}
+  \lean{PeterWeyl.exists_symmetric_bump_separating}
+  % [NEW]
+  \uses{thm:c2-rightReg-faithful, thm:c2-bump-exists,
+        thm:c2-bump-conv-tendsto, def:c2-rightReg, def:c2-symmetric,
+        def:c2-Tphi}
+  For every $g_0 \in G$ with $g_0 \neq 1_G$, there exists a symmetric
+  bump $\phi \in C(G)$ such that:
+  \begin{enumerate}
+    \item $\phi$ is symmetric (Definition~\ref{def:c2-symmetric});
+    \item $T_\phi$ is non-zero;
+    \item $T_\phi$ does not commute with $\rho^R(g_0)$ in the sense:
+      there exists $f \in L^2(G)$ with $T_\phi(\rho^R(g_0) f - f) \neq 0$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-rightReg-faithful, thm:c2-bump-conv-tendsto,
+        thm:c2-bump-exists}
+  Pick $f \in L^2(G)$ with $f' := \rho^R(g_0) f - f \neq 0$ from
+  Theorem~\ref{thm:c2-rightReg-faithful}. Pick a sequence of symmetric
+  bumps $\phi_n$ on shrinking neighbourhoods of $1_G$
+  (Theorem~\ref{thm:c2-bump-exists}, with the symmetry coming from the
+  proof's symmetrization step). By
+  Theorem~\ref{thm:c2-bump-conv-tendsto}, $T_{\phi_n} f' \to f' \neq 0$
+  in $L^2$, so for some $n$, $T_{\phi_n} f' \neq 0$. Take $\phi := \phi_n$
+  for that $n$.
+\end{proof}
+
+\section{From convolution to a finite-dim invariant subspace}
+
+\begin{theorem}[$T_\phi$ has a non-zero finite-dim eigenspace separating
+  $g_0$]
+  \label{thm:c2-eigenspace-separates}
+  \lean{PeterWeyl.exists_eigenspace_separating}
+  % [NEW]
+  \uses{thm:c2-existsSepConv, thm:c2-Tphi-compact,
+        cor:c2-Tphi-selfadj, thm:c2-spectral-nonzero-eval,
+        thm:c2-eigenspace-invariant, def:c2-rightReg}
+  For every $g_0 \neq 1_G$ in $G$, there exist $\phi \in C(G)$ symmetric,
+  $\lambda \in \mathbb R \setminus \{0\}$, and a non-zero
+  finite-dimensional closed subspace $W \leq L^2(G)$ such that:
+  \begin{enumerate}
+    \item $W = \ker(T_\phi - \lambda \cdot \mathrm{Id}) \neq 0$;
+    \item $\dim W < \infty$;
+    \item $\rho^R.\texttt{IsInvariant}\,W$;
+    \item $\rho^R(g_0)|_W \neq \mathrm{Id}_W$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-existsSepConv, thm:c2-Tphi-compact,
+        cor:c2-Tphi-selfadj, thm:c2-spectral-nonzero-eval,
+        thm:c2-eigenspace-invariant, cor:c2-Tphi-intertwiner}
+  Pick $\phi$ from Theorem~\ref{thm:c2-existsSepConv}.
+  Then $T_\phi$ is compact (Theorem~\ref{thm:c2-Tphi-compact}),
+  self-adjoint (Corollary~\ref{cor:c2-Tphi-selfadj}, using $\phi$
+  symmetric), and non-zero (item 2 of Theorem~\ref{thm:c2-existsSepConv}).
+  By Theorem~\ref{thm:c2-spectral-nonzero-eval} there exists
+  $\lambda \neq 0$ real and a finite-dim non-zero
+  $H_\lambda := \ker(T_\phi - \lambda\,\mathrm{Id})$.
+  By Corollary~\ref{cor:c2-Tphi-intertwiner} $T_\phi$ is a $\rho^R$-intertwiner;
+  by Theorem~\ref{thm:c2-eigenspace-invariant} (eigenspace of an
+  intertwiner is invariant), $H_\lambda$ is $\rho^R$-invariant.
+
+  Now check (4). The full spectral decomposition
+  (Assumption~\ref{ass:c2-spectral}) gives
+  $L^2(G) = \ker T_\phi \oplus \widehat{\bigoplus}_i H_{\lambda_i}$.
+  By item 3 of Theorem~\ref{thm:c2-existsSepConv},
+  $T_\phi(\rho^R(g_0) f - f) \neq 0$, so the projection of
+  $\rho^R(g_0) f - f$ onto $(\ker T_\phi)^\perp$ is non-zero, hence
+  some component of $\rho^R(g_0) f - f$ in some $H_{\lambda_i}$ is
+  non-zero. Replacing $\lambda$ by such $\lambda_i$ and $W$ by $H_{\lambda_i}$,
+  we have $\rho^R(g_0)$ acting non-trivially on $W$.
+\end{proof}
+
+\section{From finite-dim invariant to finite-dim irreducible}
+
+\begin{theorem}[Every finite-dim invariant subspace contains an irreducible]
+  \label{thm:c2-fd-contains-irr}
+  \lean{PeterWeyl.UnitaryRep.exists_irreducible_subspace_of_finiteDim}
+  \leanok
+  % [NEW]
+  \uses{def:c2-isInvariant, def:c2-IsIrreducible,
+        thm:c2-orthCompl-invariant, def:c2-restrict}
+  Let $W$ be a finite-dim non-zero closed subspace of $H$ with
+  $\rho.\texttt{IsInvariant}\,W$. Then there exists a non-zero closed
+  subspace $W' \subseteq W$ with $\rho.\texttt{IsInvariant}\,W'$ such
+  that $\rho|_{W'}$ is irreducible.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-orthCompl-invariant, def:c2-isInvariant,
+        def:c2-IsIrreducible}
+  Induction on $\dim W$. Base case $\dim W = 1$: $W$ is itself
+  irreducible. Inductive step: if $\rho|_W$ has a proper non-zero
+  invariant subspace $W_1 \subsetneq W$, by Theorem~\ref{thm:c2-orthCompl-invariant}
+  $W_1^\perp \cap W$ is also $\rho$-invariant of strictly smaller
+  dimension. By induction one of the two pieces $W_1$ or
+  $W_1^\perp \cap W$ contains an irreducible subspace; that is our
+  $W'$. Otherwise $\rho|_W$ has only $\{0\}$ and $W$ as invariant
+  subspaces, so $\rho|_W$ itself is irreducible; take $W' := W$.
+\end{proof}
+
+\begin{theorem}[Finite-dim invariant non-trivial action splits to non-trivial irreducible action]
+  \label{thm:c2-fd-irr-nontrivial}
+  \lean{PeterWeyl.UnitaryRep.exists_irreducible_subspace_acting_nontrivially}
+  % [NEW]
+  \uses{thm:c2-fd-contains-irr, thm:c2-orthCompl-invariant,
+        def:c2-IsIrreducible}
+  Let $W$ be a finite-dim non-zero closed $\rho$-invariant subspace, and
+  $g_0 \in G$ such that $\rho(g_0)|_W \neq \mathrm{Id}_W$. Then there
+  exists a non-zero closed $\rho$-invariant subspace $W' \subseteq W$
+  with $\rho|_{W'}$ irreducible and $\rho(g_0)|_{W'} \neq \mathrm{Id}_{W'}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-fd-contains-irr, thm:c2-orthCompl-invariant,
+        def:c2-IsIrreducible}
+  By induction on $\dim W$, with the same splitting as in
+  Theorem~\ref{thm:c2-fd-contains-irr}, but at each split step pick the
+  side on which $\rho(g_0)$ still acts non-trivially. (At least one of
+  the two pieces in $W = W_1 \oplus (W_1^\perp \cap W)$ has $\rho(g_0)$
+  non-trivial: if $\rho(g_0)$ acted as $\mathrm{Id}$ on both, it would
+  act as $\mathrm{Id}$ on all of $W$, contradicting hypothesis.) Continue
+  until reaching an irreducible subspace; since the property of
+  ``$\rho(g_0)$ acts non-trivially'' is preserved at each step, the
+  resulting irreducible $W'$ has $\rho(g_0)|_{W'} \neq \mathrm{Id}$.
+\end{proof}
+
+\section{The separation theorem}
+
+\begin{theorem}[Existence of separating finite-dim irreducible]
+  \label{thm:c2-separating-irr}
+  \lean{PeterWeyl.exists_separating_irreducible}
+  \leanok
+  % [NEW]
+  \uses{thm:c2-eigenspace-separates, thm:c2-fd-irr-nontrivial,
+        def:c2-IsIrreducible, def:c2-rightReg}
+  For every $g_0 \in G$ with $g_0 \neq 1_G$, there exists a non-zero
+  finite-dim closed $\rho^R$-invariant subspace $W' \leq L^2(G)$ such
+  that $\rho^R|_{W'}$ is irreducible and $\rho^R(g_0)|_{W'} \neq \mathrm{Id}_{W'}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-eigenspace-separates, thm:c2-fd-irr-nontrivial}
+  Apply Theorem~\ref{thm:c2-eigenspace-separates} to obtain a finite-dim
+  invariant $W$ with $\rho^R(g_0)|_W \neq \mathrm{Id}_W$, then apply
+  Theorem~\ref{thm:c2-fd-irr-nontrivial}.
+\end{proof}
+
+
+\chapter{Density of Matrix Coefficients}
+\label{chap:c2-density}
+
+\section{$\mathcal M$ separates points}
+
+\begin{theorem}[Matrix coefficients of $\rho^R|_{W'}$ are matrix coefficients of $G$]
+  \label{thm:c2-restrict-to-mc}
+  \lean{UnitaryRep.restrict_matrixCoeff_eq_matrixCoeff}
+  \leanok
+  % [NEW]
+  \uses{def:c2-matrixCoeff, def:c2-restrict}
+  If $W' \leq L^2(G)$ is a finite-dim $\rho^R$-invariant subspace and
+  $u, v \in W'$, then
+  $\pi_{u, v}^{\rho^R|_{W'}}$ is a matrix coefficient of $G$ in the
+  sense of Definition~\ref{def:c2-matrixCoeff}, with the rep being
+  $\rho^R|_{W'} : \texttt{UnitaryRep G W'}$.
+\end{theorem}
+
+\begin{proof}\uses{def:c2-matrixCoeff, def:c2-restrict}
+  Tautological from the definitions: a matrix coefficient is a function
+  on $G$, the rep is the restriction.
+\end{proof}
+
+\begin{theorem}[$\mathcal M$ separates points]
+  \label{thm:c2-MCSet-separates}
+  \lean{UnitaryRep.matrixCoeffSet_separatesPoints}
+  \leanok
+  % [NEW]
+  \uses{thm:c2-separating-irr, def:c2-matrixCoeff,
+        def:c2-MCSet, thm:c2-restrict-to-mc}
+  For every pair $g_1 \neq g_2$ in $G$ there exists
+  $f \in \mathcal M$ with $f(g_1) \neq f(g_2)$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-separating-irr, thm:c2-restrict-to-mc, def:c2-matrixCoeff,
+        def:c2-MCSet}
+  Apply Theorem~\ref{thm:c2-separating-irr} with $g_0 := g_1 g_2^{-1}$
+  to get a finite-dim irreducible $W'$ with $\rho^R(g_0)|_{W'} \neq \mathrm{Id}$.
+  Pick $u \in W'$ with $\rho^R(g_0) u \neq u$; pick $v \in W'$
+  with $\langle\rho^R(g_0) u - u, v\rangle \neq 0$.
+  Then $\pi_{u, v}^{\rho^R|_{W'}}(g_0) \neq \pi_{u,v}^{\rho^R|_{W'}}(1_G)$.
+  Right-translating: define $u' := \rho^R(g_2) u$. Then by the
+  matrix-coefficient-translation identity
+  $\pi_{u', v}^{\rho^R|_{W'}}(g) = \pi_{u, v}^{\rho^R|_{W'}}(g g_2)$,
+  giving $\pi_{u', v}(g_1) \neq \pi_{u', v}(g_2)$.
+  This is an element of $\mathcal M$ via Theorem~\ref{thm:c2-restrict-to-mc}.
 \end{proof}
 
 \begin{corollary}[$\mathcal A$ separates points]
-  \label{cor:c-mc-sep-points}
+  \label{cor:c2-MCAlg-separates}
   \lean{UnitaryRep.matrixCoeffSubalgebra_separatesPoints}
+  \leanok
   % [NEW]
-  \uses{thm:c-irreducibles-separate, def:c-mc-subalg}
-  The matrix-coefficient $*$-subalgebra
-  $\mathcal A \subseteq C(G, \mathbb C)$ separates points of $G$.
+  \uses{thm:c2-MCSet-separates, def:c2-MCAlg}
+  $\mathcal A$ separates points (in the sense of
+  \texttt{StarSubalgebra.SeparatesPoints}).
 \end{corollary}
 
 \begin{proof}
-  \uses{thm:c-irreducibles-separate, def:c-mc-subalg}
-  Let $g \neq h$ in $G$. Apply Theorem~\ref{thm:c-irreducibles-separate}
-  to $gh^{-1}$ to obtain a finite-dimensional irreducible $(\rho, V)$
-  with $\rho(gh^{-1}) \neq \mathrm{Id}_V$. Pick $u, v \in V$ with
-  $\langle \rho(gh^{-1}) u, v \rangle \neq \langle u, v \rangle$, i.e.
-  $\pi_{u,v}(gh^{-1}) \neq \pi_{u,v}(1_G)$. Right-translating by $h$
-  gives $\pi_{u,v}(g) \neq \pi_{\rho(h)u, v}(h) = \pi_{u, v}(h)$ via
-  the matrix-coefficient identity $\pi_{u,v}(gh) =
-  \langle \rho(g)\rho(h)u, v\rangle = \pi_{\rho(h)u, v}(g)$.
+  \uses{thm:c2-MCSet-separates, def:c2-MCAlg}
+  $\mathcal A \supseteq \mathcal M$, and $\mathcal M$ separates points
+  by Theorem~\ref{thm:c2-MCSet-separates}; the larger set inherits the
+  property.
 \end{proof}
 
-\section{Density of $\mathcal A$ via Stone--Weierstrass}
+\section{Stone--Weierstrass: $\mathcal A$ is dense}
 
-\begin{theorem}[$\mathcal A$ is dense in $C(G)$]
-  \label{thm:c-mc-dense-CG}
+\begin{theorem}[$\mathcal A$ is uniformly dense in $C(G, \mathbb C)$]
+  \label{thm:c2-MCAlg-CG-dense}
   \lean{UnitaryRep.matrixCoeffSubalgebra_topologicalClosure_eq_top}
-  % [NEW]
-  \uses{cor:c-mc-sep-points, lem:c-mc-algebra}
-  The closure of $\mathcal A$ in the uniform topology of $C(G,\mathbb C)$
-  is all of $C(G, \mathbb C)$.
+  \leanok
+  % [NEW; one-line citation of Stone-Weierstrass]
+  \uses{cor:c2-MCAlg-separates, def:c2-MCAlg, def:c2-G}
+  The closure of $\mathcal A$ in the uniform topology of
+  $C(G, \mathbb C)$ is the whole of $C(G, \mathbb C)$.
 \end{theorem}
 
 \begin{proof}
-  \uses{cor:c-mc-sep-points}
-  Apply the complex Stone--Weierstrass theorem
-  \texttt{ContinuousMap.starSubalgebra\_topologicalClosure\_eq\_top\_of\_separatesPoints}
-  (\texttt{Mathlib.Topology.ContinuousMap.StoneWeierstrass}) to
-  $\mathcal A$. Hypotheses: $G$ compact (Definition~\ref{def:c-standing});
-  $\mathcal A$ a star-subalgebra of $C(G, \mathbb C)$
-  (Definition~\ref{def:c-mc-subalg}); $\mathcal A$ separates points
-  (Corollary~\ref{cor:c-mc-sep-points}). Conclusion: $\mathcal A$ is
-  dense in $C(G)$ in the uniform topology.
+  \uses{cor:c2-MCAlg-separates, def:c2-MCAlg, def:c2-G}
+  Apply
+  \texttt{ContinuousMap.starSubalgebra\_topologicalClosure}\allowbreak%
+  \texttt{\_eq\_top\_of\_separatesPoints}
+  in \texttt{Mathlib.Topology.ContinuousMap}\allowbreak%
+  \texttt{.StoneWeierstrass}.
+  Hypotheses: \texttt{[CompactSpace G]} (Definition~\ref{def:c2-G});
+  $\mathcal A$ a star-subalgebra (Definition~\ref{def:c2-MCAlg}); separates
+  points (Corollary~\ref{cor:c2-MCAlg-separates}).
 \end{proof}
 
-\begin{corollary}[$\mathcal A$ is dense in $L^2(G)$]
-  \label{cor:c-mc-dense-L2}
-  \lean{UnitaryRep.matrixCoeffSubalgebra_topologicalClosure_eq_top_L2}
-  % [~ML] Uniform density implies L^2 density on a finite measure space.
-  \uses{thm:c-mc-dense-CG, thm:c-CG-dense, thm:c-Lp-inclusions}
-  The closure of $\mathcal A$ in $L^2(G)$ (under the $L^2$ topology) is
-  all of $L^2(G)$.
+\begin{corollary}[$\mathcal A$ is $L^2$-dense in $L^2(G)$]
+  \label{cor:c2-MCAlg-L2-dense}
+  \lean{UnitaryRep.matrixCoeffSubalgebra_dense_L2}
+  \leanok
+  % [~ML]
+  \uses{thm:c2-MCAlg-CG-dense, thm:c2-CG-dense-L2,
+        thm:c2-Lp-monotone}
+  The image of $\mathcal A$ in $L^2(G)$ under $\iota_{C\to L^2}$ is
+  dense in $L^2(G)$.
 \end{corollary}
 
 \begin{proof}
-  \uses{thm:c-mc-dense-CG, thm:c-CG-dense, thm:c-Lp-inclusions}
-  $\mathcal A$ is uniformly dense in $C(G)$ by
-  Theorem~\ref{thm:c-mc-dense-CG}, hence $L^2$-dense in $C(G)$ since
-  $\|\cdot\|_{L^2} \leq \|\cdot\|_{L^\infty}$ on a probability space
-  (Theorem~\ref{thm:c-Lp-inclusions}). And $C(G)$ is $L^2$-dense in
-  $L^2(G)$ (Theorem~\ref{thm:c-CG-dense}).
+  \uses{thm:c2-MCAlg-CG-dense, thm:c2-CG-dense-L2, thm:c2-Lp-monotone}
+  $\mathcal A$ uniformly dense in $C(G)$
+  (Theorem~\ref{thm:c2-MCAlg-CG-dense}) gives $\iota_{C\to L^2}(\mathcal A)$
+  dense in $\iota_{C\to L^2}(C(G))$ in the $L^2$ topology
+  (Theorem~\ref{thm:c2-Lp-monotone}). And $\iota_{C\to L^2}(C(G))$ is
+  dense in $L^2(G)$ (Theorem~\ref{thm:c2-CG-dense-L2}).
 \end{proof}
 
-\section{The isotypic decomposition of $L^2(G)$}
 
-\begin{definition}[Isotypic component]
-  \label{def:c-isotypic-comp}
-  \lean{UnitaryRep.isotypicComponent}
+\chapter{Schur Orthogonality}
+\label{chap:c2-orthog}
+
+\section{Orthogonality across distinct irreducibles}
+
+\begin{theorem}[Inner product of matrix coefficients across distinct irreducibles]
+  \label{thm:c2-mc-orthog-distinct}
+  \lean{UnitaryRep.matrixCoeff_inner_eq_zero_of_not_equiv}
   % [NEW]
-  \uses{def:c-irrep, def:c-equiv-rep, def:c-regular-rep}
-  Given an irreducible class $[\xi]$ (an isomorphism class of
-  finite-dimensional continuous irreducible unitary representations of
-  $G$), the $\xi$-\emph{isotypic component} of $L^2(G)$ (with respect to
-  the right regular representation $\rho$) is
-  $L^2(G)_\xi := \overline{\sum_{V \cong \xi} V}$,
-  the closure of the sum of all closed right-$G$-invariant subspaces
-  of $L^2(G)$ that are isomorphic to $\xi$.
-\end{definition}
-
-\begin{lemma}[Isotypic components are pairwise orthogonal]
-  \label{lem:c-isotypic-orthog}
-  \lean{UnitaryRep.isotypicComponent_orthogonal}
-  % [NEW]
-  \uses{def:c-isotypic-comp, cor:c-schur-distinct}
-  $L^2(G)_\xi \perp L^2(G)_\eta$ whenever $[\xi] \neq [\eta]$.
-\end{lemma}
-
-\begin{proof}
-  \uses{cor:c-schur-distinct}
-  Pick $V \cong \xi$ and $W \cong \eta$ closed irreducible
-  subrepresentations of $L^2(G)$. The orthogonal projection
-  $P_W : L^2(G) \to W$ is bounded and $G$-equivariant
-  (Lemma~\ref{lem:c-subrep-orthcomp}); restricting to $V$ gives an
-  intertwiner $V \to W$, which is zero by Schur
-  (Corollary~\ref{cor:c-schur-distinct}). Hence
-  $V \perp W$. Since closures preserve orthogonality, the same holds
-  for $L^2(G)_\xi$ and $L^2(G)_\eta$.
-\end{proof}
-
-\begin{theorem}[Peter--Weyl: $L^2$ decomposition]
-  \label{thm:c-PW-L2-decomp}
-  \lean{UnitaryRep.L2_isHilbertSum_isotypicComponents}
-  % [NEW]
-  \uses{cor:c-mc-dense-L2, lem:c-isotypic-orthog,
-        cor:c-irr-finite-dim, def:c-isotypic-comp}
-  $L^2(G)$ is the orthogonal Hilbert sum of the $\xi$-isotypic
-  components, as $[\xi]$ ranges over all isomorphism classes of
-  finite-dimensional continuous unitary irreducible representations of
-  $G$:
+  \uses{def:c2-matrixCoeff, def:c2-IsIrreducible,
+        thm:c2-schur-distinct, def:c2-Equiv}
+  Let $\rho_1 : \texttt{UnitaryRep G $V_1$}$,
+  $\rho_2 : \texttt{UnitaryRep G $V_2$}$ both finite-dimensional and
+  irreducible with $\rho_1 \not\cong \rho_2$. Then for all
+  $u_1, w_1 \in V_1$ and $u_2, w_2 \in V_2$,
   \[
-     L^2(G) \;=\; \widehat{\bigoplus}_{[\xi]} L^2(G)_\xi.
+     \int_G \pi_{u_1, w_1}^{\rho_1}(g)\, \overline{\pi_{u_2, w_2}^{\rho_2}(g)}\, d\mu_G(g) = 0.
   \]
-  In particular every $f \in L^2(G)$ has a unique decomposition
-  $f = \sum_{[\xi]} f_\xi$ with $f_\xi \in L^2(G)_\xi$, with
-  $\sum \|f_\xi\|_2^2 = \|f\|_2^2$ (Parseval--Plancherel).
 \end{theorem}
 
 \begin{proof}
-  \uses{cor:c-mc-dense-L2, lem:c-isotypic-orthog, def:c-isotypic-comp}
-  By Lemma~\ref{lem:c-isotypic-orthog} the family
-  $\{L^2(G)_\xi\}_{[\xi]}$ is an orthogonal family in $L^2(G)$. The
-  closed sum $\overline{\sum_{[\xi]} L^2(G)_\xi}$ is a closed
-  $G$-invariant subspace of $L^2(G)$. Each matrix coefficient
-  $\pi_{u,v}$ of an irreducible $\xi$ lies in $L^2(G)_\xi$ (by the
-  matrix-coefficient construction), so $\mathcal A$ is contained in the
-  closed sum. By Corollary~\ref{cor:c-mc-dense-L2}, $\mathcal A$ is
-  dense in $L^2(G)$, so the closed sum equals $L^2(G)$.
-
-  In Lean: this is exactly the predicate
-  \texttt{IsHilbertSum} from
-  \texttt{Mathlib.Analysis.InnerProductSpace.l2Space}, applied to the
-  orthogonal family of inclusion isometries
-  $L^2(G)_\xi \hookrightarrow L^2(G)$.
+  \uses{def:c2-matrixCoeff, thm:c2-schur-distinct,
+        thm:c2-haar-rightInv}
+  Define $T : V_1 \to V_2$ (note: finite-dimensional) by
+  $T u := \int_G \pi_{u, w_1}^{\rho_1}(g) \cdot \rho_2(g^{-1}) w_2\, d\mu_G(g)$.
+  Then $T$ is bounded (finite-dimensional, hence automatic) and an
+  intertwiner $\rho_1 \to \rho_2$ (verify by changing variables in the
+  integral, using right-invariance). Compactness is automatic in finite
+  dimensions. By Theorem~\ref{thm:c2-schur-distinct}, $T = 0$.
+  Then $\langle T u_1, u_2\rangle_{V_2} = 0$, which expands to the
+  stated integral being zero.
 \end{proof}
 
-\begin{theorem}[Peter--Weyl: explicit form on each isotypic component]
-  \label{thm:c-PW-each-isotypic}
-  \lean{UnitaryRep.isotypicComponent_isHilbertSum_copies}
-  % [NEW]
-  \uses{thm:c-PW-L2-decomp, cor:c-irr-finite-dim, def:c-isotypic-comp}
-  Each isotypic component $L^2(G)_\xi$ is itself an orthogonal Hilbert
-  sum of $\dim V_\xi$-many copies of $V_\xi$ (so $L^2(G)_\xi$ has
-  $\mathbb C$-dimension $(\dim V_\xi)^2$ when $\dim V_\xi < \infty$).
-\end{theorem}
+\section{Same-irreducible orthogonality}
 
-\begin{proof}
-  \uses{thm:c-PW-L2-decomp, cor:c-irr-finite-dim}
-  Standard. Use the (left, right) bi-equivariance of $L^2(G)$:
-  $L^2(G)_\xi$ is also a closed left-$G$-invariant subspace, and as a
-  representation under the joint $G \times G$-action it is isomorphic
-  to $V_\xi \otimes V_\xi^*$. The matrix coefficient map
-  $V_\xi \otimes V_\xi^* \to L^2(G)$, $u \otimes \ell \mapsto
-  (g \mapsto \ell(\rho_\xi(g)^{-1} u))$, is an injective $G \times G$
-  intertwiner with image $L^2(G)_\xi$; orthogonality
-  $\langle u_1 \otimes \ell_1, u_2 \otimes \ell_2 \rangle =
-  (\dim V_\xi)^{-1}\langle u_1, u_2 \rangle \overline{\langle \ell_1,
-  \ell_2 \rangle}$ follows from Schur's orthogonality relations.
-\end{proof}
-
-
-\chapter{Schur Orthogonality, Plancherel, and Fourier Inversion}
-\label{chap:c-orthogonality}
-
-\section{Schur orthogonality of matrix coefficients}
-
-\begin{theorem}[Schur orthogonality, distinct irreducibles]
-  \label{thm:c-schur-orthog-distinct}
-  \lean{UnitaryRep.matrixCoeff_orthog_of_not_equiv}
-  % [NEW]
-  \uses{cor:c-schur-distinct, def:c-matrix-coeff, lem:c-isotypic-orthog}
-  Let $(\rho, V)$, $(\sigma, W)$ be finite-dimensional continuous unitary
-  irreducibles with $\rho \not\cong \sigma$. Then for every
-  $u_1, u_2 \in V$ and $w_1, w_2 \in W$,
-  \[
-     \int_G \langle \rho(g) u_1, u_2 \rangle_V \cdot
-     \overline{\langle \sigma(g) w_1, w_2 \rangle_W} \, d\mu(g) = 0.
-  \]
-  Equivalently $\pi_{u_1, u_2}^\rho \perp \pi_{w_1, w_2}^\sigma$
-  in $L^2(G)$.
-\end{theorem}
-
-\begin{proof}
-  \uses{cor:c-schur-distinct, lem:c-isotypic-orthog}
-  Direct from Lemma~\ref{lem:c-isotypic-orthog}: matrix coefficients of
-  $\rho$ live in the $[\rho]$-isotypic component of $L^2(G)$, and those
-  of $\sigma$ in the $[\sigma]$-component, which are orthogonal.
-\end{proof}
-
-\begin{theorem}[Schur orthogonality, same irreducible]
-  \label{thm:c-schur-orthog-same}
+\begin{theorem}[Inner product of matrix coefficients of same irreducible]
+  \label{thm:c2-mc-orthog-same}
   \lean{UnitaryRep.matrixCoeff_inner_eq}
   % [NEW]
-  \uses{thm:c-schur-scalar, def:c-matrix-coeff}
-  Let $(\rho, V)$ be a finite-dimensional continuous unitary irreducible
-  with $d := \dim V$. Then for $u_1, u_2, v_1, v_2 \in V$,
+  \uses{def:c2-matrixCoeff, def:c2-IsIrreducible,
+        thm:c2-schur-scalar}
+  Let $\rho : \texttt{UnitaryRep G V}$ be finite-dimensional and
+  irreducible, $d := \dim V$. Then for all $u_1, u_2, v_1, v_2 \in V$,
   \[
-     \int_G \langle \rho(g) u_1, v_1 \rangle \cdot
-     \overline{\langle \rho(g) u_2, v_2 \rangle} \, d\mu(g)
-     = \frac{1}{d}\,\langle u_1, u_2 \rangle \cdot
-     \overline{\langle v_1, v_2 \rangle}.
+     \int_G \pi_{u_1, v_1}^{\rho}(g)\, \overline{\pi_{u_2, v_2}^{\rho}(g)}\, d\mu_G(g)
+     = \frac{1}{d}\,\langle u_1, u_2\rangle\,\overline{\langle v_1, v_2\rangle}.
   \]
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:c-schur-scalar}
-  Standard.  Define a $G$-equivariant operator
-  $T : V \to V$, $T u := \int_G \rho(g)\, u \otimes \overline{\rho(g)v_1} \cdot
-  \pi_{u_2, v_2}(g)^* \, d\mu$ (compactness of $G$ ensures convergence).
-  Use Theorem~\ref{thm:c-schur-scalar} to identify $T$ with a scalar,
-  and compute the scalar by taking traces.
+  \uses{def:c2-matrixCoeff, thm:c2-schur-scalar,
+        thm:c2-haar-rightInv}
+  Define $T : V \to V$ by
+  $T u := \int_G \pi_{u, v_1}^\rho(g)\, \rho(g^{-1}) v_2\, d\mu_G(g)$
+  (finite-dimensional Bochner integral). $T$ is an intertwiner
+  $\rho \to \rho$, hence by Theorem~\ref{thm:c2-schur-scalar}
+  $T = c \cdot \mathrm{Id}_V$ for some $c \in \mathbb C$.
+  Take traces: $\mathrm{tr}(T) = c \cdot d$, while
+  $\mathrm{tr}(T) = \int_G \pi_{v_1, v_1}^\rho(g) \cdot \mathrm{tr}(\rho(g^{-1}) \cdot \langle\cdot, v_2\rangle v_2)\,d\mu_G$
+  evaluating the trace by an orthonormal basis $\{e_i\}$ of $V$ gives
+  $c \cdot d = \overline{\langle v_1, v_2\rangle}\langle e_i, v_2\rangle\dots$;
+  carrying through the calculation yields
+  $c = \overline{\langle v_1, v_2\rangle}\langle u_1, u_2\rangle / d$.
 \end{proof}
 
-\begin{corollary}[Orthonormal basis from matrix coefficients]
-  \label{cor:c-mc-orthonormal-basis}
-  \lean{UnitaryRep.matrixCoeff_hilbertBasis}
+
+\chapter{Isotypic Decomposition of $L^2(G)$ and Plancherel}
+\label{chap:c2-isotypic}
+
+\section{Isotypic component}
+
+\begin{definition}[Set of finite-dim irreducible classes]
+  \label{def:c2-Ghat}
+  \lean{UnitaryRep.IrreducibleClass, UnitaryRep.IrrSkeleton}
+  \leanok
   % [NEW]
-  \uses{thm:c-schur-orthog-same, thm:c-schur-orthog-distinct,
-        thm:c-PW-L2-decomp}
-  Let $\widehat{G}$ index a choice of one finite-dimensional unitary
-  irreducible $V_\xi$ from each isomorphism class. For each $\xi$, fix
-  an orthonormal basis $\{e^\xi_i\}_{i=1}^{d_\xi}$ of $V_\xi$. Then
-  the family $\{\sqrt{d_\xi}\, \pi_{e^\xi_i, e^\xi_j}\}$ for
-  $\xi \in \widehat G$, $1 \leq i, j \leq d_\xi$, is an
-  orthonormal Hilbert basis of $L^2(G)$. In Lean: a
-  \texttt{HilbertBasis ($\Sigma$ $\xi \in \widehat G$,
-                        $\mathrm{Fin}\,d_\xi \times \mathrm{Fin}\,d_\xi$)
-  ($L^2(G)$)}.
-\end{corollary}
-
-\begin{proof}
-  \uses{thm:c-schur-orthog-same, thm:c-schur-orthog-distinct,
-        thm:c-PW-L2-decomp}
-  Combine Theorem~\ref{thm:c-PW-L2-decomp} (the matrix coefficients span
-  a dense subspace) with
-  Theorem~\ref{thm:c-schur-orthog-same} (giving the explicit
-  $1/d_\xi$ normalisation factor) and
-  Theorem~\ref{thm:c-schur-orthog-distinct} (orthogonality across
-  $\xi$).
-\end{proof}
-
-\section{Fourier transform and Plancherel}
-
-\begin{definition}[Operator-valued Fourier transform]
-  \label{def:c-fourier}
-  \lean{UnitaryRep.fourierTransform}
-  % [NEW]
-  \uses{def:c-matrix-coeff, def:c-isotypic-comp}
-  For $f \in L^1(G)$ and an irreducible class $[\xi]$ with
-  representative $(\rho_\xi, V_\xi)$, define
-  $\widehat f(\xi) \in \mathrm{End}(V_\xi)$ by
-  $\widehat f(\xi) := \int_G f(g)\, \rho_\xi(g) \, d\mu(g)$
-  (Bochner integral in the finite-dimensional space
-  $\mathrm{End}(V_\xi)$).
+  % Lean implementation: \texttt{UnitaryRep.IrreducibleClass G} is the
+  % structure bundling $(V, \rho, \text{irreducible})$ without
+  % quotienting; \texttt{UnitaryRep.IrrSkeleton G} is the quotient by
+  % \texttt{UnitaryRep.Equiv} (used as the \texttt{IsHilbertSum}
+  % indexing type below).
+  \uses{def:c2-UnitaryRep, def:c2-IsIrreducible, def:c2-Equiv}
+  $\widehat G$ is the type of equivalence classes (under $\cong$,
+  Definition~\ref{def:c2-Equiv}) of finite-dimensional continuous unitary
+  irreducible representations of $G$.
+  In Lean, $\widehat G$ is implemented as a quotient of the type of all
+  finite-dim irreducibles modulo unitary equivalence, with a chosen
+  representative $V_\xi$ and rep $\rho_\xi$ for each $[\xi]$.
 \end{definition}
 
-\begin{theorem}[Plancherel for compact groups]
-  \label{thm:c-plancherel}
-  \lean{UnitaryRep.plancherel}
+\begin{definition}[$\xi$-isotypic component of $L^2(G)$]
+  \label{def:c2-isotypic}
+  \lean{PeterWeyl.isotypicComponent}
+  \leanok
   % [NEW]
-  \uses{thm:c-PW-each-isotypic, cor:c-mc-orthonormal-basis,
-        def:c-fourier}
-  For $f \in L^2(G)$:
-  $\|f\|_{L^2(G)}^2 = \sum_{[\xi]} d_\xi \,\|\widehat f(\xi)\|_{HS}^2$,
-  where $\|\cdot\|_{HS}$ is the Hilbert--Schmidt norm on
-  $\mathrm{End}(V_\xi)$.
-\end{theorem}
-
-\begin{proof}
-  \uses{cor:c-mc-orthonormal-basis, def:c-fourier}
-  Expand $f$ in the orthonormal basis from
-  Corollary~\ref{cor:c-mc-orthonormal-basis} and identify the resulting
-  coefficients with the entries of $\widehat f(\xi)$.
-\end{proof}
-
-\begin{theorem}[Fourier inversion]
-  \label{thm:c-fourier-inversion}
-  \lean{UnitaryRep.fourierInversion}
-  % [NEW]
-  \uses{thm:c-plancherel, def:c-fourier}
-  For $f \in L^2(G)$ (with $L^2$ convergence),
-  $f(g) = \sum_{[\xi]} d_\xi \, \mathrm{tr}(\rho_\xi(g)^{-1} \widehat f(\xi))$.
-\end{theorem}
-
-\begin{proof}
-  \uses{thm:c-plancherel, def:c-fourier}
-  Same expansion as in Theorem~\ref{thm:c-plancherel}, summed back.
-\end{proof}
-
-
-\chapter{Full Statement of the Peter--Weyl Theorem}
-\label{chap:c-statement}
-
-The blueprint culminates in three equivalent forms of Peter--Weyl:
-
-\begin{theorem}[Peter--Weyl, Form I: representations]
-  \label{thm:c-PW-I}
-  \lean{UnitaryRep.PeterWeyl_representations}
-  % [NEW]
-  \uses{thm:c-PW-L2-decomp, thm:c-PW-each-isotypic}
-  Every continuous unitary representation of a compact group $G$ on a
-  Hilbert space decomposes (uniquely) as a Hilbert sum of finite-dimensional
-  irreducibles. In particular, all irreducible continuous unitary
-  representations of $G$ are finite-dimensional.
-\end{theorem}
-
-\begin{proof}
-  \uses{thm:c-PW-L2-decomp, thm:c-PW-each-isotypic, cor:c-irr-finite-dim}
-  Apply the isotypic decomposition (Theorem~\ref{thm:c-PW-L2-decomp})
-  componentwise. Finite-dimensionality of the irreducibles follows from
-  Corollary~\ref{cor:c-irr-finite-dim} since every irreducible can be
-  embedded in $L^2(G)$ by the matrix-coefficient construction (or
-  directly by the regular representation).
-\end{proof}
-
-\begin{theorem}[Peter--Weyl, Form II: matrix coefficients]
-  \label{thm:c-PW-II}
-  \lean{UnitaryRep.PeterWeyl_matrixCoefficients_dense}
-  % [NEW]
-  \uses{thm:c-mc-dense-CG, cor:c-mc-orthonormal-basis}
-  The set of matrix coefficients of finite-dimensional continuous unitary
-  irreducible representations is uniformly dense in $C(G, \mathbb C)$,
-  and the suitably normalised matrix coefficients form an orthonormal
-  Hilbert basis of $L^2(G)$.
-\end{theorem}
-
-\begin{proof}\uses{thm:c-mc-dense-CG, cor:c-mc-orthonormal-basis}
-  Combination of Theorem~\ref{thm:c-mc-dense-CG} (uniform density) and
-  Corollary~\ref{cor:c-mc-orthonormal-basis} (Hilbert basis).
-\end{proof}
-
-\begin{theorem}[Peter--Weyl, Form III: $L^2$ decomposition]
-  \label{thm:c-PW-III}
-  \lean{UnitaryRep.PeterWeyl_L2_decomposition}
-  % [NEW]
-  \uses{thm:c-PW-L2-decomp, thm:c-PW-each-isotypic}
-  As a representation of $G \times G$ under (left, right)-translation,
+  \uses{def:c2-Ghat, def:c2-rightReg, def:c2-Subrep}
+  For $\xi \in \widehat G$, the $\xi$-isotypic component is
   \[
-     L^2(G) \;\cong\;
-     \widehat{\bigoplus}_{[\xi] \in \widehat G}
-     V_\xi \boxtimes V_\xi^*,
+     L^2(G)_\xi :=
+     \overline{\sum \{V \mid V \text{ closed $\rho^R$-invariant subspace}, \rho^R|_V \cong \rho_\xi\}},
   \]
-  where each summand $V_\xi \boxtimes V_\xi^*$ is the
-  finite-dimensional representation of $G \times G$ on
-  $V_\xi \otimes V_\xi^*$ via $\rho_\xi \boxtimes \rho_\xi^*$.
+  the closure (in $L^2$) of the linear span of all closed $\rho^R$-invariant
+  subspaces of $L^2(G)$ on which $\rho^R$ acts equivalently to $\rho_\xi$.
+\end{definition}
+
+\begin{theorem}[$L^2(G)_\xi$ is $\rho^R$-invariant]
+  \label{thm:c2-isotypic-invariant}
+  \lean{PeterWeyl.isotypicComponent_isInvariant}
+  % [NEW]
+  \uses{def:c2-isotypic}
+  $\rho^R.\texttt{IsInvariant}\, L^2(G)_\xi$.
 \end{theorem}
 
-\begin{proof}\uses{thm:c-PW-L2-decomp, thm:c-PW-each-isotypic}
-  Combine Theorem~\ref{thm:c-PW-L2-decomp} and
-  Theorem~\ref{thm:c-PW-each-isotypic}, the latter giving the
-  identification of each isotypic component with
-  $V_\xi \otimes V_\xi^*$ as a $G \times G$-representation.
+\begin{proof}
+  \uses{def:c2-isotypic, def:c2-isInvariant}
+  Sums of $\rho^R$-invariant subspaces are $\rho^R$-invariant; closures
+  of $\rho^R$-invariant sets are $\rho^R$-invariant (since each $\rho^R(g)$
+  is continuous).
+\end{proof}
+
+\section{Orthogonality between isotypic components}
+
+\begin{theorem}[Distinct isotypic components are orthogonal]
+  \label{thm:c2-isotypic-orthog}
+  \lean{PeterWeyl.isotypicComponent_orthogonal}
+  % [NEW]
+  \uses{def:c2-isotypic, thm:c2-mc-orthog-distinct,
+        thm:c2-schur-distinct}
+  For $\xi_1 \neq \xi_2$ in $\widehat G$, $L^2(G)_{\xi_1} \perp L^2(G)_{\xi_2}$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-schur-distinct, thm:c2-orthCompl-invariant,
+        def:c2-isotypic}
+  By bilinearity and continuity of the inner product, it suffices to show
+  $V_1 \perp V_2$ for any pair of closed $\rho^R$-invariant subspaces
+  $V_1 \cong \rho_{\xi_1}$, $V_2 \cong \rho_{\xi_2}$.
+  Consider the orthogonal projection $P : L^2(G) \to V_2$. It is bounded,
+  $\rho^R$-equivariant (Theorem~\ref{thm:c2-orthCompl-invariant} plus
+  the standard fact that orthogonal projection onto an invariant subspace
+  is equivariant), and finite-rank (range is $V_2$, finite-dim), hence
+  compact. Restricted to $V_1$, it gives a compact intertwiner
+  $V_1 \to V_2$ between two non-isomorphic irreducibles. By
+  Theorem~\ref{thm:c2-schur-distinct}, $P|_{V_1} = 0$, i.e.\ $V_1 \perp V_2$.
+\end{proof}
+
+\section{The isotypic Hilbert sum}
+
+\begin{theorem}[Matrix coefficients of $\rho_\xi$ live in $L^2(G)_\xi$]
+  \label{thm:c2-mc-in-isotypic}
+  \lean{UnitaryRep.matrixCoeff_mem_isotypicComponent}
+  % [NEW]
+  \uses{def:c2-isotypic, def:c2-matrixCoeff, def:c2-Ghat}
+  For each $\xi \in \widehat G$ and $u, v \in V_\xi$, the matrix
+  coefficient $\pi_{u, v}^{\rho_\xi} \in L^2(G)$ lies in $L^2(G)_\xi$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:c2-isotypic, def:c2-matrixCoeff,
+        thm:c2-restrict-to-mc, def:c2-rightReg}
+  The closure of the right-translates of $\pi_{u,v}^{\rho_\xi}$ (under
+  $\rho^R$) gives a closed $\rho^R$-invariant subspace $W \leq L^2(G)$.
+  The map $V_\xi \to L^2(G)$, $u' \mapsto \pi_{u', v}^{\rho_\xi}$, is a
+  $G$-equivariant linear map (right-translation action on $L^2(G)$ matches
+  the $\rho_\xi$-action on $V_\xi$ via the matrix-coefficient identity);
+  it has trivial kernel (Schur, since $V_\xi$ irreducible and the map
+  non-zero), and image is $W$. Hence $\rho^R|_W \cong \rho_\xi$, so
+  $W \subseteq L^2(G)_\xi$, hence $\pi_{u, v}^{\rho_\xi} \in W \subseteq L^2(G)_\xi$.
+\end{proof}
+
+\begin{theorem}[Closed sum of isotypic components is dense]
+  \label{thm:c2-isotypic-spans}
+  \lean{PeterWeyl.isotypicComponents_topologicalClosure_eq_top}
+  % [NEW]
+  \uses{thm:c2-mc-in-isotypic, cor:c2-MCAlg-L2-dense,
+        def:c2-MCAlg, def:c2-isotypic}
+  $\overline{\sum_{\xi \in \widehat G} L^2(G)_\xi} = L^2(G)$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-mc-in-isotypic, cor:c2-MCAlg-L2-dense}
+  By Theorem~\ref{thm:c2-mc-in-isotypic}, every matrix coefficient lies
+  in some $L^2(G)_\xi$. Hence $\mathcal A \subseteq \sum_\xi L^2(G)_\xi$.
+  By Corollary~\ref{cor:c2-MCAlg-L2-dense}, $\mathcal A$ is dense in
+  $L^2(G)$, so the closed sum is all of $L^2(G)$.
+\end{proof}
+
+\begin{theorem}[$L^2(G)$ is the Hilbert sum of isotypic components]
+  \label{thm:c2-PW-HilbertSum}
+  \lean{PeterWeyl.isHilbertSum_isotypicComponents}
+  % [NEW]
+  \uses{thm:c2-isotypic-orthog, thm:c2-isotypic-spans, def:c2-isotypic}
+  The family $\{L^2(G)_\xi\}_{\xi \in \widehat G}$ is an
+  \texttt{IsHilbertSum} structure on $L^2(G)$:
+  \begin{itemize}
+    \item it is an orthogonal family (Theorem~\ref{thm:c2-isotypic-orthog});
+    \item the closure of the linear span of all components is $\top$
+      (Theorem~\ref{thm:c2-isotypic-spans}).
+  \end{itemize}
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-isotypic-orthog, thm:c2-isotypic-spans}
+  Both conditions in the definition of \texttt{IsHilbertSum}
+  (\texttt{Mathlib.Analysis.InnerProductSpace.l2Space}) are exactly
+  the cited theorems.
+\end{proof}
+
+\section{Plancherel}
+
+\begin{theorem}[Plancherel: per-isotypic norm sum]
+  \label{thm:c2-plancherel-isotypic}
+  \lean{PeterWeyl.norm_sq_eq_sum_isotypic_norm_sq}
+  % [~ML, just IsHilbertSum.norm_sum]
+  \uses{thm:c2-PW-HilbertSum}
+  For every $f \in L^2(G)$,
+  $\|f\|_{L^2}^2 = \sum_{\xi \in \widehat G}\|P_\xi f\|_{L^2}^2$,
+  where $P_\xi : L^2(G) \to L^2(G)_\xi$ is the orthogonal projection.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:c2-PW-HilbertSum}
+  Direct from \texttt{IsHilbertSum.norm\_sq\_eq\_tsum} (or analogous
+  Mathlib lemma) applied to Theorem~\ref{thm:c2-PW-HilbertSum}.
 \end{proof}
 
 
-\chapter{Mathlib-Status Summary and Roadmap}
-\label{chap:c-status}
+\chapter{Mathlib-Status Summary}
+\label{chap:c2-status}
 
-\paragraph{What is already in Mathlib (\texttt{[ML]}, with \texttt{\textbackslash leanok}).}
-The analytic foundations are mostly there:
-\texttt{MeasureTheory.Measure.haarMeasure} and the \texttt{IsHaarMeasure}
-typeclass with all invariance, regularity, and uniqueness results
-(\texttt{Mathlib.MeasureTheory.Measure.Haar.\{Basic, Unique\}});
-\texttt{MeasureTheory.Lp E 2 $\mu$} with its inner-product
-structure (\texttt{Mathlib.MeasureTheory.Function.L2Space});
-density of $C(G)$ in $L^p$ on a finite regular measure space
-(\texttt{MeasureTheory.Lp.continuousMap\_dense});
-the inclusions $L^p \subseteq L^q$ on a finite measure space; the bundled
-\texttt{StarSubalgebra $\mathbb C$ C(G, $\mathbb C$)} type and the complex
-Stone--Weierstrass theorem
-(\texttt{ContinuousMap.starSubalgebra\_topologicalClosure\_eq\_top\_of\_separatesPoints});
-\texttt{IsHilbertSum} and \texttt{HilbertBasis}
-(\texttt{Mathlib.Analysis.InnerProductSpace.l2Space});
-\texttt{IsCompactOperator} as a predicate
-(\texttt{Mathlib.Analysis.Normed.Operator.Compact});
-the multiplicative convolution \texttt{MeasureTheory.mconvolution}
-(\texttt{Mathlib.Analysis.Convolution}).
+\paragraph{Counts (final v2 blueprint).}
+77 formal items across 9 chapters. Of these:
 
-\paragraph{Trivial wrappers (\texttt{[\textasciitilde ML]}).}
-\texttt{UnitaryRep.matrixCoeffSubalgebra\_topologicalClosure\_eq\_top\_L2}
-(uniform density implies $L^2$ density on a finite measure space).
+\begin{itemize}
+  \item \textbf{Mathlib citations (\texttt{[ML]}).}
+    Haar measure (existence, uniqueness, invariance, inversion,
+    finiteness on compact groups, probability normalization),
+    \texttt{MeasureTheory.Lp}, $L^2$ inner product structure,
+    \texttt{ContinuousMap.toLp} and density, $L^p$-monotonicity on
+    finite measure spaces, \texttt{IsCompactOperator}, the closure of
+    compact operators, complex Stone--Weierstrass, \texttt{IsHilbertSum},
+    \texttt{IsHilbertSum.norm\_sq\_eq\_tsum}.
 
-\paragraph{Genuinely new contributions (\texttt{[NEW]}).}
-There are roughly four blocks:
+  \item \textbf{External assumption (\texttt{[EXT]}).}
+    Exactly one item: the spectral theorem for compact self-adjoint
+    operators on a complex Hilbert space (Assumption~\ref{ass:c2-spectral}),
+    plus its immediate consequence that a non-zero such operator has a
+    non-zero finite-dimensional eigenspace
+    (Theorem~\ref{thm:c2-spectral-nonzero-eval}).
 
-\begin{enumerate}
+  \item \textbf{Trivial wrappers (\texttt{[\textasciitilde ML]}).}
+    \texttt{PeterWeyl.haarProb} (rescaling),
+    \texttt{cor:c2-MCAlg-L2-dense},
+    \texttt{thm:c2-plancherel-isotypic}.
 
-  \item \textbf{Continuous unitary representation theory.}
-  \texttt{UnitaryRep $\mathbb C$ G H} (the bundled structure) and the
-  basic API: \texttt{UnitaryRep.Subrep},
-  \texttt{UnitaryRep.IsIrreducible}, \texttt{UnitaryRep.Intertwiner},
-  \texttt{UnitaryRep.Equiv}, the orthogonal-complement closure of
-  invariant subspaces (Lemma~\ref{lem:c-subrep-orthcomp}), and the
-  Schur lemmas (Theorem~\ref{thm:c-schur-scalar},
-  Corollary~\ref{cor:c-schur-distinct}). This is roughly the analog of
-  what Mathlib's \texttt{Representation} infrastructure provides in the
-  algebraic setting, and probably belongs in a new
-  \texttt{Mathlib.RepresentationTheory.Unitary} file (or several).
+  \item \textbf{New contributions (\texttt{[NEW]}).}
+    Roughly 60 items, organized into:
+    \begin{itemize}
+      \item \emph{UnitaryRep API} (Chapter~\ref{chap:c2-rep}): structure
+        definition, basic theorems about unitarity, subrep predicate
+        and orthogonal-complement closure, irreducibility, intertwiners,
+        equivalence, left/right regular representations.
+      \item \emph{Convolution as a bounded operator on $L^2(G)$}
+        (Chapter~\ref{chap:c2-conv}): pointwise convolution facts,
+        bounded extension to $L^2$, equivariance, self-adjointness for
+        symmetric kernels, compactness.
+      \item \emph{Approximate identities} (Chapter~\ref{chap:c2-approxId}).
+      \item \emph{Schur's lemma} (Chapter~\ref{chap:c2-schur}, using
+        Assumption~\ref{ass:c2-spectral}).
+      \item \emph{Matrix coefficients and the star-subalgebra}
+        (Chapter~\ref{chap:c2-matCoeff}).
+      \item \emph{Existence of separating finite-dim irreducibles}
+        (Chapter~\ref{chap:c2-separating}).
+      \item \emph{Density of $\mathcal A$} (Chapter~\ref{chap:c2-density},
+        the Stone--Weierstrass step).
+      \item \emph{Schur orthogonality} (Chapter~\ref{chap:c2-orthog}).
+      \item \emph{Isotypic decomposition} (Chapter~\ref{chap:c2-isotypic}).
+    \end{itemize}
+\end{itemize}
 
-  \item \textbf{Convolution as a compact self-adjoint operator on
-  $L^2(G)$.} The chain
-  Theorem~\ref{thm:c-conv-compact},
-  Theorem~\ref{thm:c-conv-selfadjoint},
-  Theorem~\ref{thm:c-conv-comm-right},
-  Lemma~\ref{lem:c-approx-identity}.
-  These are essentially folklore but are not currently in Mathlib for
-  compact non-abelian groups.
-
-  \item \textbf{The compact-operator spectral theorem
-  (Theorem~\ref{thm:c-spectral}).}
-  This is the most substantial gap.  Mathlib has the finite-dimensional
-  version (\texttt{LinearMap.IsSymmetric.diagonalization}) but not the
-  infinite-dimensional compact-self-adjoint case. Formalising it is a
-  project in its own right (perhaps even larger than the rest of this
-  blueprint combined). A workaround might be to prove just the weaker
-  ``every compact self-adjoint operator has a non-zero eigenvalue with
-  finite-dimensional eigenspace'', which is enough for
-  Corollary~\ref{cor:c-irr-finite-dim} and
-  Theorem~\ref{thm:c-irreducibles-separate}.
-
-  \item \textbf{Peter--Weyl proper.} The decomposition theorems
-  themselves: Theorem~\ref{thm:c-irreducibles-separate} (existence of
-  separating finite-dim irreducibles), Theorem~\ref{thm:c-mc-dense-CG}
-  (dense matrix coefficients via Stone--Weierstrass),
-  Theorem~\ref{thm:c-PW-L2-decomp} ($L^2$ Hilbert sum),
-  Theorem~\ref{thm:c-PW-each-isotypic} (per-isotypic structure),
-  Schur orthogonality, Plancherel, Fourier inversion.
-
-\end{enumerate}
-
-\paragraph{Suggested formalisation order.}
-\begin{enumerate}
-  \item Define \texttt{UnitaryRep} and basic API
-        (Chapter~\ref{chap:c-rep}).
-  \item Convolution facts on a compact group
-        (Chapter~\ref{chap:c-convolution}, sections 1).
-  \item Either (a) formalise the compact-self-adjoint spectral theorem
-        in full generality, or (b) extract the weaker ``every non-zero
-        compact self-adjoint operator has a finite-dimensional
-        eigenspace at a non-zero eigenvalue'' --- which is what we
-        actually use --- as a focused mini-project.
-  \item Schur's lemma (Chapter~\ref{chap:c-schur}).
-  \item The matrix-coefficient subalgebra and Stone--Weierstrass
-        (Chapter~\ref{chap:c-peter-weyl-L2}, sections 1--3).
-  \item The Peter--Weyl decomposition and Plancherel
-        (Chapter~\ref{chap:c-peter-weyl-L2}, sections 3--4 and
-        Chapter~\ref{chap:c-orthogonality}).
-\end{enumerate}
-
-\paragraph{Comparison to the finite-group blueprint.}
-Recall that for finite $G$ over an algebraically closed field $k$, the
-proof reduces to ``Maschke + Wedderburn--Artin + algebraic closedness'',
-with about \emph{four}--five genuinely new lemmas needed beyond Mathlib.
-For a compact (possibly infinite) topological group, the analytic
-infrastructure dominates and the new contributions are an order of
-magnitude larger; the spectral theorem alone is a sub-project of
-substantial size. This is in line with the historical observation that
-Peter--Weyl for compact groups is much harder than the finite-group case
-and required serious harmonic analysis to develop.
+\paragraph{Translation-readiness checklist.}
+Each item in the blueprint satisfies the following:
+\begin{itemize}
+  \item Has a single named conclusion (no ``$X$ is closed and invariant'';
+    instead split into two atomic theorems).
+  \item Has a \texttt{\textbackslash lean\{...\}} directive giving the
+    intended Lean name in a coherent namespace
+    (\texttt{UnitaryRep.}, \texttt{PeterWeyl.}).
+  \item Has typed signatures: every introduced object lists its type
+    explicitly.
+  \item Has a precise \texttt{\textbackslash uses\{...\}} graph: each
+    \texttt{\textbackslash uses} entry is genuinely needed in the
+    proof.
+  \item Proofs decompose into named steps each of which corresponds to
+    a single line/\texttt{have} in Lean. Where multiple Lean steps would
+    be needed, those steps are extracted as their own theorems with
+    their own \texttt{\textbackslash uses} entries.
+\end{itemize}

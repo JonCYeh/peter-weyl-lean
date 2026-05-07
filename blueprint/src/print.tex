@@ -24,6 +24,14 @@
 \input{macros/common}
 \input{macros/print}
 
+% Allow TeX more flexibility on lines containing long Mathlib references.
+% Long \texttt{...} identifiers can't hyphenate, so we widen the emergency
+% stretch and permit looser inter-word spacing as a fallback. Together with
+% the per-identifier \allowbreak hints below, this clears almost all the
+% overfull \hbox warnings.
+\setlength{\emergencystretch}{3em}
+\sloppy
+
 \title{Peter Weyl Lean}
 \author{JonCYeh}
 

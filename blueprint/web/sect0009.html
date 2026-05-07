@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Algebraic closedness collapses the \(D_i\) to \(k\)</title>
-<link rel="next" href="sect0010.html" title="Sum-of-squares dimension formula" />
-<link rel="prev" href="sect0008.html" title="Wedderburn form of k[G]" />
-<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
+<title>Pointwise convolution</title>
+<link rel="next" href="sect0010.html" title="Convolution as a bounded operator" />
+<link rel="prev" href="chap-c2-conv.html" title="Convolution as a Bounded Operator on L2(G)" />
+<link rel="up" href="chap-c2-conv.html" title="Convolution as a Bounded Operator on L2(G)" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -26,118 +26,202 @@
 <body>
 <header>
 <svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
-<h1 id="doc_title"><a href="index.html">Peter WWeyl Lean</a></h1>
+<h1 id="doc_title"><a href="index.html">Peter Weyl Lean</a></h1>
 </header>
 
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class="">
-  <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup and Hypotheses</span></a>
+  <a href="chap-c2-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
 <li class="">
-  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Mathlib API for representations</span></a>
+  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
+  <a href="chap-c2-rep.html"><span class="toc_ref">2</span> <span class="toc_entry">Continuous Unitary Representations</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
- </li>
-
-  </ul>
+  <a href="sect0004.html"><span class="toc_ref">2.1</span> <span class="toc_entry">The structure</span></a>
  </li>
 <li class="">
-  <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
+  <a href="sect0005.html"><span class="toc_ref">2.2</span> <span class="toc_entry">Subrepresentations</span></a>
  </li>
 <li class="">
-  <a href="sect0005.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Bundled <span class="ttfamily">IntertwiningMap</span> form</span></a>
- </li>
-
-  </ul>
+  <a href="sect0006.html"><span class="toc_ref">2.3</span> <span class="toc_entry">Irreducibility</span></a>
  </li>
 <li class="">
-  <a href="chap-characters.html"><span class="toc_ref">4</span> <span class="toc_entry">Characters and Their Orthogonality</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sec-char-mathlib.html"><span class="toc_ref">4.1</span> <span class="toc_entry">Mathlib’s character API</span></a>
- </li>
-
-  </ul>
+  <a href="sect0007.html"><span class="toc_ref">2.4</span> <span class="toc_entry">Intertwiners and equivalences</span></a>
  </li>
 <li class="">
-  <a href="chap-isotypic.html"><span class="toc_ref">5</span> <span class="toc_entry">Isotypic Decomposition via Mathlib</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sect0006.html"><span class="toc_ref">5.1</span> <span class="toc_entry">Mathlib’s isotypic API</span></a>
+  <a href="sect0008.html"><span class="toc_ref">2.5</span> <span class="toc_entry">The left and right regular representations</span></a>
  </li>
 
   </ul>
  </li>
 <li class=" active">
-  <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
+  <a href="chap-c2-conv.html"><span class="toc_ref">3</span> <span class="toc_entry">Convolution as a Bounded Operator on \(L^2(G)\)</span></a>
   <span class="expand-toc">▼</span>
   <ul class="sub-toc-1 active">
-     <li class="">
-  <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
+     <li class=" active current">
+  <a href="sect0009.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Pointwise convolution</span></a>
  </li>
 <li class="">
-  <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
- </li>
-<li class=" active current">
-  <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
+  <a href="sect0010.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Convolution as a bounded operator</span></a>
  </li>
 <li class="">
-  <a href="sect0010.html"><span class="toc_ref">6.4</span> <span class="toc_entry">Sum-of-squares dimension formula</span></a>
+  <a href="sect0011.html"><span class="toc_ref">3.3</span> <span class="toc_entry">Right-equivariance of \(T_{\phi }\)</span></a>
  </li>
 <li class="">
-  <a href="sect0011.html"><span class="toc_ref">6.5</span> <span class="toc_entry">Module-form Peter–Weyl</span></a>
+  <a href="sect0012.html"><span class="toc_ref">3.4</span> <span class="toc_entry">Self-adjointness of \(T_\phi \) for symmetric \(\phi \)</span></a>
+ </li>
+<li class="">
+  <a href="sect0013.html"><span class="toc_ref">3.5</span> <span class="toc_entry">Compactness of \(T_\phi \)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-character-consequences.html"><span class="toc_ref">7</span> <span class="toc_entry">Character-Theoretic Consequences</span></a>
+  <a href="chap-c2-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-schur.html"><span class="toc_ref">6</span> <span class="toc_entry">Schur’s Lemma for Continuous Unitary Irreducibles</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0012.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Multiplicity formula and irreducibility test</span></a>
+  <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
  </li>
 <li class="">
-  <a href="sect0013.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Class functions and the second orthogonality</span></a>
+  <a href="sect0015.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Self-adjoint equivariant operator on irreducible is scalar</span></a>
+ </li>
+<li class="">
+  <a href="sect0016.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Schur’s lemma proper</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-status.html"><span class="toc_ref">8</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <a href="chap-c2-matCoeff.html"><span class="toc_ref">7</span> <span class="toc_entry">Matrix Coefficients</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="chap-status.html#a0000000015"><span class="toc_ref"></span> <span class="toc_entry">Already in Mathlib (<span class="ttfamily">[ML]</span>, with <span class="ttfamily">\leanok</span>).</span></a>
+  <a href="sect0017.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Matrix coefficient of a finite-dim representation</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000016"><span class="toc_ref"></span> <span class="toc_entry">Trivial wrappers (<span class="ttfamily">[~ML]</span>).</span></a>
+  <a href="sect0018.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Algebra structure</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000017"><span class="toc_ref"></span> <span class="toc_entry">Genuinely new contributions (<span class="ttfamily">[NEW]</span>).</span></a>
+  <a href="sect0019.html"><span class="toc_ref">7.3</span> <span class="toc_entry">The matrix-coefficient star-subalgebra</span></a>
+ </li>
+
+  </ul>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000018"><span class="toc_ref"></span> <span class="toc_entry">What this means.</span></a>
+  <a href="chap-c2-separating.html"><span class="toc_ref">8</span> <span class="toc_entry">Existence of Separating Finite-Dim Irreducibles</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0020.html"><span class="toc_ref">8.1</span> <span class="toc_entry">Setup and key intermediate lemmas</span></a>
+ </li>
+<li class="">
+  <a href="sect0021.html"><span class="toc_ref">8.2</span> <span class="toc_entry">From convolution to a finite-dim invariant subspace</span></a>
+ </li>
+<li class="">
+  <a href="sect0022.html"><span class="toc_ref">8.3</span> <span class="toc_entry">From finite-dim invariant to finite-dim irreducible</span></a>
+ </li>
+<li class="">
+  <a href="sect0023.html"><span class="toc_ref">8.4</span> <span class="toc_entry">The separation theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-density.html"><span class="toc_ref">9</span> <span class="toc_entry">Density of Matrix Coefficients</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0024.html"><span class="toc_ref">9.1</span> <span class="toc_entry">\(\mathcal M\) separates points</span></a>
+ </li>
+<li class="">
+  <a href="sect0025.html"><span class="toc_ref">9.2</span> <span class="toc_entry">Stone–Weierstrass: \(\mathcal A\) is dense</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-orthog.html"><span class="toc_ref">10</span> <span class="toc_entry">Schur Orthogonality</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0026.html"><span class="toc_ref">10.1</span> <span class="toc_entry">Orthogonality across distinct irreducibles</span></a>
+ </li>
+<li class="">
+  <a href="sect0027.html"><span class="toc_ref">10.2</span> <span class="toc_entry">Same-irreducible orthogonality</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-isotypic.html"><span class="toc_ref">11</span> <span class="toc_entry">Isotypic Decomposition of \(L^2(G)\) and Plancherel</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0028.html"><span class="toc_ref">11.1</span> <span class="toc_entry">Isotypic component</span></a>
+ </li>
+<li class="">
+  <a href="sect0029.html"><span class="toc_ref">11.2</span> <span class="toc_entry">Orthogonality between isotypic components</span></a>
+ </li>
+<li class="">
+  <a href="sect0030.html"><span class="toc_ref">11.3</span> <span class="toc_entry">The isotypic Hilbert sum</span></a>
+ </li>
+<li class="">
+  <a href="sect0031.html"><span class="toc_ref">11.4</span> <span class="toc_entry">Plancherel</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html"><span class="toc_ref">12</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-c2-status.html#a0000000037"><span class="toc_ref"></span> <span class="toc_entry">Counts (final v2 blueprint).</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html#a0000000038"><span class="toc_ref"></span> <span class="toc_entry">Translation-readiness checklist.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-genstatus.html"><span class="toc_ref">13</span> <span class="toc_entry">Project Status (Generated)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0032.html"><span class="toc_ref"></span> <span class="toc_entry">Headline counts</span></a>
+ </li>
+<li class="">
+  <a href="sect0033.html"><span class="toc_ref"></span> <span class="toc_entry">Per-chapter status</span></a>
+ </li>
+<li class="">
+  <a href="sect0034.html"><span class="toc_ref"></span> <span class="toc_entry">Architectural fixes during formalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0035.html"><span class="toc_ref"></span> <span class="toc_entry">Cleanup-pass priorities</span></a>
  </li>
 
   </ul>
@@ -151,14 +235,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000010">6.3 Algebraic closedness collapses the \(D_i\) to \(k\)</h1>
-<div class="lemma_thmwrapper theorem-style-plain" id="lem:divalg-of-isAlgClosed">
-  <div class="lemma_thmheading">
-    <span class="lemma_thmcaption">
-    Lemma
+<h1 id="a0000000010">3.1 Pointwise convolution</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-conv-ptwise">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
     </span>
-    <span class="lemma_thmlabel">28</span>
-    <span class="lemma_thmtitle">Finite-dim division algebra over alg-closed \(k\) equals \(k\)</span>
+    <span class="definition_thmlabel">35</span>
+    <span class="definition_thmtitle">Pointwise convolution</span>
     <div class="thm_header_extras">
 
     
@@ -166,10 +250,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0009.html#lem:divalg-of-isAlgClosed">#</a>
-    
-    <a class="icon proof" href="sect0009.html#a0000000040"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0009.html#def:c2-conv-ptwise">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -184,9 +265,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sect0002.html#def:c2-haar-prob">Definition 3</a></li>
           
         </ul>
     
@@ -206,7 +285,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed" class="lean_decl">PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.convPtwise" class="lean_decl">PeterWeyl.convPtwise</a></li>
           
         </ul>
     
@@ -216,40 +295,30 @@
     
         </div>
   </div>
-  <div class="lemma_thmcontent">
-  <p>    Let \(k\) be an algebraically closed field and \(D\) a finite-dimensional division \(k\)-algebra. Then the canonical map \(k \to D\) is a \(k\)-algebra isomorphism. </p>
+  <div class="definition_thmcontent">
+  <p>    For Borel-measurable \(f, \phi : G \to \mathbb C\) such that the integral below converges, define </p>
+<div class="displaymath" id="a0000000047">
+  \[  (f * \phi )(x) := \int _G f(y)\,  \phi (y^{-1} x)\,  d\mu _G(y).  \]
+</div>
+<p> In Lean this is <span class="ttfamily">MeasureTheory.mconvolution</span> applied to the bilinear form \((\xi , \eta ) \mapsto \xi \cdot \eta : \mathbb C \times \mathbb C \to \mathbb C\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000040">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> The canonical map \(\iota : k \to D\) is injective (it has trivial kernel since \(k\) is a field and \(\iota (1) = 1 \ne 0\)). For surjectivity, take \(d \in D\). Since \(D\) is finite-dimensional over \(k\), the powers \(1, d, d^2, \ldots \) are \(k\)-linearly dependent, so \(d\) satisfies some non-zero polynomial \(f \in k[X]\). Pick \(f\) of minimal degree; it is then irreducible in \(k[X]\) (else a proper factorisation would give zero-divisors in \(D\), contradicting \(D\) a division ring). Since \(k\) is algebraically closed, every irreducible polynomial in \(k[X]\) has degree \(1\), so \(\deg f = 1\) and \(d \in \iota (k)\). The Lean formalisation (<span class="ttfamily">PeterWeyl.divisionAlgebra_algEquiv_of_isAlgClosed</span>) packages this as <span class="ttfamily">AlgEquiv.ofBijective (Algebra.ofId k D)</span>, with surjectivity supplied by <span class="ttfamily">IsAlgClosed.algebraMap_bijective_of_isIntegral</span> (using <span class="ttfamily">Algebra.IsIntegral.of_finite</span>) and injectivity by <span class="ttfamily">(algebraMap k D).injective</span>. </p>
-
-  </div>
-</div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:peter-weyl-ring">
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-conv-CS">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">29</span>
-    <span class="theorem_thmtitle">Peter–Weyl for finite groups, ring form</span>
+    <span class="theorem_thmlabel">36</span>
+    <span class="theorem_thmtitle">Cauchy–Schwarz bound for pointwise convolution</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0009.html#thm:peter-weyl-ring">#</a>
+    <a class="icon proof" href="sect0009.html#thm:c2-conv-CS">#</a>
     
-    <a class="icon proof" href="sect0009.html#a0000000041"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0009.html#a0000000048"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -265,13 +334,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 27</a></li>
+          <li><a href="sect0009.html#def:c2-conv-ptwise">Definition 35</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
+          <li><a href="sect0003.html#def:c2-L2">Definition 9</a></li>
           
-          <li><a href="sect0008.html#thm:wedderburn-kG">Theorem 27</a></li>
+          <li><a href="sect0009.html#def:c2-conv-ptwise">Definition 35</a></li>
           
-          <li><a href="sect0009.html#lem:divalg-of-isAlgClosed">Lemma 28</a></li>
+          <li><a href="sect0002.html#thm:c2-haar-rightInv">Theorem 7</a></li>
           
         </ul>
     
@@ -291,7 +360,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.groupAlgebra_algEquiv_pi_matrix" class="lean_decl">PeterWeyl.groupAlgebra_algEquiv_pi_matrix</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.convPtwise_norm_le_L2_L2" class="lean_decl">PeterWeyl.convPtwise_norm_le_L2_L2</a></li>
           
         </ul>
     
@@ -302,14 +371,11 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Under the standing hypotheses there exist \(n \in \mathbb N\) and \((d_i)_{i {\lt} n}\) with each \(d_i \ne 0\), together with a \(k\)-algebra isomorphism </p>
-<div class="displaymath" id="a0000000042">
-  \[  \mathrm{MonoidAlgebra}\  k\  G \; \simeq _{k\text{-alg}}\;  \prod _{i {\lt} n} \mathrm{Mat}_{d_i \times d_i}(k).  \]
-</div>
+  <p>    For \(f, \phi \in L^2(G)\) and \(x \in G\), \(|(f*\phi )(x)| \leq \| f\| _{L^2}\| \phi \| _{L^2}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000041">
+<div class="proof_wrapper" id="a0000000048">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -317,7 +383,90 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Apply Theorem&#160;<a href="sect0008.html#thm:wedderburn-kG">27</a> to obtain \(\Phi : k[G] \simeq _{\! k} \prod _i \mathrm{Mat}_{d_i}(D_i)\) with each \(D_i\) a finite-dimensional division \(k\)-algebra. Apply Lemma&#160;<a href="sect0009.html#lem:divalg-of-isAlgClosed">28</a> componentwise to obtain \(D_i \simeq k\) as \(k\)-algebras, and lift through <span class="ttfamily">AlgEquiv.mapMatrix</span> via <span class="ttfamily">AlgEquiv.piCongrRight</span> to get \(\prod _i \mathrm{Mat}_{d_i}(D_i) \simeq \prod _i \mathrm{Mat}_{d_i}(k)\). Compose. The Lean formalisation (<span class="ttfamily">PeterWeyl.groupAlgebra_algEquiv_pi_matrix</span>) follows this structure exactly. </p>
+  <p> \(|(f*\phi )(x)| \leq \int |f(y)|\, |\phi (y^{-1}x)|\, d\mu _G(y) \leq \| f\| _{L^2} \cdot \| y\mapsto \phi (y^{-1}x)\| _{L^2}\) by the standard Cauchy–Schwarz inequality. Right-invariance and inversion-invariance of \(\mu _G\) (Theorems&#160;<a href="sect0002.html#thm:c2-haar-rightInv">7</a>, <a href="sect0002.html#thm:c2-haar-inv">8</a>) give \(\| y \mapsto \phi (y^{-1}x)\| _{L^2} = \| \phi \| _{L^2}\). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-conv-cts">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">37</span>
+    <span class="theorem_thmtitle">\(f*\phi \) is continuous when \(f, \phi \in L^2\)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0009.html#thm:c2-conv-cts">#</a>
+    
+    <a class="icon proof" href="sect0009.html#a0000000049"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0009.html#thm:c2-conv-CS">Theorem 36</a></li>
+          
+          <li><a href="sect0008.html#thm:c2-leftTrans-strongCts">Theorem 30</a></li>
+          
+          <li><a href="sect0009.html#thm:c2-conv-CS">Theorem 36</a></li>
+          
+          <li><a href="sect0008.html#thm:c2-leftTrans-strongCts">Theorem 30</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.convPtwise_continuous" class="lean_decl">PeterWeyl.convPtwise_continuous</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For \(f, \phi \in L^2(G)\), the function \(x \mapsto (f*\phi )(x)\) is continuous on \(G\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000049">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Write \((f*\phi )(x) = \langle f, L^2\text{-class of } (y \mapsto \phi (y^{-1} x)^*)\rangle _{L^2}\). The map \(x \mapsto (y \mapsto \phi (y^{-1} x)^*)\) is continuous from \(G\) to \(L^2(G)\) (Theorem&#160;<a href="sect0008.html#thm:c2-leftTrans-strongCts">30</a> applied to the conjugate of the inverted reflection of \(\phi \)). Continuity of the inner product gives the result. </p>
 
   </div>
 </div>
@@ -332,11 +481,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0008.html" title="Wedderburn form of \(k[G]\)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-c2-conv.html" title="Convolution as a Bounded Operator on \(L^2(G)\)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-c2-conv.html" title="Convolution as a Bounded Operator on \(L^2(G)\)"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0010.html" title="Sum-of-squares dimension formula"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0010.html" title="Convolution as a bounded operator"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Maschke’s theorem in Mathlib</title>
-<link rel="next" href="chap-schur.html" title="Schur’s Lemma in Mathlib" />
-<link rel="prev" href="chap-maschke.html" title="Maschke and Semisimplicity" />
-<link rel="up" href="chap-maschke.html" title="Maschke and Semisimplicity" />
+<title>The Hilbert space \(L^2(G)\)</title>
+<link rel="next" href="chap-c2-rep.html" title="Continuous Unitary Representations" />
+<link rel="prev" href="sect0002.html" title="Haar measure and the probability normalization" />
+<link rel="up" href="chap-c2-setup.html" title="Setup, Haar Measure, L2(G)" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -26,118 +26,202 @@
 <body>
 <header>
 <svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
-<h1 id="doc_title"><a href="index.html">Peter WWeyl Lean</a></h1>
+<h1 id="doc_title"><a href="index.html">Peter Weyl Lean</a></h1>
 </header>
 
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
-<li class="">
-  <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup and Hypotheses</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+<li class=" active">
+  <a href="chap-c2-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
 <li class="">
-  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Mathlib API for representations</span></a>
+  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
  </li>
-
-  </ul>
- </li>
-<li class=" active">
-  <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
-     <li class=" active current">
-  <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
+<li class=" active current">
+  <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
+  <a href="chap-c2-rep.html"><span class="toc_ref">2</span> <span class="toc_entry">Continuous Unitary Representations</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
+  <a href="sect0004.html"><span class="toc_ref">2.1</span> <span class="toc_entry">The structure</span></a>
  </li>
 <li class="">
-  <a href="sect0005.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Bundled <span class="ttfamily">IntertwiningMap</span> form</span></a>
+  <a href="sect0005.html"><span class="toc_ref">2.2</span> <span class="toc_entry">Subrepresentations</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">2.3</span> <span class="toc_entry">Irreducibility</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html"><span class="toc_ref">2.4</span> <span class="toc_entry">Intertwiners and equivalences</span></a>
+ </li>
+<li class="">
+  <a href="sect0008.html"><span class="toc_ref">2.5</span> <span class="toc_entry">The left and right regular representations</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-characters.html"><span class="toc_ref">4</span> <span class="toc_entry">Characters and Their Orthogonality</span></a>
+  <a href="chap-c2-conv.html"><span class="toc_ref">3</span> <span class="toc_entry">Convolution as a Bounded Operator on \(L^2(G)\)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sec-char-mathlib.html"><span class="toc_ref">4.1</span> <span class="toc_entry">Mathlib’s character API</span></a>
+  <a href="sect0009.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Pointwise convolution</span></a>
+ </li>
+<li class="">
+  <a href="sect0010.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Convolution as a bounded operator</span></a>
+ </li>
+<li class="">
+  <a href="sect0011.html"><span class="toc_ref">3.3</span> <span class="toc_entry">Right-equivariance of \(T_{\phi }\)</span></a>
+ </li>
+<li class="">
+  <a href="sect0012.html"><span class="toc_ref">3.4</span> <span class="toc_entry">Self-adjointness of \(T_\phi \) for symmetric \(\phi \)</span></a>
+ </li>
+<li class="">
+  <a href="sect0013.html"><span class="toc_ref">3.5</span> <span class="toc_entry">Compactness of \(T_\phi \)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-isotypic.html"><span class="toc_ref">5</span> <span class="toc_entry">Isotypic Decomposition via Mathlib</span></a>
+  <a href="chap-c2-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-schur.html"><span class="toc_ref">6</span> <span class="toc_entry">Schur’s Lemma for Continuous Unitary Irreducibles</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0006.html"><span class="toc_ref">5.1</span> <span class="toc_entry">Mathlib’s isotypic API</span></a>
+  <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
+ </li>
+<li class="">
+  <a href="sect0015.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Self-adjoint equivariant operator on irreducible is scalar</span></a>
+ </li>
+<li class="">
+  <a href="sect0016.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Schur’s lemma proper</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
+  <a href="chap-c2-matCoeff.html"><span class="toc_ref">7</span> <span class="toc_entry">Matrix Coefficients</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
+  <a href="sect0017.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Matrix coefficient of a finite-dim representation</span></a>
  </li>
 <li class="">
-  <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
+  <a href="sect0018.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Algebra structure</span></a>
  </li>
 <li class="">
-  <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
- </li>
-<li class="">
-  <a href="sect0010.html"><span class="toc_ref">6.4</span> <span class="toc_entry">Sum-of-squares dimension formula</span></a>
- </li>
-<li class="">
-  <a href="sect0011.html"><span class="toc_ref">6.5</span> <span class="toc_entry">Module-form Peter–Weyl</span></a>
+  <a href="sect0019.html"><span class="toc_ref">7.3</span> <span class="toc_entry">The matrix-coefficient star-subalgebra</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-character-consequences.html"><span class="toc_ref">7</span> <span class="toc_entry">Character-Theoretic Consequences</span></a>
+  <a href="chap-c2-separating.html"><span class="toc_ref">8</span> <span class="toc_entry">Existence of Separating Finite-Dim Irreducibles</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0012.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Multiplicity formula and irreducibility test</span></a>
+  <a href="sect0020.html"><span class="toc_ref">8.1</span> <span class="toc_entry">Setup and key intermediate lemmas</span></a>
  </li>
 <li class="">
-  <a href="sect0013.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Class functions and the second orthogonality</span></a>
+  <a href="sect0021.html"><span class="toc_ref">8.2</span> <span class="toc_entry">From convolution to a finite-dim invariant subspace</span></a>
+ </li>
+<li class="">
+  <a href="sect0022.html"><span class="toc_ref">8.3</span> <span class="toc_entry">From finite-dim invariant to finite-dim irreducible</span></a>
+ </li>
+<li class="">
+  <a href="sect0023.html"><span class="toc_ref">8.4</span> <span class="toc_entry">The separation theorem</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-status.html"><span class="toc_ref">8</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <a href="chap-c2-density.html"><span class="toc_ref">9</span> <span class="toc_entry">Density of Matrix Coefficients</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="chap-status.html#a0000000015"><span class="toc_ref"></span> <span class="toc_entry">Already in Mathlib (<span class="ttfamily">[ML]</span>, with <span class="ttfamily">\leanok</span>).</span></a>
+  <a href="sect0024.html"><span class="toc_ref">9.1</span> <span class="toc_entry">\(\mathcal M\) separates points</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000016"><span class="toc_ref"></span> <span class="toc_entry">Trivial wrappers (<span class="ttfamily">[~ML]</span>).</span></a>
+  <a href="sect0025.html"><span class="toc_ref">9.2</span> <span class="toc_entry">Stone–Weierstrass: \(\mathcal A\) is dense</span></a>
+ </li>
+
+  </ul>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000017"><span class="toc_ref"></span> <span class="toc_entry">Genuinely new contributions (<span class="ttfamily">[NEW]</span>).</span></a>
+  <a href="chap-c2-orthog.html"><span class="toc_ref">10</span> <span class="toc_entry">Schur Orthogonality</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0026.html"><span class="toc_ref">10.1</span> <span class="toc_entry">Orthogonality across distinct irreducibles</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000018"><span class="toc_ref"></span> <span class="toc_entry">What this means.</span></a>
+  <a href="sect0027.html"><span class="toc_ref">10.2</span> <span class="toc_entry">Same-irreducible orthogonality</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-isotypic.html"><span class="toc_ref">11</span> <span class="toc_entry">Isotypic Decomposition of \(L^2(G)\) and Plancherel</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0028.html"><span class="toc_ref">11.1</span> <span class="toc_entry">Isotypic component</span></a>
+ </li>
+<li class="">
+  <a href="sect0029.html"><span class="toc_ref">11.2</span> <span class="toc_entry">Orthogonality between isotypic components</span></a>
+ </li>
+<li class="">
+  <a href="sect0030.html"><span class="toc_ref">11.3</span> <span class="toc_entry">The isotypic Hilbert sum</span></a>
+ </li>
+<li class="">
+  <a href="sect0031.html"><span class="toc_ref">11.4</span> <span class="toc_entry">Plancherel</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html"><span class="toc_ref">12</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-c2-status.html#a0000000037"><span class="toc_ref"></span> <span class="toc_entry">Counts (final v2 blueprint).</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html#a0000000038"><span class="toc_ref"></span> <span class="toc_entry">Translation-readiness checklist.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-genstatus.html"><span class="toc_ref">13</span> <span class="toc_entry">Project Status (Generated)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0032.html"><span class="toc_ref"></span> <span class="toc_entry">Headline counts</span></a>
+ </li>
+<li class="">
+  <a href="sect0033.html"><span class="toc_ref"></span> <span class="toc_entry">Per-chapter status</span></a>
+ </li>
+<li class="">
+  <a href="sect0034.html"><span class="toc_ref"></span> <span class="toc_entry">Architectural fixes during formalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0035.html"><span class="toc_ref"></span> <span class="toc_entry">Cleanup-pass priorities</span></a>
  </li>
 
   </ul>
@@ -151,14 +235,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">2.1 Maschke’s theorem in Mathlib</h1>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:maschke">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<h1 id="a0000000004">1.3 The Hilbert space \(L^2(G)\)</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-L2">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
     </span>
-    <span class="theorem_thmlabel">9</span>
-    <span class="theorem_thmtitle">Maschke: every \({k[G]}\)-module is semisimple</span>
+    <span class="definition_thmlabel">9</span>
+    <span class="definition_thmtitle">\(L^2(G)\)</span>
     <div class="thm_header_extras">
 
     
@@ -166,10 +250,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:maschke">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0003.html#def:c2-L2">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -184,13 +265,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
+          <li><a href="sect0002.html#def:c2-haar-prob">Definition 3</a></li>
           
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
-          
-          <li><a href="sect0001.html#def:standing-hypotheses">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#def:as-module">Definition 3</a></li>
+          <li><a href="sect0001.html#def:c2-scalars">Definition 2</a></li>
           
         </ul>
     
@@ -210,7 +287,72 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/MonoidAlgebra.Submodule.instIsSemisimpleModule" class="lean_decl">MonoidAlgebra.Submodule.instIsSemisimpleModule</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.L2" class="lean_decl">PeterWeyl.L2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    \(L^2(G) := \texttt{Lp $\mathbb C$ 2 $\mu _G$}\), the Bochner \(L^2\) space of \(\mathbb C\)-valued square-integrable equivalence classes of functions on \(G\), with inner product \(\langle f, h\rangle := \int _G f(g)\overline{h(g)}\, d\mu _G(g)\). </p>
+<p>Mathlib provides the structure (file <span class="ttfamily">Mathlib.MeasureTheory.Function.L2Space</span>) including the inner-product instance <span class="ttfamily">L2.innerProductSpace</span>, the norm \(\| f\| _{L^2}^2 = \int |f|^2 d\mu _G\), and completeness (<span class="ttfamily">MeasureTheory.Lp.completeSpace</span>). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-L2-Hilbert">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">10</span>
+    <span class="theorem_thmtitle">\(L^2(G)\) is a Hilbert space</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0003.html#thm:c2-L2-Hilbert">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0003.html#def:c2-L2">Definition 9</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.L2.completeSpace" class="lean_decl">PeterWeyl.L2.completeSpace</a></li>
           
         </ul>
     
@@ -221,29 +363,17 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Under the standing hypotheses (Definition&#160;<a href="sect0001.html#def:standing-hypotheses">1</a>), for every <span class="ttfamily">Module (MonoidAlgebra k G) V</span> we have <span class="ttfamily">IsSemisimpleModule (MonoidAlgebra k G) V</span>: every \(k[G]\)-submodule has a \(k[G]\)-complement. </p>
+  <p>    <span class="ttfamily">CompleteSpace \(L^2(G)\)</span>. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000019">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-CG-into-L2">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
     </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> This is the registered instance <span class="ttfamily">MonoidAlgebra.Submodule.instIsSemisimpleModule</span> in <span class="ttfamily">Mathlib.RepresentationTheory.Maschke</span>, with hypotheses <span class="ttfamily">[Field k] [Group G] [Finite G] [NeZero (Nat.card G : k)]</span>. The Mathlib proof uses <span class="ttfamily">LinearMap.equivariantProjection</span> (averaging \(\pi \) over \(G\)) plus <span class="ttfamily">LinearMap.equivariantProjection_condition</span>. </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:kG-semisimple-ring">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">10</span>
-    <span class="corollary_thmtitle">\({k[G]}\) is a semisimple ring</span>
+    <span class="theorem_thmlabel">11</span>
+    <span class="theorem_thmtitle">\(C(G) \hookrightarrow L^2(G)\) as a continuous linear map</span>
     <div class="thm_header_extras">
 
     
@@ -251,10 +381,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:kG-semisimple-ring">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0003.html#thm:c2-CG-into-L2">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -269,9 +396,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0003.html#def:c2-L2">Definition 9</a></li>
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0001.html#def:c2-G">Definition 1</a></li>
           
         </ul>
     
@@ -291,7 +418,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.instIsSemisimpleRing_groupAlgebra" class="lean_decl">PeterWeyl.instIsSemisimpleRing_groupAlgebra</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.continuousMapToL2" class="lean_decl">PeterWeyl.continuousMapToL2</a></li>
           
         </ul>
     
@@ -301,39 +428,26 @@
     
         </div>
   </div>
-  <div class="corollary_thmcontent">
-  <p>    <span class="ttfamily">IsSemisimpleRing (MonoidAlgebra k G)</span> holds. </p>
+  <div class="theorem_thmcontent">
+  <p>    There is a continuous linear map \(\iota _{C \to L^2} : C(G, \mathbb C) \to L^2(G)\) taking a continuous function to its \(L^2\)-equivalence class. Mathlib’s <span class="ttfamily">ContinuousMap.toLp</span> provides this. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000020">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-CG-dense-L2">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
     </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> By definition, <span class="ttfamily">IsSemisimpleRing R := IsSemisimpleModule R R</span>. Specialise Theorem&#160;<a href="sect0003.html#thm:maschke">9</a> to \(V := \texttt{MonoidAlgebra k G}\). Formalised as <span class="ttfamily">PeterWeyl.instIsSemisimpleRing_groupAlgebra</span> via <span class="ttfamily">inferInstance</span>. </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:fdrep-semisimple">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">11</span>
-    <span class="corollary_thmtitle">Every \(V : \texttt{FDRep k G}\) is semisimple</span>
+    <span class="theorem_thmlabel">12</span>
+    <span class="theorem_thmtitle">\(\iota _{C \to L^2}\) has dense range</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#cor:fdrep-semisimple">#</a>
-    
-    <a class="icon proof" href="sect0003.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="sect0003.html#thm:c2-CG-dense-L2">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -348,11 +462,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
-          
-          <li><a href="sect0002.html#def:fdrep">Definition 8</a></li>
-          
-          <li><a href="sect0003.html#thm:maschke">Theorem 9</a></li>
+          <li><a href="sect0003.html#thm:c2-CG-into-L2">Theorem 11</a></li>
           
         </ul>
     
@@ -372,7 +482,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/FDRep.isSemisimpleModule_asModule" class="lean_decl">FDRep.isSemisimpleModule_asModule</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.continuousMapToL2_denseRange" class="lean_decl">PeterWeyl.continuousMapToL2_denseRange</a></li>
           
         </ul>
     
@@ -382,20 +492,74 @@
     
         </div>
   </div>
-  <div class="corollary_thmcontent">
-  <p>    For every \(V : \texttt{FDRep k G}\), <span class="ttfamily">V.ρ.asModule</span> is a semisimple <span class="ttfamily">MonoidAlgebra k G</span>-module and is finite as a \(k[G]\)-module. </p>
+  <div class="theorem_thmcontent">
+  <p>    The range of \(\iota _{C \to L^2}\) is dense in \(L^2(G)\). (Mathlib: <span class="ttfamily">MeasureTheory.Lp.continuousMap_dense</span> or <span class="ttfamily">ContinuousMap.toLp_denseRange</span> on a finite regular measure.) </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000021">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-Lp-monotone">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="theorem_thmlabel">13</span>
+    <span class="theorem_thmtitle">\(\| \cdot \| _{L^2} \leq \| \cdot \| _{L^\infty }\) on \(L^2(G)\)</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0003.html#thm:c2-Lp-monotone">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0003.html#def:c2-L2">Definition 9</a></li>
+          
+          <li><a href="sect0002.html#thm:c2-haar-isProb">Theorem 5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/PeterWeyl.L2_norm_le_Linfty_norm" class="lean_decl">PeterWeyl.L2_norm_le_Linfty_norm</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
   </div>
-  <div class="proof_content">
-  <p> Direct from Theorem&#160;<a href="sect0003.html#thm:maschke">9</a>; finiteness over \(k[G]\) follows from finiteness over \(k\) (which is built into <span class="ttfamily">FDRep</span>) since \(k\) is a subring of \(k[G]\). </p>
+  <div class="theorem_thmcontent">
+  <p>    For any \(f \in C(G, \mathbb C)\), \(\| \iota _{C\to L^2}(f)\| _{L^2} \leq \| f\| _\infty \). (Follows from <span class="ttfamily">MeasureTheory.MemLp.mono_exponent_of_isFiniteMeasure</span> or the direct integration estimate using \(\mu _G(G) = 1\).) </p>
 
   </div>
 </div>
@@ -410,11 +574,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0002.html" title="Haar measure and the probability normalization"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-maschke.html" title="Maschke and Semisimplicity"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-c2-setup.html" title="Setup, Haar Measure, \(L^2(G)\)"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-schur.html" title="Schur’s Lemma in Mathlib"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-c2-rep.html" title="Continuous Unitary Representations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

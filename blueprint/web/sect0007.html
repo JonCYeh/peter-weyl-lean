@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The regular representation</title>
-<link rel="next" href="sect0008.html" title="Wedderburn form of k[G]" />
-<link rel="prev" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
-<link rel="up" href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups" />
+<title>Intertwiners and equivalences</title>
+<link rel="next" href="sect0008.html" title="The left and right regular representations" />
+<link rel="prev" href="sect0006.html" title="Irreducibility" />
+<link rel="up" href="chap-c2-rep.html" title="Continuous Unitary Representations" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -26,118 +26,202 @@
 <body>
 <header>
 <svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
-<h1 id="doc_title"><a href="index.html">Peter WWeyl Lean</a></h1>
+<h1 id="doc_title"><a href="index.html">Peter Weyl Lean</a></h1>
 </header>
 
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class="">
-  <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup and Hypotheses</span></a>
+  <a href="chap-c2-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
 <li class="">
-  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Mathlib API for representations</span></a>
- </li>
-
-  </ul>
+  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
  </li>
 <li class="">
-  <a href="chap-maschke.html"><span class="toc_ref">2</span> <span class="toc_entry">Maschke and Semisimplicity</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry">Maschke’s theorem in Mathlib</span></a>
- </li>
-
-  </ul>
- </li>
-<li class="">
-  <a href="chap-schur.html"><span class="toc_ref">3</span> <span class="toc_entry">Schur’s Lemma in Mathlib</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sect0004.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Categorical form (<span class="ttfamily">FDRep</span>)</span></a>
- </li>
-<li class="">
-  <a href="sect0005.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Bundled <span class="ttfamily">IntertwiningMap</span> form</span></a>
- </li>
-
-  </ul>
- </li>
-<li class="">
-  <a href="chap-characters.html"><span class="toc_ref">4</span> <span class="toc_entry">Characters and Their Orthogonality</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sec-char-mathlib.html"><span class="toc_ref">4.1</span> <span class="toc_entry">Mathlib’s character API</span></a>
- </li>
-
-  </ul>
- </li>
-<li class="">
-  <a href="chap-isotypic.html"><span class="toc_ref">5</span> <span class="toc_entry">Isotypic Decomposition via Mathlib</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
-     <li class="">
-  <a href="sect0006.html"><span class="toc_ref">5.1</span> <span class="toc_entry">Mathlib’s isotypic API</span></a>
+  <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
  </li>
 
   </ul>
  </li>
 <li class=" active">
-  <a href="chap-peter-weyl.html"><span class="toc_ref">6</span> <span class="toc_entry">The Peter–Weyl Theorem for Finite Groups</span></a>
+  <a href="chap-c2-rep.html"><span class="toc_ref">2</span> <span class="toc_entry">Continuous Unitary Representations</span></a>
   <span class="expand-toc">▼</span>
   <ul class="sub-toc-1 active">
-     <li class=" active current">
-  <a href="sect0007.html"><span class="toc_ref">6.1</span> <span class="toc_entry">The regular representation</span></a>
+     <li class="">
+  <a href="sect0004.html"><span class="toc_ref">2.1</span> <span class="toc_entry">The structure</span></a>
  </li>
 <li class="">
-  <a href="sect0008.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Wedderburn form of \(k[G]\)</span></a>
+  <a href="sect0005.html"><span class="toc_ref">2.2</span> <span class="toc_entry">Subrepresentations</span></a>
  </li>
 <li class="">
-  <a href="sect0009.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Algebraic closedness collapses the \(D_i\) to \(k\)</span></a>
+  <a href="sect0006.html"><span class="toc_ref">2.3</span> <span class="toc_entry">Irreducibility</span></a>
+ </li>
+<li class=" active current">
+  <a href="sect0007.html"><span class="toc_ref">2.4</span> <span class="toc_entry">Intertwiners and equivalences</span></a>
  </li>
 <li class="">
-  <a href="sect0010.html"><span class="toc_ref">6.4</span> <span class="toc_entry">Sum-of-squares dimension formula</span></a>
- </li>
-<li class="">
-  <a href="sect0011.html"><span class="toc_ref">6.5</span> <span class="toc_entry">Module-form Peter–Weyl</span></a>
+  <a href="sect0008.html"><span class="toc_ref">2.5</span> <span class="toc_entry">The left and right regular representations</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-character-consequences.html"><span class="toc_ref">7</span> <span class="toc_entry">Character-Theoretic Consequences</span></a>
+  <a href="chap-c2-conv.html"><span class="toc_ref">3</span> <span class="toc_entry">Convolution as a Bounded Operator on \(L^2(G)\)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0012.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Multiplicity formula and irreducibility test</span></a>
+  <a href="sect0009.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Pointwise convolution</span></a>
  </li>
 <li class="">
-  <a href="sect0013.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Class functions and the second orthogonality</span></a>
+  <a href="sect0010.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Convolution as a bounded operator</span></a>
+ </li>
+<li class="">
+  <a href="sect0011.html"><span class="toc_ref">3.3</span> <span class="toc_entry">Right-equivariance of \(T_{\phi }\)</span></a>
+ </li>
+<li class="">
+  <a href="sect0012.html"><span class="toc_ref">3.4</span> <span class="toc_entry">Self-adjointness of \(T_\phi \) for symmetric \(\phi \)</span></a>
+ </li>
+<li class="">
+  <a href="sect0013.html"><span class="toc_ref">3.5</span> <span class="toc_entry">Compactness of \(T_\phi \)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="chap-status.html"><span class="toc_ref">8</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <a href="chap-c2-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-schur.html"><span class="toc_ref">6</span> <span class="toc_entry">Schur’s Lemma for Continuous Unitary Irreducibles</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="chap-status.html#a0000000015"><span class="toc_ref"></span> <span class="toc_entry">Already in Mathlib (<span class="ttfamily">[ML]</span>, with <span class="ttfamily">\leanok</span>).</span></a>
+  <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000016"><span class="toc_ref"></span> <span class="toc_entry">Trivial wrappers (<span class="ttfamily">[~ML]</span>).</span></a>
+  <a href="sect0015.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Self-adjoint equivariant operator on irreducible is scalar</span></a>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000017"><span class="toc_ref"></span> <span class="toc_entry">Genuinely new contributions (<span class="ttfamily">[NEW]</span>).</span></a>
+  <a href="sect0016.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Schur’s lemma proper</span></a>
+ </li>
+
+  </ul>
  </li>
 <li class="">
-  <a href="chap-status.html#a0000000018"><span class="toc_ref"></span> <span class="toc_entry">What this means.</span></a>
+  <a href="chap-c2-matCoeff.html"><span class="toc_ref">7</span> <span class="toc_entry">Matrix Coefficients</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0017.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Matrix coefficient of a finite-dim representation</span></a>
+ </li>
+<li class="">
+  <a href="sect0018.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Algebra structure</span></a>
+ </li>
+<li class="">
+  <a href="sect0019.html"><span class="toc_ref">7.3</span> <span class="toc_entry">The matrix-coefficient star-subalgebra</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-separating.html"><span class="toc_ref">8</span> <span class="toc_entry">Existence of Separating Finite-Dim Irreducibles</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0020.html"><span class="toc_ref">8.1</span> <span class="toc_entry">Setup and key intermediate lemmas</span></a>
+ </li>
+<li class="">
+  <a href="sect0021.html"><span class="toc_ref">8.2</span> <span class="toc_entry">From convolution to a finite-dim invariant subspace</span></a>
+ </li>
+<li class="">
+  <a href="sect0022.html"><span class="toc_ref">8.3</span> <span class="toc_entry">From finite-dim invariant to finite-dim irreducible</span></a>
+ </li>
+<li class="">
+  <a href="sect0023.html"><span class="toc_ref">8.4</span> <span class="toc_entry">The separation theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-density.html"><span class="toc_ref">9</span> <span class="toc_entry">Density of Matrix Coefficients</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0024.html"><span class="toc_ref">9.1</span> <span class="toc_entry">\(\mathcal M\) separates points</span></a>
+ </li>
+<li class="">
+  <a href="sect0025.html"><span class="toc_ref">9.2</span> <span class="toc_entry">Stone–Weierstrass: \(\mathcal A\) is dense</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-orthog.html"><span class="toc_ref">10</span> <span class="toc_entry">Schur Orthogonality</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0026.html"><span class="toc_ref">10.1</span> <span class="toc_entry">Orthogonality across distinct irreducibles</span></a>
+ </li>
+<li class="">
+  <a href="sect0027.html"><span class="toc_ref">10.2</span> <span class="toc_entry">Same-irreducible orthogonality</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-isotypic.html"><span class="toc_ref">11</span> <span class="toc_entry">Isotypic Decomposition of \(L^2(G)\) and Plancherel</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0028.html"><span class="toc_ref">11.1</span> <span class="toc_entry">Isotypic component</span></a>
+ </li>
+<li class="">
+  <a href="sect0029.html"><span class="toc_ref">11.2</span> <span class="toc_entry">Orthogonality between isotypic components</span></a>
+ </li>
+<li class="">
+  <a href="sect0030.html"><span class="toc_ref">11.3</span> <span class="toc_entry">The isotypic Hilbert sum</span></a>
+ </li>
+<li class="">
+  <a href="sect0031.html"><span class="toc_ref">11.4</span> <span class="toc_entry">Plancherel</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html"><span class="toc_ref">12</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-c2-status.html#a0000000037"><span class="toc_ref"></span> <span class="toc_entry">Counts (final v2 blueprint).</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html#a0000000038"><span class="toc_ref"></span> <span class="toc_entry">Translation-readiness checklist.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-genstatus.html"><span class="toc_ref">13</span> <span class="toc_entry">Project Status (Generated)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0032.html"><span class="toc_ref"></span> <span class="toc_entry">Headline counts</span></a>
+ </li>
+<li class="">
+  <a href="sect0033.html"><span class="toc_ref"></span> <span class="toc_entry">Per-chapter status</span></a>
+ </li>
+<li class="">
+  <a href="sect0034.html"><span class="toc_ref"></span> <span class="toc_entry">Architectural fixes during formalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0035.html"><span class="toc_ref"></span> <span class="toc_entry">Cleanup-pass priorities</span></a>
  </li>
 
   </ul>
@@ -151,14 +235,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000008">6.1 The regular representation</h1>
-<div class="definition_thmwrapper theorem-style-definition" id="def:regular">
+<h1 id="a0000000008">2.4 Intertwiners and equivalences</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-isIntertwiner">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">26</span>
-    <span class="definition_thmtitle">Left regular representation</span>
+    <span class="definition_thmlabel">23</span>
+    <span class="definition_thmtitle">Intertwiner predicate</span>
     <div class="thm_header_extras">
 
     
@@ -166,7 +250,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0007.html#def:regular">#</a>
+    <a class="icon proof" href="sect0007.html#def:c2-isIntertwiner">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -181,7 +265,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0002.html#def:representation">Definition 2</a></li>
+          <li><a href="sect0004.html#def:c2-UnitaryRep">Definition 14</a></li>
           
         </ul>
     
@@ -201,7 +285,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/Representation.leftRegular" class="lean_decl">Representation.leftRegular</a></li>
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.IsIntertwiner" class="lean_decl">UnitaryRep.IsIntertwiner</a></li>
           
         </ul>
     
@@ -212,11 +296,202 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>    <span class="ttfamily">Representation.leftRegular k G : Representation k G ((G →₀ k))</span>. Its bundled form is <span class="ttfamily">Rep.ofMulAction k G G : Rep k G</span>, with the same underlying \(k[G]\)-module as <span class="ttfamily">MonoidAlgebra k G</span> acting on itself by left multiplication. </p>
+  <p>    Let \(\rho : \texttt{UnitaryRep G H}\) and \(\sigma : \texttt{UnitaryRep G K}\). A bounded linear map \(T : H \to _L K\) is an <em>intertwiner</em> (\(T.\texttt{IsIntertwiner $\rho $ $\sigma $}\)) if \(\forall g : G, T \circ _L \rho (g) = \sigma (g) \circ _L T\). </p>
 
   </div>
 </div>
-<p>[Character of the regular representation] In the classical proof of Peter–Weyl one would compute \(\chi _{k[G]}(g) = |G|\cdot [g = 1]\) (since left translation by \(g\) acts as a permutation matrix on the basis \(\{ \delta _h\} \) and has \(|G|\) fixed points if \(g = 1\), otherwise none) and use Schur orthogonality to deduce that every irreducible appears with multiplicity \(\dim V_\xi \) in \(k[G]\). The proof in this blueprint does <em>not</em> use this calculation; we recover the same conclusion as a consequence of the Wedderburn–Artin decomposition (Theorem&#160;<a href="sect0009.html#thm:peter-weyl-ring">29</a>). We mention it only to connect to the classical exposition.  </p>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-Intertwiner">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">24</span>
+    <span class="definition_thmtitle">Space of intertwiners</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0007.html#def:c2-Intertwiner">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0007.html#def:c2-isIntertwiner">Definition 23</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.Intertwiner" class="lean_decl">UnitaryRep.Intertwiner</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    \(\texttt{UnitaryRep.Intertwiner $\rho $ $\sigma $}\) is the bundled type \(\{ T : H \to _L K \mid T.\texttt{IsIntertwiner $\rho $ $\sigma $}\} \), registered as a \(\mathbb C\)-module subspace of \(H \to _L K\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-isEquiv">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">25</span>
+    <span class="definition_thmtitle">Predicate “\(T\) is a unitary equivalence”</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0007.html#def:c2-isEquiv">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0007.html#def:c2-isIntertwiner">Definition 23</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.IsEquiv" class="lean_decl">UnitaryRep.IsEquiv</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    An intertwiner \(T : H \to _L K\) is a <em>unitary equivalence</em> if it is also a surjective isometry, equivalently \(T^* T = \mathrm{Id}_H\) and \(T T^* = \mathrm{Id}_K\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-Equiv">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">26</span>
+    <span class="definition_thmtitle">Equivalence of representations</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0007.html#def:c2-Equiv">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0007.html#def:c2-isEquiv">Definition 25</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.Equiv" class="lean_decl">UnitaryRep.Equiv</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    Two representations \(\rho , \sigma \) are <em>equivalent</em>, \(\rho \cong \sigma \), if there exists a \(T : H \to _L K\) with \(T.\texttt{IsIntertwiner $\rho $ $\sigma $}\) and \(T.\texttt{IsEquiv}\). </p>
+
+  </div>
+</div>
 
 </div> <!--main-text -->
 </div> <!-- content-wrapper -->
@@ -228,11 +503,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0006.html" title="Irreducibility"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-peter-weyl.html" title="The Peter–Weyl Theorem for Finite Groups"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="chap-c2-rep.html" title="Continuous Unitary Representations"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0008.html" title="Wedderburn form of \(k[G]\)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0008.html" title="The left and right regular representations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

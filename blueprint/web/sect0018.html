@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Algebra structure</title>
+<link rel="next" href="sect0019.html" title="The matrix-coefficient star-subalgebra" />
+<link rel="prev" href="sect0017.html" title="Matrix coefficient of a finite-dim representation" />
+<link rel="up" href="chap-c2-matCoeff.html" title="Matrix Coefficients" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">Peter Weyl Lean</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-c2-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-rep.html"><span class="toc_ref">2</span> <span class="toc_entry">Continuous Unitary Representations</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0004.html"><span class="toc_ref">2.1</span> <span class="toc_entry">The structure</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">2.2</span> <span class="toc_entry">Subrepresentations</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">2.3</span> <span class="toc_entry">Irreducibility</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html"><span class="toc_ref">2.4</span> <span class="toc_entry">Intertwiners and equivalences</span></a>
+ </li>
+<li class="">
+  <a href="sect0008.html"><span class="toc_ref">2.5</span> <span class="toc_entry">The left and right regular representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-conv.html"><span class="toc_ref">3</span> <span class="toc_entry">Convolution as a Bounded Operator on \(L^2(G)\)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0009.html"><span class="toc_ref">3.1</span> <span class="toc_entry">Pointwise convolution</span></a>
+ </li>
+<li class="">
+  <a href="sect0010.html"><span class="toc_ref">3.2</span> <span class="toc_entry">Convolution as a bounded operator</span></a>
+ </li>
+<li class="">
+  <a href="sect0011.html"><span class="toc_ref">3.3</span> <span class="toc_entry">Right-equivariance of \(T_{\phi }\)</span></a>
+ </li>
+<li class="">
+  <a href="sect0012.html"><span class="toc_ref">3.4</span> <span class="toc_entry">Self-adjointness of \(T_\phi \) for symmetric \(\phi \)</span></a>
+ </li>
+<li class="">
+  <a href="sect0013.html"><span class="toc_ref">3.5</span> <span class="toc_entry">Compactness of \(T_\phi \)</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-schur.html"><span class="toc_ref">6</span> <span class="toc_entry">Schur’s Lemma for Continuous Unitary Irreducibles</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
+ </li>
+<li class="">
+  <a href="sect0015.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Self-adjoint equivariant operator on irreducible is scalar</span></a>
+ </li>
+<li class="">
+  <a href="sect0016.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Schur’s lemma proper</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active">
+  <a href="chap-c2-matCoeff.html"><span class="toc_ref">7</span> <span class="toc_entry">Matrix Coefficients</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="sect0017.html"><span class="toc_ref">7.1</span> <span class="toc_entry">Matrix coefficient of a finite-dim representation</span></a>
+ </li>
+<li class=" active current">
+  <a href="sect0018.html"><span class="toc_ref">7.2</span> <span class="toc_entry">Algebra structure</span></a>
+ </li>
+<li class="">
+  <a href="sect0019.html"><span class="toc_ref">7.3</span> <span class="toc_entry">The matrix-coefficient star-subalgebra</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-separating.html"><span class="toc_ref">8</span> <span class="toc_entry">Existence of Separating Finite-Dim Irreducibles</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0020.html"><span class="toc_ref">8.1</span> <span class="toc_entry">Setup and key intermediate lemmas</span></a>
+ </li>
+<li class="">
+  <a href="sect0021.html"><span class="toc_ref">8.2</span> <span class="toc_entry">From convolution to a finite-dim invariant subspace</span></a>
+ </li>
+<li class="">
+  <a href="sect0022.html"><span class="toc_ref">8.3</span> <span class="toc_entry">From finite-dim invariant to finite-dim irreducible</span></a>
+ </li>
+<li class="">
+  <a href="sect0023.html"><span class="toc_ref">8.4</span> <span class="toc_entry">The separation theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-density.html"><span class="toc_ref">9</span> <span class="toc_entry">Density of Matrix Coefficients</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0024.html"><span class="toc_ref">9.1</span> <span class="toc_entry">\(\mathcal M\) separates points</span></a>
+ </li>
+<li class="">
+  <a href="sect0025.html"><span class="toc_ref">9.2</span> <span class="toc_entry">Stone–Weierstrass: \(\mathcal A\) is dense</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-orthog.html"><span class="toc_ref">10</span> <span class="toc_entry">Schur Orthogonality</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0026.html"><span class="toc_ref">10.1</span> <span class="toc_entry">Orthogonality across distinct irreducibles</span></a>
+ </li>
+<li class="">
+  <a href="sect0027.html"><span class="toc_ref">10.2</span> <span class="toc_entry">Same-irreducible orthogonality</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-isotypic.html"><span class="toc_ref">11</span> <span class="toc_entry">Isotypic Decomposition of \(L^2(G)\) and Plancherel</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0028.html"><span class="toc_ref">11.1</span> <span class="toc_entry">Isotypic component</span></a>
+ </li>
+<li class="">
+  <a href="sect0029.html"><span class="toc_ref">11.2</span> <span class="toc_entry">Orthogonality between isotypic components</span></a>
+ </li>
+<li class="">
+  <a href="sect0030.html"><span class="toc_ref">11.3</span> <span class="toc_entry">The isotypic Hilbert sum</span></a>
+ </li>
+<li class="">
+  <a href="sect0031.html"><span class="toc_ref">11.4</span> <span class="toc_entry">Plancherel</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html"><span class="toc_ref">12</span> <span class="toc_entry">Mathlib-Status Summary</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-c2-status.html#a0000000037"><span class="toc_ref"></span> <span class="toc_entry">Counts (final v2 blueprint).</span></a>
+ </li>
+<li class="">
+  <a href="chap-c2-status.html#a0000000038"><span class="toc_ref"></span> <span class="toc_entry">Translation-readiness checklist.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-c2-genstatus.html"><span class="toc_ref">13</span> <span class="toc_entry">Project Status (Generated)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0032.html"><span class="toc_ref"></span> <span class="toc_entry">Headline counts</span></a>
+ </li>
+<li class="">
+  <a href="sect0033.html"><span class="toc_ref"></span> <span class="toc_entry">Per-chapter status</span></a>
+ </li>
+<li class="">
+  <a href="sect0034.html"><span class="toc_ref"></span> <span class="toc_entry">Architectural fixes during formalization</span></a>
+ </li>
+<li class="">
+  <a href="sect0035.html"><span class="toc_ref"></span> <span class="toc_entry">Cleanup-pass priorities</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000019">7.2 Algebra structure</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-mc-sum">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">61</span>
+    <span class="theorem_thmtitle">Sum of matrix coefficients is a matrix coefficient</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#thm:c2-mc-sum">#</a>
+    
+    <a class="icon proof" href="sect0018.html#a0000000068"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.matrixCoeff_add_eq_directSum" class="lean_decl">UnitaryRep.matrixCoeff_add_eq_directSum</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(V_1, V_2\) be finite-dim Hilbert spaces with reps \(\rho _1, \rho _2\). For \(u_i, v_i \in V_i\), the function \(g \mapsto \pi _{u_1, v_1}^{\rho _1}(g) + \pi _{u_2, v_2}^{\rho _2}(g)\) equals \(\pi _{u_1 \oplus u_2, v_1 \oplus v_2}^{\rho _1 \oplus \rho _2}\) on \(V_1 \oplus V_2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000068">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Direct expansion of inner product on a direct sum. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-mc-smul">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">62</span>
+    <span class="theorem_thmtitle">Scalar multiple of a matrix coefficient is a matrix coefficient</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#thm:c2-mc-smul">#</a>
+    
+    <a class="icon proof" href="sect0018.html#a0000000069"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.smul_matrixCoeff" class="lean_decl">UnitaryRep.smul_matrixCoeff</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(c \cdot \pi _{u,v}^\rho = \pi _{cu, v}^\rho \) for \(c \in \mathbb C\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000069">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> \(\langle \rho (g)(c u), v\rangle = c\langle \rho (g)u, v\rangle \). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-tensor-rep">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">63</span>
+    <span class="definition_thmtitle">Tensor product of unitary reps</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#def:c2-tensor-rep">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0004.html#def:c2-UnitaryRep">Definition 14</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.tensor" class="lean_decl">UnitaryRep.tensor</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    Given \(\rho _i : \texttt{UnitaryRep G $V_i$}\) for \(i = 1, 2\) with \(V_i\) finite-dimensional, \(\rho _1 \otimes \rho _2 : \texttt{UnitaryRep G ($V_1 \otimes V_2$)}\) is the homomorphism \(g \mapsto \rho _1(g) \otimes \rho _2(g)\) on the algebraic (= Hilbert, in finite dim) tensor product, with the inner product \(\langle u_1\otimes u_2, v_1 \otimes v_2\rangle := \langle u_1, v_1\rangle \langle u_2, v_2\rangle \) extended linearly. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-mc-mul">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">64</span>
+    <span class="theorem_thmtitle">Product of matrix coefficients</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#thm:c2-mc-mul">#</a>
+    
+    <a class="icon proof" href="sect0018.html#a0000000070"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0018.html#def:c2-tensor-rep">Definition 63</a></li>
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0018.html#def:c2-tensor-rep">Definition 63</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.matrixCoeff_mul_eq_tensor" class="lean_decl">UnitaryRep.matrixCoeff_mul_eq_tensor</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\pi _{u_1, v_1}^{\rho _1}(g) \cdot \pi _{u_2, v_2}^{\rho _2}(g) = \pi _{u_1 \otimes u_2, v_1 \otimes v_2}^{\rho _1 \otimes \rho _2}(g)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000070">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> \(\langle \rho _1(g) u_1, v_1\rangle \langle \rho _2(g) u_2, v_2\rangle = \langle (\rho _1 \otimes \rho _2)(g)(u_1 \otimes u_2), v_1 \otimes v_2\rangle \) by definition of tensor product inner product. </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:c2-contragredient">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">65</span>
+    <span class="definition_thmtitle">Contragredient (dual) representation</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#def:c2-contragredient">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0004.html#def:c2-UnitaryRep">Definition 14</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.contragredient" class="lean_decl">UnitaryRep.contragredient</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    Given \(\rho : \texttt{UnitaryRep G V}\) with \(V\) finite-dimensional, \(\overline\rho : \texttt{UnitaryRep G $V^*$}\) is the homomorphism \(g \mapsto (\rho (g)^{-1})^* = \rho (g^{-1})^* = \rho (g)\) acting on the conjugate-dual space \(V^*\) via \((\overline\rho (g) \ell )(v) := \overline{\ell (\rho (g)^{-1} v)}\); equivalently we identify \(V^*\) with the conjugate Hilbert space \(\overline V\) (same underlying set, scalar multiplication conjugated). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-mc-conj">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">66</span>
+    <span class="theorem_thmtitle">Conjugate of a matrix coefficient</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#thm:c2-mc-conj">#</a>
+    
+    <a class="icon proof" href="sect0018.html#a0000000071"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0018.html#def:c2-contragredient">Definition 65</a></li>
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0018.html#def:c2-contragredient">Definition 65</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.matrixCoeff_conj_eq_contragredient" class="lean_decl">UnitaryRep.matrixCoeff_conj_eq_contragredient</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\overline{\pi _{u,v}^\rho (g)} = \pi _{v, u}^{\overline\rho }(g)\) (under the conjugate-Hilbert identification). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000071">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> \(\overline{\langle \rho (g)u, v\rangle } = \langle v, \rho (g) u\rangle = \langle \rho (g^{-1}) v, u\rangle = \pi _{v, u}^{\overline\rho }(g)\) using unitarity. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:c2-mc-one">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">67</span>
+    <span class="theorem_thmtitle">The constant function \(1\) is a matrix coefficient</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0018.html#thm:c2-mc-one">#</a>
+    
+    <a class="icon proof" href="sect0018.html#a0000000072"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+          <li><a href="sect0017.html#def:c2-matrixCoeff">Definition 57</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://leanprover-community.github.io/mathlib4_docs/find/#doc/UnitaryRep.matrixCoeff_one_eq_trivial" class="lean_decl">UnitaryRep.matrixCoeff_one_eq_trivial</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(\mathbf{1} : \texttt{UnitaryRep G $\mathbb C$}\) be the trivial representation \(\mathbf{1}(g) = \mathrm{Id}_{\mathbb C}\). Then \(\pi _{1, 1}^{\mathbf1}(g) = 1\) for all \(g\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000072">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> \(\langle 1, 1\rangle _{\mathbb C} = 1\) in the trivial inner product. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="sect0017.html" title="Matrix coefficient of a finite-dim representation"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="chap-c2-matCoeff.html" title="Matrix Coefficients"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0019.html" title="The matrix-coefficient star-subalgebra"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>
