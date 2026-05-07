@@ -66,7 +66,7 @@ variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 /-! ## Item 1: Orthogonality across non-equivalent irreducibles -/
 
-/-- (`thm:c2-mc-orthog-distinct`) Matrix coefficients of non-equivalent
+/-- (`thm:mc-orthog-distinct`) Matrix coefficients of non-equivalent
 finite-dimensional irreducible representations are `L²(G)`-orthogonal.
 
 Proof outline:
@@ -123,7 +123,7 @@ theorem matrixCoeff_inner_eq_zero_of_not_equiv
 
 /-! ## Item 2: Same-irreducible orthogonality with explicit `1/d` -/
 
-/-- (`thm:c2-mc-orthog-same`) Schur orthogonality, same-irreducible
+/-- (`thm:mc-orthog-same`) Schur orthogonality, same-irreducible
 form.  For a finite-dim irreducible `ρ : UnitaryRep G V` of dimension
 `d := dim V`,
 `∫_G π_{u₁,v₁}^ρ(g) · conj π_{u₂,v₂}^ρ(g) dμ_G(g) =

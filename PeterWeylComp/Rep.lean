@@ -71,15 +71,15 @@ def trivial (G : Type*) [Group G] [TopologicalSpace G]
 
 variable (ρ : UnitaryRep G H)
 
-/-- `ρ g` preserves the inner product (`thm:c2-rho-inner`). -/
+/-- `ρ g` preserves the inner product (`thm:rho-inner`). -/
 theorem inner_apply (g : G) (u v : H) : ⟪ρ g u, ρ g v⟫_ℂ = ⟪u, v⟫_ℂ :=
   ((ρ.toMonoidHom g).inner_map_map_iff_adjoint_comp_self.mpr (ρ.isUnitary g)) u v
 
-/-- `ρ g` preserves the norm (`thm:c2-rho-norm`). -/
+/-- `ρ g` preserves the norm (`thm:rho-norm`). -/
 theorem norm_apply (g : G) (v : H) : ‖ρ g v‖ = ‖v‖ :=
   ((ρ.toMonoidHom g).norm_map_iff_adjoint_comp_self.mpr (ρ.isUnitary g)) v
 
-/-- The operator norm of `ρ g` is at most `1` (`thm:c2-rho-opNorm`). -/
+/-- The operator norm of `ρ g` is at most `1` (`thm:rho-opNorm`). -/
 theorem opNorm_apply_le_one (g : G) : ‖ρ.toMonoidHom g‖ ≤ 1 :=
   ContinuousLinearMap.opNorm_le_bound _ zero_le_one fun v => by
     rw [one_mul]; exact (ρ.norm_apply g v).le
@@ -95,12 +95,12 @@ theorem apply_inv_apply (g : G) (v : H) : ρ g (ρ g⁻¹ v) = v := by
 /-! ## Invariant subspaces and subrepresentations -/
 
 /-- Predicate: a submodule `V ⊆ H` is invariant under the representation
-`ρ` (`def:c2-isInvariant`). -/
+`ρ` (`def:isInvariant`). -/
 def IsInvariant (ρ : UnitaryRep G H) (V : Submodule ℂ H) : Prop :=
   ∀ g : G, ∀ v ∈ V, ρ g v ∈ V
 
 /-- The orthogonal complement of an invariant subspace is invariant
-(`thm:c2-orthCompl-invariant`). -/
+(`thm:orthCompl-invariant`). -/
 theorem IsInvariant.orthogonalComplement {V : Submodule ℂ H}
     (hV : ρ.IsInvariant V) : ρ.IsInvariant Vᗮ := by
   intro g w hw
@@ -113,7 +113,7 @@ theorem IsInvariant.orthogonalComplement {V : Submodule ℂ H}
     _ = 0 := (Submodule.mem_orthogonal _ _).mp hw _ hg_inv
 
 /-- A subrepresentation: a closed invariant subspace of the underlying
-Hilbert space (`def:c2-Subrep`). -/
+Hilbert space (`def:Subrep`). -/
 structure Subrep (ρ : UnitaryRep G H) where
   /-- The underlying linear subspace. -/
   toSubmodule : Submodule ℂ H
@@ -165,7 +165,7 @@ end Subrep
 /-! ## Irreducibility -/
 
 /-- A representation is irreducible if `H` is non-trivial and the only
-closed invariant subspaces are `⊥` and `⊤` (`def:c2-IsIrreducible`). -/
+closed invariant subspaces are `⊥` and `⊤` (`def:IsIrreducible`). -/
 structure IsIrreducible (ρ : UnitaryRep G H) : Prop where
   /-- `H` is non-trivial, equivalently `H ≠ 0`. -/
   nontrivial : Nontrivial H
@@ -178,12 +178,12 @@ structure IsIrreducible (ρ : UnitaryRep G H) : Prop where
 variable {K : Type*} [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteSpace K]
 
 /-- Predicate: `T : H →L[ℂ] K` intertwines `ρ` and `σ`, i.e.
-`T ∘L ρ g = σ g ∘L T` for every `g` (`def:c2-isIntertwiner`). -/
+`T ∘L ρ g = σ g ∘L T` for every `g` (`def:isIntertwiner`). -/
 def IsIntertwiner (T : H →L[ℂ] K) (ρ : UnitaryRep G H) (σ : UnitaryRep G K) : Prop :=
   ∀ g : G, T ∘L ρ.toMonoidHom g = σ.toMonoidHom g ∘L T
 
 /-- The space of intertwiners between `ρ` and `σ`, bundled as a
-submodule of `H →L[ℂ] K` (`def:c2-Intertwiner`). -/
+submodule of `H →L[ℂ] K` (`def:Intertwiner`). -/
 def Intertwiner (ρ : UnitaryRep G H) (σ : UnitaryRep G K) : Submodule ℂ (H →L[ℂ] K) where
   carrier := { T | IsIntertwiner T ρ σ }
   add_mem' {T U} hT hU g := by
@@ -196,13 +196,13 @@ def Intertwiner (ρ : UnitaryRep G H) (σ : UnitaryRep G K) : Submodule ℂ (H �
 
 /-- Predicate: `T : H →L[ℂ] K` is a unitary equivalence: a bounded
 surjective isometry, equivalently `T† * T = id_H` and `T * T† = id_K`
-(`def:c2-isEquiv`). -/
+(`def:isEquiv`). -/
 def IsEquiv (T : H →L[ℂ] K) : Prop :=
   T.adjoint ∘L T = 1 ∧ T ∘L T.adjoint = 1
 
 /-- Two representations are unitarily equivalent if there exists a
 continuous linear map `T : H →L[ℂ] K` that is simultaneously an
-intertwiner and a unitary equivalence (`def:c2-Equiv`). -/
+intertwiner and a unitary equivalence (`def:Equiv`). -/
 def Equiv (ρ : UnitaryRep G H) (σ : UnitaryRep G K) : Prop :=
   ∃ T : H →L[ℂ] K, IsIntertwiner T ρ σ ∧ IsEquiv T
 
@@ -215,7 +215,7 @@ namespace PeterWeyl
 variable (G : Type*) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [CompactSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G]
 
-/-- Left translation `λ_g : L²(G) → L²(G)` (`def:c2-leftTransL2`).
+/-- Left translation `λ_g : L²(G) → L²(G)` (`def:leftTransL2`).
 On continuous functions `f`, it is `λ_g f = h ↦ f(g⁻¹ h)`; left
 invariance of `haarProb` ensures this preserves the `L²` norm, and the
 extension to `L²(G)` is unique by density of `C(G)` in `L²(G)`
@@ -228,7 +228,7 @@ noncomputable def leftTransL2 (g : G) : L2 G →L[ℂ] L2 G := by
   exact sorry
 
 /-- For each `g`, `leftTransL2 g` is unitary
-(`thm:c2-leftTrans-unitary`). -/
+(`thm:leftTrans-unitary`). -/
 theorem leftTransL2_isUnitary (g : G) :
     (leftTransL2 G g).adjoint ∘L (leftTransL2 G g) = 1 := by
   -- TODO: by construction `leftTransL2 g` is a surjective isometry on
@@ -238,14 +238,14 @@ theorem leftTransL2_isUnitary (g : G) :
 
 /-- Left translation gives a multiplicative structure:
 `leftTransL2 (g * h) = leftTransL2 g ∘L leftTransL2 h` and
-`leftTransL2 1 = id` (`thm:c2-leftTrans-mulHom`). -/
+`leftTransL2 1 = id` (`thm:leftTrans-mulHom`). -/
 theorem leftTransL2_mulHom (g h : G) :
     leftTransL2 G (g * h) = (leftTransL2 G g) ∘L (leftTransL2 G h) := by
   -- TODO: verify on the dense subspace `C(G)` using `f((g*h)⁻¹ x) =
   -- f(h⁻¹ g⁻¹ x) = (leftTransL2 h f)(g⁻¹ x)`, then extend by continuity.
   sorry
 
-/-- Strong continuity of left translation (`thm:c2-leftTrans-strongCts`). -/
+/-- Strong continuity of left translation (`thm:leftTrans-strongCts`). -/
 theorem leftTransL2_strongContinuous (f : L2 G) :
     Continuous fun g : G => leftTransL2 G g f := by
   -- TODO: 3-step argument from the blueprint: (1) uniform continuity
@@ -255,7 +255,7 @@ theorem leftTransL2_strongContinuous (f : L2 G) :
   sorry
 
 /-- The left regular representation `ρ^L : UnitaryRep G (L²(G))`
-(`def:c2-leftReg`). -/
+(`def:leftReg`). -/
 noncomputable def leftReg : UnitaryRep G (L2 G) where
   toMonoidHom :=
     { toFun := leftTransL2 G
@@ -272,7 +272,7 @@ noncomputable def leftReg : UnitaryRep G (L2 G) where
   isUnitary := leftTransL2_isUnitary G
   strongContinuous := leftTransL2_strongContinuous G
 
-/-- Right translation `ρ_g : L²(G) → L²(G)` (`def:c2-rightTransL2`). -/
+/-- Right translation `ρ_g : L²(G) → L²(G)` (`def:rightTransL2`). -/
 noncomputable def rightTransL2 (g : G) : L2 G →L[ℂ] L2 G := by
   -- TODO: extend `f ↦ (h ↦ f (h * g))` from `C(G, ℂ)` to `L²(G)` using
   -- right-invariance of `haarProb` (Chapter 1 `haarProb_isMulRightInvariant`,
@@ -283,7 +283,7 @@ noncomputable def rightTransL2 (g : G) : L2 G →L[ℂ] L2 G := by
   exact sorry
 
 /-- The right regular representation `ρ^R : UnitaryRep G (L²(G))`
-(`def:c2-rightReg`). -/
+(`def:rightReg`). -/
 noncomputable def rightReg : UnitaryRep G (L2 G) where
   -- Depends on item 14 construction pattern (`leftTransL2`): the
   -- `MonoidHom` and `isUnitary`/`strongContinuous` proofs duplicate
@@ -297,7 +297,7 @@ noncomputable def rightReg : UnitaryRep G (L2 G) where
   strongContinuous := by sorry
 
 /-- The left and right regular representations commute
-(`thm:c2-LR-commute`). -/
+(`thm:LR-commute`). -/
 theorem leftReg_comm_rightReg (g h : G) :
     (leftReg G).toMonoidHom g ∘L (rightReg G).toMonoidHom h
       = (rightReg G).toMonoidHom h ∘L (leftReg G).toMonoidHom g := by

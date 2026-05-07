@@ -47,7 +47,7 @@ namespace PeterWeyl
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
-/-- **EXTERNAL ASSUMPTION** (`ass:c2-spectral`)
+/-- **EXTERNAL ASSUMPTION** (`ass:spectral`)
 
 The spectral theorem for compact self-adjoint operators on a complex
 Hilbert space, in the form used by the blueprint: a compact self-adjoint
@@ -72,7 +72,7 @@ theorem ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.spectralDecompositio
   sorry
 
 /-- Existence of a non-zero real eigenvalue for a non-zero compact
-self-adjoint operator (`thm:c2-spectral-nonzero-eval`)
+self-adjoint operator (`thm:spectral-nonzero-eval`)
 
 Proven directly from Mathlib's `eq_zero_of_forall_hasEigenvalue_eq_zero`
 plus `finite_dimensional_eigenspace`; the blueprint derives this from
@@ -100,7 +100,7 @@ theorem ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.exists_eigenvalue
 
 /-! ## Chapter 6: Schur's lemma -/
 
-/-- **EXTERNAL ASSUMPTION** (`ass:c2-schauder`): Schauder's theorem.
+/-- **EXTERNAL ASSUMPTION** (`ass:schauder`): Schauder's theorem.
 
 The adjoint of a compact operator on a complex Hilbert space is compact.
 
@@ -126,13 +126,13 @@ theorem _root_.IsCompactOperator.adjoint
   sorry
 
 /-- The self-adjoint *real part* `Re T = (T + T†)/2` of a continuous
-linear map on a complex Hilbert space (`def:c2-RealImag`) -/
+linear map on a complex Hilbert space (`def:RealImag`) -/
 noncomputable def _root_.ContinuousLinearMap.realPart (T : H →L[ℂ] H) :
     H →L[ℂ] H :=
   (1 / 2 : ℂ) • (T + T.adjoint)
 
 /-- The self-adjoint *imaginary part* `Im T = (T − T†)/(2i)` of a
-continuous linear map on a complex Hilbert space (`def:c2-RealImag`) -/
+continuous linear map on a complex Hilbert space (`def:RealImag`) -/
 noncomputable def _root_.ContinuousLinearMap.imagPart (T : H →L[ℂ] H) :
     H →L[ℂ] H :=
   (1 / (2 * Complex.I) : ℂ) • (T - T.adjoint)
@@ -197,7 +197,7 @@ protected theorem UnitaryRep.IsIntertwiner.adjoint
   exact hadj.symm
 
 /-- The real and imaginary parts of an intertwiner are intertwiners
-(`thm:c2-RealImag-equiv`) -/
+(`thm:RealImag-equiv`) -/
 theorem UnitaryRep.IsIntertwiner.realPart_imagPart
     {T : H →L[ℂ] H} (hT : UnitaryRep.IsIntertwiner T ρ ρ) :
     UnitaryRep.IsIntertwiner T.realPart ρ ρ
@@ -211,7 +211,7 @@ theorem UnitaryRep.IsIntertwiner.realPart_imagPart
       (UnitaryRep.IsIntertwiner.sub hT hT_adj)
 
 /-- The eigenspace of an intertwiner is `ρ`-invariant
-(`thm:c2-eigenspace-invariant`) -/
+(`thm:eigenspace-invariant`) -/
 theorem UnitaryRep.IsIntertwiner.eigenspace_isInvariant
     {T : H →L[ℂ] H} (hT : UnitaryRep.IsIntertwiner T ρ ρ) (μ : ℂ) :
     ρ.IsInvariant (Module.End.eigenspace T.toLinearMap μ) := by
@@ -225,7 +225,7 @@ theorem UnitaryRep.IsIntertwiner.eigenspace_isInvariant
 
 /-- A compact self-adjoint intertwiner of an irreducible representation
 is either zero or a real scalar multiple of the identity
-(`thm:c2-irrep-selfadj-scalar`) -/
+(`thm:irrep-selfadj-scalar`) -/
 theorem UnitaryRep.IsIrreducible.compact_selfAdjoint_intertwiner_eq_smul_or_zero
     (hρ : ρ.IsIrreducible) {A : H →L[ℂ] H}
     (hA_compact : IsCompactOperator A) (hA_sa : IsSelfAdjoint A)
@@ -259,7 +259,7 @@ theorem UnitaryRep.IsIrreducible.compact_selfAdjoint_intertwiner_eq_smul_or_zero
       exact hv_eig
 
 /-- **Schur's lemma**, scalar form, compact case
-(`thm:c2-schur-scalar`) -/
+(`thm:schur-scalar`) -/
 theorem UnitaryRep.IsIrreducible.intertwiner_self_eq_smul
     (hρ : ρ.IsIrreducible) {T : H →L[ℂ] H}
     (hT_compact : IsCompactOperator T)
@@ -345,7 +345,7 @@ theorem UnitaryRep.IsIrreducible.intertwiner_self_eq_smul
 
 /-- **Schur's lemma** for distinct irreducibles: a compact intertwiner
 between non-equivalent irreducibles is zero
-(`thm:c2-schur-distinct`)
+(`thm:schur-distinct`)
 
 Both prerequisites are now in place: `intertwiner_self_eq_smul` (item 6
 above) is real, and `IsCompactOperator.adjoint` (Schauder) is the second

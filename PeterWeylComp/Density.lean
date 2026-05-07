@@ -67,7 +67,7 @@ theorem matrixCoeff_left_translate
 /-! ## Item 1: restriction matrix coefficients -/
 
 omit [T2Space G] in
-/-- (`thm:c2-restrict-to-mc`) The matrix coefficient of the restriction
+/-- (`thm:restrict-to-mc`) The matrix coefficient of the restriction
 of `ρ^R` to a finite-dim `ρ^R`-invariant subspace `W ⊆ L²(G)` belongs
 to `matrixCoeffSet G`. -/
 theorem restrict_matrixCoeff_eq_matrixCoeff
@@ -82,7 +82,7 @@ theorem restrict_matrixCoeff_eq_matrixCoeff
 
 /-! ## Item 2: `matrixCoeffSet` separates points -/
 
-/-- (`thm:c2-MCSet-separates`) `matrixCoeffSet G` separates points of
+/-- (`thm:MCSet-separates`) `matrixCoeffSet G` separates points of
 `G`: for every pair `g₁ ≠ g₂`, there is a matrix coefficient
 distinguishing them. -/
 theorem matrixCoeffSet_separatesPoints :
@@ -148,7 +148,7 @@ theorem matrixCoeffSet_separatesPoints :
 
 /-! ## Item 3: `matrixCoeffSubalgebra` separates points -/
 
-/-- (`cor:c2-MCAlg-separates`) The matrix-coefficient star-subalgebra
+/-- (`cor:MCAlg-separates`) The matrix-coefficient star-subalgebra
 separates points of `G`. -/
 theorem matrixCoeffSubalgebra_separatesPoints :
     (matrixCoeffSubalgebra G).SeparatesPoints := by
@@ -165,7 +165,7 @@ theorem matrixCoeffSubalgebra_separatesPoints :
 
 /-! ## Item 4: Stone–Weierstrass density in `C(G, ℂ)` -/
 
-/-- (`thm:c2-MCAlg-CG-dense`) The matrix-coefficient star-subalgebra is
+/-- (`thm:MCAlg-CG-dense`) The matrix-coefficient star-subalgebra is
 uniformly dense in `C(G, ℂ)`: its topological closure is `⊤`.
 
 Direct application of
@@ -177,7 +177,7 @@ theorem matrixCoeffSubalgebra_topologicalClosure_eq_top :
 
 /-! ## Item 5: `L²` density -/
 
-/-- (`cor:c2-MCAlg-L2-dense`) The image of the matrix-coefficient
+/-- (`cor:MCAlg-L2-dense`) The image of the matrix-coefficient
 star-subalgebra in `L²(G)` (under the standard `C(G) ↪ L²(G)`
 inclusion) is dense in `L²(G)`. -/
 theorem matrixCoeffSubalgebra_dense_L2 :

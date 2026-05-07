@@ -63,7 +63,7 @@ structure IsBump (U : Set G) (φ : G → ℝ) : Prop where
 /-! ## Existence of continuous bumps -/
 
 /-- For every open neighbourhood `U` of `1_G`, there exists a bump on `U`
-(`thm:c2-bump-exists`) -/
+(`thm:bump-exists`) -/
 theorem exists_bump {U : Set G} (hU_open : IsOpen U) (hU_mem : (1 : G) ∈ U) :
     ∃ φ : G → ℝ, IsBump U φ := by
   /- Blueprint outline:
@@ -94,7 +94,7 @@ theorem exists_bump {U : Set G} (hU_open : IsOpen U) (hU_mem : (1 : G) ∈ U) :
 
 /-- Convolution against a sequence of bumps with shrinking supports
 converges to the identity strongly in `L²(G)`
-(`thm:c2-bump-conv-tendsto`)
+(`thm:bump-conv-tendsto`)
 
 Note on the signature: we phrase the statement abstractly over any
 `Filter.AtTop`-indexed sequence of bumps whose supports form an

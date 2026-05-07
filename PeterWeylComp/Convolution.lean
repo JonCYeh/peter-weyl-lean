@@ -57,7 +57,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 noncomputable def convPtwise (f φ : G → ℂ) (x : G) : ℂ :=
   ∫ y, f y * φ (y⁻¹ * x) ∂(haarProb G)
 
-/-- Cauchy–Schwarz pointwise bound for `convPtwise` (`thm:c2-conv-CS`) -/
+/-- Cauchy–Schwarz pointwise bound for `convPtwise` (`thm:conv-CS`) -/
 theorem convPtwise_norm_le_L2_L2 (f φ : G → ℂ)
     (hf : MeasureTheory.MemLp f 2 (haarProb G))
     (hφ : MeasureTheory.MemLp φ 2 (haarProb G)) (x : G) :
@@ -82,7 +82,7 @@ theorem convPtwise_continuous (f φ : G → ℂ)
   -- of the `L²` inner product.  Currently blocked on Chapter 2's sorry.
   sorry
 
-/-- `L²` norm bound for convolution (`thm:c2-conv-L2bound`) -/
+/-- `L²` norm bound for convolution (`thm:conv-L2bound`) -/
 theorem convPtwise_L2_norm_bound (f φ : G → ℂ)
     (hf : MeasureTheory.MemLp f 2 (haarProb G))
     (hφ : MeasureTheory.MemLp φ 2 (haarProb G)) :
@@ -104,7 +104,7 @@ noncomputable def convOp (φ : L2 G) : L2 G →L[ℂ] L2 G := by
   -- justifies the extension.
   exact sorry
 
-/-- `T_φ` commutes with right translation (`thm:c2-Tphi-comm-rightReg`) -/
+/-- `T_φ` commutes with right translation (`thm:Tphi-comm-rightReg`) -/
 theorem convOp_comm_rightReg (φ : L2 G) (g : G) :
     (convOp φ) ∘L (rightReg G).toMonoidHom g
       = (rightReg G).toMonoidHom g ∘L (convOp φ) := by
@@ -113,7 +113,7 @@ theorem convOp_comm_rightReg (φ : L2 G) (g : G) :
   -- (Chapter 1 `haarProb_isMulRightInvariant`); extend by continuity.
   sorry
 
-/-- `T_φ` is an intertwiner from `ρ^R` to `ρ^R` (`cor:c2-Tphi-intertwiner`) -/
+/-- `T_φ` is an intertwiner from `ρ^R` to `ρ^R` (`cor:Tphi-intertwiner`) -/
 theorem convOp_isIntertwiner (φ : L2 G) :
     UnitaryRep.IsIntertwiner (convOp φ) (rightReg G) (rightReg G) :=
   fun g => convOp_comm_rightReg φ g
@@ -124,7 +124,7 @@ theorem convOp_isIntertwiner (φ : L2 G) :
 def IsSymmetricKernel (φ : L2 G) : Prop :=
   ∀ᵐ g ∂(haarProb G), (φ : G → ℂ) g = star ((φ : G → ℂ) g⁻¹)
 
-/-- Adjoint of `T_φ` is `T_(φ̃)` where `φ̃ g = conj φ g⁻¹` (`thm:c2-Tphi-adj`) -/
+/-- Adjoint of `T_φ` is `T_(φ̃)` where `φ̃ g = conj φ g⁻¹` (`thm:Tphi-adj`) -/
 theorem convOp_adjoint (φ : L2 G) :
     ∃ ψ : L2 G, (convOp φ).adjoint = convOp ψ
       ∧ (∀ᵐ g ∂(haarProb G), (ψ : G → ℂ) g = star ((φ : G → ℂ) g⁻¹)) := by
@@ -134,7 +134,7 @@ theorem convOp_adjoint (φ : L2 G) :
   -- The Fubini step is technical; left as `sorry`.
   sorry
 
-/-- `T_φ` is self-adjoint when `φ` is symmetric (`cor:c2-Tphi-selfadj`) -/
+/-- `T_φ` is self-adjoint when `φ` is symmetric (`cor:Tphi-selfadj`) -/
 theorem convOp_isSelfAdjoint (φ : L2 G) (hφ : IsSymmetricKernel φ) :
     IsSelfAdjoint (convOp φ) := by
   -- TODO: from `convOp_adjoint` choose `ψ` with `(convOp φ).adjoint = convOp ψ`
@@ -144,7 +144,7 @@ theorem convOp_isSelfAdjoint (φ : L2 G) (hφ : IsSymmetricKernel φ) :
 
 /-! ## Compactness via finite-rank approximation -/
 
-/-- `T_φ` is a compact operator on `L²(G)` (`thm:c2-Tphi-compact`)
+/-- `T_φ` is a compact operator on `L²(G)` (`thm:Tphi-compact`)
 
 Proof route (ii) from the blueprint: finite-rank approximation via the
 density of `C(G, ℂ)` in `L²(G)` and the closure of compact operators in

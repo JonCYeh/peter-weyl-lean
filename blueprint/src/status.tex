@@ -4,7 +4,7 @@
 % fixes that have been applied during formalization.
 
 \chapter{Project Status (Generated)}
-\label{chap:c2-genstatus}
+\label{chap:genstatus}
 
 This chapter is a generated overview of the project's current state of
 formalization, intended as a quick reference accompanying the blueprint.
@@ -17,8 +17,8 @@ re-running the blueprint integration scripts.
   \item \textbf{Total \texttt{\textbackslash lean\{...\}} citations in
     \texttt{content\_comp.tex}}: 89 (excluding the example placeholder).
   \item \textbf{Distinct Lean declarations referenced}: 90
-    (the \texttt{cor:c2-matrixCoeff-CG-L2} citation pair counts as
-    two; \texttt{def:c2-Ghat} counts as two).
+    (the \texttt{cor:matrixCoeff-CG-L2} citation pair counts as
+    two; \texttt{def:Ghat} counts as two).
   \item \textbf{Real (no \texttt{sorry}) declarations referenced}: 51.
   \item \textbf{Sorry-bodied declarations referenced}: 38.
   \item \textbf{Project total declaration-level sorries}: 41
@@ -49,7 +49,7 @@ re-running the blueprint integration scripts.
 \section*{Architectural fixes during formalization}
 
 \paragraph{IrrSkeleton refactor.}
-The \texttt{def:c2-Ghat} definition originally bundled
+The \texttt{def:Ghat} definition originally bundled
 \texttt{UnitaryRep.IrreducibleClass} as ``the type of equivalence
 classes of finite-dim irreducibles''.  In Lean, this was a structure
 \emph{without} a quotient: two distinct
@@ -60,7 +60,7 @@ give orthogonal subspaces.  We added a separate
 \texttt{UnitaryRep.IrrSkeleton G := Quotient (IrreducibleClass.setoid G)}
 type and re-indexed the Hilbert-sum statements over
 \texttt{IrrSkeleton G}.  See the implementation note in
-\texttt{def:c2-Ghat}.
+\texttt{def:Ghat}.
 
 \paragraph{Universe correction in \texttt{matrixCoeffSet}.}
 \texttt{UnitaryRep.matrixCoeffSet G} originally quantified over
@@ -72,7 +72,7 @@ Chapter~7's Lean file; no blueprint change.
 \paragraph{Two external assumptions.}
 \begin{itemize}
   \item \textbf{Compact self-adjoint spectral theorem}
-    (\texttt{ass:c2-spectral}, Chapter~5): the bundled form (countable
+    (\texttt{ass:spectral}, Chapter~5): the bundled form (countable
     family of real eigenvalues with FD eigenspaces and dense span) is
     not in Mathlib; Mathlib has the constituent pieces in
     \texttt{Analysis/InnerProductSpace/Spectrum.lean} but not the

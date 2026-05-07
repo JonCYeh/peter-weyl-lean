@@ -55,7 +55,7 @@ variable {G : Type u} [Group G] [TopologicalSpace G]
 
 /-! ## Item 1: irreducible classes `Ĝ` -/
 
-/-- (`def:c2-Ghat`) The dual `Ĝ`: a structure bundling a finite-dim
+/-- (`def:Ghat`) The dual `Ĝ`: a structure bundling a finite-dim
 Hilbert space `V`, a continuous unitary representation `ρ : G → U(V)`,
 and a proof that `ρ` is irreducible.  This is *not* yet quotiented by
 unitary equivalence; for the equivalence-class type used in the
@@ -131,7 +131,7 @@ def IrreducibleClass.setoid (G : Type u) [Group G] [TopologicalSpace G] :
       symm := fun ⟨h⟩ => ⟨Equiv.symm h⟩
       trans := fun ⟨h₁⟩ ⟨h₂⟩ => ⟨Equiv.trans h₁ h₂⟩ }
 
-/-- (`def:c2-Ghat`, skeleton form) The skeleton of `Ĝ`: equivalence
+/-- (`def:Ghat`, skeleton form) The skeleton of `Ĝ`: equivalence
 classes of finite-dim irreducible continuous unitary representations
 under unitary equivalence.  This is the indexing type for the
 Hilbert-sum decomposition (items 6, 7, 8).
@@ -183,7 +183,7 @@ theorem isotypicComponent_aux_eq_of_equiv
   -- hence are equal.
   sorry
 
-/-- (`def:c2-isotypic`) The `ξ`-isotypic component of `L²(G)` for
+/-- (`def:isotypic`) The `ξ`-isotypic component of `L²(G)` for
 `ξ : IrrSkeleton G`.  Defined via `Quotient.lift` from
 `isotypicComponent_aux`, with well-definedness given by
 `isotypicComponent_aux_eq_of_equiv`. -/
@@ -194,7 +194,7 @@ noncomputable def isotypicComponent (ξ : UnitaryRep.IrrSkeleton G) :
 
 /-! ## Item 3: isotypic component is `ρ^R`-invariant -/
 
-/-- (`thm:c2-isotypic-invariant`) The isotypic component is
+/-- (`thm:isotypic-invariant`) The isotypic component is
 `ρ^R`-invariant. -/
 theorem isotypicComponent_isInvariant
     (ξ : UnitaryRep.IrrSkeleton G) :
@@ -210,7 +210,7 @@ theorem isotypicComponent_isInvariant
 
 /-! ## Item 4: isotypic components are mutually orthogonal -/
 
-/-- (`thm:c2-isotypic-orthog`) Distinct skeleton elements give
+/-- (`thm:isotypic-orthog`) Distinct skeleton elements give
 orthogonal isotypic components.  This is the cornerstone of the
 Hilbert-sum construction.
 
@@ -238,7 +238,7 @@ theorem isotypicComponent_orthogonal
 
 /-! ## Item 5: matrix coefficients live in their isotypic component -/
 
-/-- (`thm:c2-mc-in-isotypic`) For `ξ : IrreducibleClass G` and
+/-- (`thm:mc-in-isotypic`) For `ξ : IrreducibleClass G` and
 `u, v ∈ V_ξ`, the matrix coefficient `π_{u,v}^{ρ_ξ}` (as an element
 of `L²(G)` via `continuousMapToL2`) lies in the isotypic component
 of `ξ`'s skeleton image.
@@ -257,7 +257,7 @@ theorem _root_.UnitaryRep.matrixCoeff_mem_isotypicComponent
 
 /-! ## Item 6: closed sum of isotypic components is dense -/
 
-/-- (`thm:c2-isotypic-spans`) The topological closure of the linear
+/-- (`thm:isotypic-spans`) The topological closure of the linear
 span of all isotypic components is `⊤` (the whole `L²(G)`).
 
 Composition: every matrix coefficient lies in some isotypic component
@@ -284,7 +284,7 @@ theorem isotypicComponents_topologicalClosure_eq_top :
 
 /-! ## Item 7: the Peter–Weyl Hilbert sum -/
 
-/-- (`thm:c2-PW-HilbertSum`) The family `{L²(G)_ξ}_{ξ : IrrSkeleton G}`
+/-- (`thm:PW-HilbertSum`) The family `{L²(G)_ξ}_{ξ : IrrSkeleton G}`
 is an `IsHilbertSum` decomposition of `L²(G)`.
 
 Indexed over `IrrSkeleton G` so that distinct indices correspond to
@@ -321,7 +321,7 @@ instance isotypicComponent_hasOrthogonalProjection
     (Submodule.isClosed_topologicalClosure _).completeSpace_coe
   exact inferInstance
 
-/-- (`thm:c2-plancherel-isotypic`) Plancherel's identity, isotypic
+/-- (`thm:plancherel-isotypic`) Plancherel's identity, isotypic
 form: for every `f ∈ L²(G)`,
 `‖f‖² = ∑_ξ ‖P_ξ f‖²`, where `P_ξ` is the orthogonal projection onto
 the `ξ`-isotypic component.

@@ -48,7 +48,7 @@ of `C(G, ℂ)`, used in Chapter 9's Stone–Weierstrass step.
 Mathlib's complex inner product is conjugate-linear in the first
 argument and linear in the second (`inner_smul_left : ⟪c • x, y⟫ =
 (star c) * ⟪x, y⟫`).  The blueprint statement of item 6
-(`thm:c2-mc-smul`) reads `c π_{u,v} = π_{cu,v}`, which under Mathlib's
+(`thm:mc-smul`) reads `c π_{u,v} = π_{cu,v}`, which under Mathlib's
 convention is only true for `c` real.  We restate it on the right
 argument: `c π_{u,v} = π_{u, cv}` (linear), which is true for all
 `c : ℂ` and conveys the same algebraic content.
@@ -63,7 +63,7 @@ namespace UnitaryRep
 variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V]
 
-/-- (`def:c2-matrixCoeff`) The matrix coefficient of a continuous unitary
+/-- (`def:matrixCoeff`) The matrix coefficient of a continuous unitary
 representation `ρ : UnitaryRep G V` and vectors `u, v ∈ V`:
 `π_{u,v}^ρ(g) := ⟪ρ g u, v⟫`. -/
 def matrixCoeff (ρ : UnitaryRep G V) (u v : V) : G → ℂ :=
@@ -72,14 +72,14 @@ def matrixCoeff (ρ : UnitaryRep G V) (u v : V) : G → ℂ :=
 @[simp] lemma matrixCoeff_apply (ρ : UnitaryRep G V) (u v : V) (g : G) :
     ρ.matrixCoeff u v g = ⟪ρ g u, v⟫_ℂ := rfl
 
-/-- (`thm:c2-matrixCoeff-cts`) Matrix coefficients are continuous:
+/-- (`thm:matrixCoeff-cts`) Matrix coefficients are continuous:
 composition of strong continuity (`UnitaryRep.strongContinuous`) with
 continuity of the inner product. -/
 theorem matrixCoeff_continuous (ρ : UnitaryRep G V) (u v : V) :
     Continuous (ρ.matrixCoeff u v) :=
   Continuous.inner (ρ.strongContinuous u) continuous_const
 
-/-- (`thm:c2-matrixCoeff-bdd`) Matrix coefficients are bounded by
+/-- (`thm:matrixCoeff-bdd`) Matrix coefficients are bounded by
 `‖u‖ * ‖v‖`: Cauchy–Schwarz combined with norm preservation
 (`UnitaryRep.norm_apply`). -/
 theorem matrixCoeff_bounded (ρ : UnitaryRep G V) (u v : V) (g : G) :
@@ -89,7 +89,7 @@ theorem matrixCoeff_bounded (ρ : UnitaryRep G V) (u v : V) (g : G) :
       ≤ ‖ρ g u‖ * ‖v‖ := norm_inner_le_norm _ _
     _ = ‖u‖ * ‖v‖ := by rw [ρ.norm_apply g u]
 
-/-- (`cor:c2-matrixCoeff-CG-L2`, first half) The matrix coefficient
+/-- (`cor:matrixCoeff-CG-L2`, first half) The matrix coefficient
 bundled as a continuous map `G → ℂ`. -/
 def matrixCoeff_continuousMap (ρ : UnitaryRep G V) (u v : V) : C(G, ℂ) :=
   ⟨ρ.matrixCoeff u v, ρ.matrixCoeff_continuous u v⟩
@@ -107,7 +107,7 @@ section L2
 variable [IsTopologicalGroup G] [CompactSpace G] [T2Space G]
   [MeasurableSpace G] [BorelSpace G]
 
-/-- (`cor:c2-matrixCoeff-CG-L2`, second half) The matrix coefficient
+/-- (`cor:matrixCoeff-CG-L2`, second half) The matrix coefficient
 viewed as an element of `L²(G)`, via the standard `C(G) ↪ L²(G)`
 inclusion (`PeterWeyl.continuousMapToL2`). -/
 noncomputable def matrixCoeff_memL2 (ρ : UnitaryRep G V) (u v : V) :
@@ -122,7 +122,7 @@ variable {V₁ V₂ : Type*}
   [NormedAddCommGroup V₁] [InnerProductSpace ℂ V₁] [CompleteSpace V₁]
   [NormedAddCommGroup V₂] [InnerProductSpace ℂ V₂] [CompleteSpace V₂]
 
-/-- (`thm:c2-mc-sum`) The pointwise sum of two matrix coefficients
+/-- (`thm:mc-sum`) The pointwise sum of two matrix coefficients
 (of possibly different representations) is itself a matrix coefficient
 of the direct sum representation `ρ₁ ⊕ ρ₂` on `WithLp 2 (V₁ × V₂)`,
 applied to the pair of vectors `(u₁, u₂), (v₁, v₂)`.
@@ -145,7 +145,7 @@ theorem matrixCoeff_add_eq_directSum
   -- `WithLp.prod_inner_apply`.  Defining `directSum` is the prerequisite.
   sorry
 
-/-- (`thm:c2-mc-smul`) Scalar multiple of a matrix coefficient is a
+/-- (`thm:mc-smul`) Scalar multiple of a matrix coefficient is a
 matrix coefficient with the scalar absorbed into the second argument
 (via right-linearity of the inner product, see convention note above). -/
 @[simp] theorem smul_matrixCoeff (ρ : UnitaryRep G V) (c : ℂ) (u v : V) :
@@ -154,7 +154,7 @@ matrix coefficient with the scalar absorbed into the second argument
   show c * ⟪ρ g u, v⟫_ℂ = ⟪ρ g u, c • v⟫_ℂ
   rw [inner_smul_right]
 
-/-- (`def:c2-tensor-rep`) Tensor product of two finite-dimensional
+/-- (`def:tensor-rep`) Tensor product of two finite-dimensional
 unitary representations.
 
 The tensor representation is `g ↦ ρ₁(g) ⊗ ρ₂(g)` acting on
@@ -180,7 +180,7 @@ noncomputable def tensor
     UnitaryRep G (TensorProduct ℂ V₁ V₂) :=
   sorry
 
-/-- (`thm:c2-mc-mul`) The pointwise product of two matrix coefficients
+/-- (`thm:mc-mul`) The pointwise product of two matrix coefficients
 equals the matrix coefficient of the tensor product representation
 applied to the tensor of the vectors:
 `π_{u₁,v₁}^{ρ₁}(g) · π_{u₂,v₂}^{ρ₂}(g) = π_{u₁⊗u₂,v₁⊗v₂}^{ρ₁⊗ρ₂}(g)`.
@@ -199,7 +199,7 @@ theorem matrixCoeff_mul_eq_tensor
   -- unfolding `matrixCoeff`.
   sorry
 
-/-- (`def:c2-contragredient`) Contragredient (dual) representation of a
+/-- (`def:contragredient`) Contragredient (dual) representation of a
 finite-dimensional unitary representation.
 
 Acts on the conjugate-dual space of `V` (or equivalently the dual `V*`
@@ -219,7 +219,7 @@ noncomputable def contragredient
   sorry
 
 omit [CompleteSpace V₁] [CompleteSpace V₂] in
-/-- (`thm:c2-mc-conj`) Conjugate of a matrix coefficient is a matrix
+/-- (`thm:mc-conj`) Conjugate of a matrix coefficient is a matrix
 coefficient of the contragredient representation:
 `conj (π_{u,v}^ρ(g)) = π_{v,u}^{contragredient ρ}(g)`.
 
@@ -233,7 +233,7 @@ theorem matrixCoeff_conj_eq_contragredient
       = (UnitaryRep.contragredient ρ).matrixCoeff v u g := by
   sorry
 
-/-- (`thm:c2-mc-one`) The constant function `1` is the matrix
+/-- (`thm:mc-one`) The constant function `1` is the matrix
 coefficient of the trivial representation on `ℂ` at the unit vector
 `(1, 1)`. -/
 @[simp] theorem matrixCoeff_one_eq_trivial (g : G) :
@@ -247,7 +247,7 @@ coefficient of the trivial representation on `ℂ` at the unit vector
 
 /-! ## The matrix-coefficient star-subalgebra of `C(G, ℂ)` -/
 
-/-- (`def:c2-MCSet`) The set of all matrix coefficients of finite-dim
+/-- (`def:MCSet`) The set of all matrix coefficients of finite-dim
 continuous unitary representations of `G`, viewed inside `C(G, ℂ)`.
 
 The existential quantification ranges over the *type* of the
@@ -262,7 +262,7 @@ def matrixCoeffSet (G : Type u) [Group G] [TopologicalSpace G] :
           (ρ : UnitaryRep G V) (u v : V),
         f = ρ.matrixCoeff_continuousMap u v }
 
-/-- (`def:c2-MCAlg`) The matrix-coefficient star-subalgebra of
+/-- (`def:MCAlg`) The matrix-coefficient star-subalgebra of
 `C(G, ℂ)`: the smallest star-subalgebra over `ℂ` containing
 `matrixCoeffSet G`.
 

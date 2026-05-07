@@ -50,7 +50,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 /-! ## Setup and key intermediate lemmas -/
 
-/-- (`thm:c2-rightReg-faithful`) The right regular representation is
+/-- (`thm:rightReg-faithful`) The right regular representation is
 faithful: for every `g₀ ≠ 1_G`, there exists `f ∈ L²(G)` with
 `ρ^R(g₀) f ≠ f`.
 
@@ -71,7 +71,7 @@ theorem rightReg_faithful (g₀ : G) (hg : g₀ ≠ 1) :
   --     compute `ρ^R(g₀) f` pointwise.
   sorry
 
-/-- (`thm:c2-existsSepConv`) Existence of a symmetric bump whose
+/-- (`thm:existsSepConv`) Existence of a symmetric bump whose
 convolution operator is non-zero and separates `g₀ ≠ 1_G`.
 
 The blueprint conclusions:
@@ -102,7 +102,7 @@ theorem exists_symmetric_bump_separating (g₀ : G) (hg : g₀ ≠ 1) :
 
 /-! ## From convolution to a finite-dim invariant subspace -/
 
-/-- (`thm:c2-eigenspace-separates`) For every `g₀ ≠ 1_G`, there exists
+/-- (`thm:eigenspace-separates`) For every `g₀ ≠ 1_G`, there exists
 a non-zero finite-dimensional closed `ρ^R`-invariant eigenspace
 `W = ker(T_φ - λ·Id)` for some symmetric bump `φ` and `λ ∈ ℝ \ {0}`,
 on which `ρ^R(g₀)` acts non-trivially. -/
@@ -159,7 +159,7 @@ induction on the dimension of the invariant subspace `W`. -/
 
 omit [IsTopologicalGroup G] [CompactSpace G] [T2Space G]
   [MeasurableSpace G] [BorelSpace G] in
-/-- (`thm:c2-fd-contains-irr`) Every non-zero finite-dimensional closed
+/-- (`thm:fd-contains-irr`) Every non-zero finite-dimensional closed
 `ρ`-invariant subspace contains a non-zero closed `ρ`-invariant
 subspace on which `ρ` is irreducible (in the intrinsic sense: any
 closed `ρ`-invariant submodule of `W'` is `⊥` or `W'`). -/
@@ -221,7 +221,7 @@ theorem UnitaryRep.exists_irreducible_subspace_of_finiteDim
 
 omit [IsTopologicalGroup G] [CompactSpace G] [T2Space G]
   [MeasurableSpace G] [BorelSpace G] in
-/-- (`thm:c2-fd-irr-nontrivial`) If `W` is finite-dim closed
+/-- (`thm:fd-irr-nontrivial`) If `W` is finite-dim closed
 `ρ`-invariant and `ρ(g₀)` acts non-trivially on `W`, then `W` contains
 a non-zero closed `ρ`-invariant subspace `W'` on which `ρ` is
 irreducible AND `ρ(g₀)` still acts non-trivially. -/
@@ -254,7 +254,7 @@ theorem UnitaryRep.exists_irreducible_subspace_acting_nontrivially
 
 /-! ## The separation theorem -/
 
-/-- (`thm:c2-separating-irr`) Existence of a non-zero finite-dim closed
+/-- (`thm:separating-irr`) Existence of a non-zero finite-dim closed
 `ρ^R`-invariant subspace of `L²(G)` on which `ρ^R` is irreducible and
 `ρ^R(g₀)` acts non-trivially.  This is the existence-of-separating
 finite-dim irreducible representation theorem.
