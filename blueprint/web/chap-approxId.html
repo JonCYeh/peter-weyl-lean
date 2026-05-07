@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Hilbert space \(L^2(G)\)</title>
-<link rel="next" href="chap-rep.html" title="Continuous Unitary Representations" />
-<link rel="prev" href="sect0002.html" title="Haar measure and the probability normalization" />
-<link rel="up" href="chap-setup.html" title="Setup, Haar Measure, L2(G)" />
+<title>Approximate Identities</title>
+<link rel="next" href="chap-spectral.html" title="The Compact Self-Adjoint Spectral Theorem (External)" />
+<link rel="prev" href="sect0013.html" title="Compactness of " />
+<link rel="up" href="index.html" title="Peter Weyl Lean" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -32,17 +32,17 @@
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
-<li class=" active">
+<li class="">
   <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
 <li class="">
   <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
  </li>
-<li class=" active current">
+<li class="">
   <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
  </li>
 
@@ -92,7 +92,7 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active current">
   <a href="chap-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
  </li>
 <li class="">
@@ -235,14 +235,16 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">1.3 The Hilbert space \(L^2(G)\)</h1>
-<div class="definition_thmwrapper theorem-style-definition" id="def:L2">
+<h1 id="chap:approxId">4 Approximate Identities</h1>
+
+<p>We need a family of symmetric continuous bumps \(\{ \phi _U\} \) supported in shrinking neighbourhoods of \(1_G\), with \(T_{\phi _U} \to \mathrm{Id}\) strongly as \(U \to \{ 1_G\} \). </p>
+<div class="definition_thmwrapper theorem-style-definition" id="def:bump">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">9</span>
-    <span class="definition_thmtitle">\(L^2(G)\)</span>
+    <span class="definition_thmlabel">46</span>
+    <span class="definition_thmtitle">Continuous bump</span>
     <div class="thm_header_extras">
 
     
@@ -250,7 +252,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#def:L2">#</a>
+    <a class="icon proof" href="chap-approxId.html#def:bump">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -264,139 +266,6 @@
         </header>
         
         <ul class="uses">
-          
-          <li><a href="sect0002.html#def:haar-prob">Definition 3</a></li>
-          
-          <li><a href="sect0001.html#def:scalars">Definition 2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2" class="lean_decl">PeterWeyl.L2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    \(L^2(G) := \texttt{Lp $\mathbb C$ 2 $\mu _G$}\), the Bochner \(L^2\) space of \(\mathbb C\)-valued square-integrable equivalence classes of functions on \(G\), with inner product \(\langle f, h\rangle := \int _G f(g)\overline{h(g)}\, d\mu _G(g)\). </p>
-<p>Mathlib provides the structure (file <span class="ttfamily">Mathlib.MeasureTheory.Function.L2Space</span>) including the inner-product instance <span class="ttfamily">L2.innerProductSpace</span>, the norm \(\| f\| _{L^2}^2 = \int |f|^2 d\mu _G\), and completeness (<span class="ttfamily">MeasureTheory.Lp.completeSpace</span>). </p>
-
-  </div>
-</div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:L2-Hilbert">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">10</span>
-    <span class="theorem_thmtitle">\(L^2(G)\) is a Hilbert space</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#thm:L2-Hilbert">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2.completeSpace" class="lean_decl">PeterWeyl.L2.completeSpace</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="theorem_thmcontent">
-  <p>    <span class="ttfamily">CompleteSpace \(L^2(G)\)</span>. </p>
-
-  </div>
-</div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:CG-into-L2">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">11</span>
-    <span class="theorem_thmtitle">\(C(G) \hookrightarrow L^2(G)\) as a continuous linear map</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#thm:CG-into-L2">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
           
           <li><a href="sect0001.html#def:G">Definition 1</a></li>
           
@@ -418,7 +287,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.continuousMapToL2" class="lean_decl">PeterWeyl.continuousMapToL2</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.IsBump" class="lean_decl">PeterWeyl.IsBump</a></li>
           
         </ul>
     
@@ -428,26 +297,27 @@
     
         </div>
   </div>
-  <div class="theorem_thmcontent">
-  <p>    There is a continuous linear map \(\iota _{C \to L^2} : C(G, \mathbb C) \to L^2(G)\) taking a continuous function to its \(L^2\)-equivalence class. Mathlib’s <span class="ttfamily">ContinuousMap.toLp</span> provides this. </p>
+  <div class="definition_thmcontent">
+  <p>    Given an open neighbourhood \(U\) of \(1_G\), a function \(\phi : G \to \mathbb R\) is a <em>bump on \(U\)</em> if it is continuous, non-negative, has support contained in \(U\), satisfies \(\int _G \phi \,  d\mu _G = 1\), and \(\phi (g) = \phi (g^{-1})\) for all \(g\). </p>
 
   </div>
 </div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:CG-dense-L2">
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:bump-exists">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">\(\iota _{C \to L^2}\) has dense range</span>
+    <span class="theorem_thmlabel">47</span>
+    <span class="theorem_thmtitle">Existence of continuous bumps</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:CG-dense-L2">#</a>
+    <a class="icon proof" href="chap-approxId.html#thm:bump-exists">#</a>
+    
+    <a class="icon proof" href="chap-approxId.html#a0000000057"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -462,7 +332,13 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#thm:CG-into-L2">Theorem 11</a></li>
+          <li><a href="chap-approxId.html#def:bump">Definition 46</a></li>
+          
+          <li><a href="sect0001.html#def:G">Definition 1</a></li>
+          
+          <li><a href="chap-approxId.html#def:bump">Definition 46</a></li>
+          
+          <li><a href="sect0001.html#def:G">Definition 1</a></li>
           
         </ul>
     
@@ -482,7 +358,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.continuousMapToL2_denseRange" class="lean_decl">PeterWeyl.continuousMapToL2_denseRange</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.exists_bump" class="lean_decl">PeterWeyl.exists_bump</a></li>
           
         </ul>
     
@@ -493,25 +369,38 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    The range of \(\iota _{C \to L^2}\) is dense in \(L^2(G)\). (Mathlib: <span class="ttfamily">MeasureTheory.Lp.continuousMap_dense</span> or <span class="ttfamily">ContinuousMap.toLp_denseRange</span> on a finite regular measure.) </p>
+  <p>    For every open \(U \ni 1_G\), there exists \(\phi : G \to \mathbb R\) that is a bump on \(U\). </p>
 
   </div>
 </div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:Lp-monotone">
+<div class="proof_wrapper" id="a0000000057">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Use Urysohn’s lemma in the locally compact Hausdorff group \(G\) to obtain a continuous non-negative \(\psi \in C(G)\) with \(\psi (1_G) {\gt} 0\) and \(\mathrm{supp}\, \psi \subseteq U\). Pick a smaller open \(V \ni 1_G\) with \(V \cup V^{-1} \subseteq U\) and shrink \(\psi \)’s support if necessary. Symmetrize: set \(\psi ^*(g) := \psi (g) + \psi (g^{-1})\). Then \(\psi ^*\) has support in \(V \cup V^{-1} \subseteq U\) and is symmetric. Normalise: \(\phi := \psi ^* / \int \psi ^*\, d\mu _G\) (positive denominator because \(\psi ^*(1_G) {\gt} 0\) and \(\psi ^*\) continuous non-negative implies a positive integral on any non-empty open set by the open-positivity of \(\mu _G\)). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:bump-conv-tendsto">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">13</span>
-    <span class="theorem_thmtitle">\(\| \cdot \| _{L^2} \leq \| \cdot \| _{L^\infty }\) on \(L^2(G)\)</span>
+    <span class="theorem_thmlabel">48</span>
+    <span class="theorem_thmtitle">Convergence of bump-convolution to identity, \(L^2\)</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:Lp-monotone">#</a>
+    <a class="icon proof" href="chap-approxId.html#thm:bump-conv-tendsto">#</a>
+    
+    <a class="icon proof" href="chap-approxId.html#a0000000058"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -526,9 +415,19 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
+          <li><a href="chap-approxId.html#def:bump">Definition 46</a></li>
           
-          <li><a href="sect0002.html#thm:haar-isProb">Theorem 5</a></li>
+          <li><a href="sect0010.html#def:Tphi">Definition 39</a></li>
+          
+          <li><a href="sect0008.html#thm:leftTrans-strongCts">Theorem 30</a></li>
+          
+          <li><a href="chap-approxId.html#def:bump">Definition 46</a></li>
+          
+          <li><a href="sect0010.html#def:Tphi">Definition 39</a></li>
+          
+          <li><a href="sect0008.html#thm:leftTrans-strongCts">Theorem 30</a></li>
+          
+          <li><a href="sect0003.html#thm:CG-dense-L2">Theorem 12</a></li>
           
         </ul>
     
@@ -548,7 +447,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2_norm_le_Linfty_norm" class="lean_decl">PeterWeyl.L2_norm_le_Linfty_norm</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.convOp_bump_tendsto_id" class="lean_decl">PeterWeyl.convOp_bump_tendsto_id</a></li>
           
         </ul>
     
@@ -559,7 +458,26 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    For any \(f \in C(G, \mathbb C)\), \(\| \iota _{C\to L^2}(f)\| _{L^2} \leq \| f\| _\infty \). (Follows from <span class="ttfamily">MeasureTheory.MemLp.mono_exponent_of_isFiniteMeasure</span> or the direct integration estimate using \(\mu _G(G) = 1\).) </p>
+  <p>    Let \(\{ U_n\} \) be a countable neighbourhood basis at \(1_G\) shrinking to \(\{ 1_G\} \), and \(\phi _n\) a bump on \(U_n\) for each \(n\). Then for every \(f \in L^2(G)\), \(T_{\phi _n} f \to f\) in \(L^2\) as \(n \to \infty \). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000058">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Three steps. </p>
+<p><em>Step 1.</em> For continuous \(f \in C(G)\), by uniform continuity (compactness, Heine–Cantor) of \(f\), given \(\varepsilon {\gt} 0\) pick a neighbourhood \(U \ni 1_G\) with \(|f(u^{-1} x) - f(x)| {\lt} \varepsilon \) for all \(u \in U, x \in G\). For \(n\) large enough \(\phi _n\) has support in \(U\), so \(|(T_{\phi _n} f)(x) - f(x)| = |\int (f(y^{-1}x) - f(x))\phi _n(y)\, d\mu _G(y)| \leq \varepsilon \). Hence \(\| T_{\phi _n} f - f\| _{L^\infty } \to 0\), and a fortiori \(\| T_{\phi _n} f - f\| _{L^2} \to 0\) since \(\| \cdot \| _{L^2} \leq \| \cdot \| _{L^\infty }\) (Theorem&#160;<a href="sect0003.html#thm:Lp-monotone">13</a>). </p>
+<p><em>Step 2.</em> For general \(f \in L^2(G)\) and \(\varepsilon {\gt} 0\), pick \(f' \in C(G)\) with \(\| f - f'\| _{L^2} {\lt} \varepsilon /3\) (Theorem&#160;<a href="sect0003.html#thm:CG-dense-L2">12</a>). By Step 1, pick \(N\) with \(\| T_{\phi _n}f' - f'\| _{L^2} {\lt} \varepsilon /3\) for \(n \geq N\). </p>
+<p><em>Step 3.</em> Triangle inequality: </p>
+<div class="displaymath" id="a0000000059">
+  \[  \| T_{\phi _n}f - f\| _{L^2} \leq \| T_{\phi _n}(f - f')\| _{L^2} + \| T_{\phi _n}f' - f'\| _{L^2} + \| f' - f\| _{L^2}.  \]
+</div>
+<p> The middle term is \({\lt} \varepsilon /3\) by choice of \(N\). The first and third are each \({\lt} \varepsilon /3\) using \(\| T_{\phi _n}\| _{\mathrm{op}} \leq \| \phi _n\| _{L^2}\) (Definition&#160;<a href="sect0010.html#def:Tphi">39</a>)... but \(\| \phi _n\| _{L^2}\) is not bounded in general! We need a refined estimate: \(\| T_{\phi _n}(f - f')\| _{L^2} \leq \| f - f'\| _{L^2}\cdot \| \phi _n\| _{L^1} = \| f - f'\| _{L^2}\) using \(\| \phi _n\| _{L^1} = 1\) (the normalization condition) and Young’s inequality with \(L^2 \cdot L^1 \to L^2\). This bound is uniform in \(n\). Then the first term is \({\lt} \varepsilon /3\). Total: \({\lt} \varepsilon \). </p>
 
   </div>
 </div>
@@ -574,11 +492,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0002.html" title="Haar measure and the probability normalization"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0013.html" title="Compactness of \(T_\phi \)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-setup.html" title="Setup, Haar Measure, \(L^2(G)\)"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="index.html" title="Peter Weyl Lean"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-rep.html" title="Continuous Unitary Representations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-spectral.html" title="The Compact Self-Adjoint Spectral Theorem (External)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

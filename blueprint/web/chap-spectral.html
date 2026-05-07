@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Hilbert space \(L^2(G)\)</title>
-<link rel="next" href="chap-rep.html" title="Continuous Unitary Representations" />
-<link rel="prev" href="sect0002.html" title="Haar measure and the probability normalization" />
-<link rel="up" href="chap-setup.html" title="Setup, Haar Measure, L2(G)" />
+<title>The Compact Self-Adjoint Spectral Theorem (External)</title>
+<link rel="next" href="chap-schur.html" title="Schur’s Lemma for Continuous Unitary Irreducibles" />
+<link rel="prev" href="chap-approxId.html" title="Approximate Identities" />
+<link rel="up" href="index.html" title="Peter Weyl Lean" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -32,17 +32,17 @@
 <div class="wrapper">
 <nav class="toc">
 <ul class="sub-toc-0">
-<li class=" active">
+<li class="">
   <a href="chap-setup.html"><span class="toc_ref">1</span> <span class="toc_entry">Setup, Haar Measure, \(L^2(G)\)</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
      <li class="">
   <a href="sect0001.html"><span class="toc_ref">1.1</span> <span class="toc_entry">Standing hypotheses</span></a>
  </li>
 <li class="">
   <a href="sect0002.html"><span class="toc_ref">1.2</span> <span class="toc_entry">Haar measure and the probability normalization</span></a>
  </li>
-<li class=" active current">
+<li class="">
   <a href="sect0003.html"><span class="toc_ref">1.3</span> <span class="toc_entry">The Hilbert space \(L^2(G)\)</span></a>
  </li>
 
@@ -95,7 +95,7 @@
 <li class="">
   <a href="chap-approxId.html"><span class="toc_ref">4</span> <span class="toc_entry">Approximate Identities</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="chap-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
  </li>
 <li class="">
@@ -235,45 +235,23 @@
 
 
 <div class="main-text">
-<h1 id="a0000000004">1.3 The Hilbert space \(L^2(G)\)</h1>
-<div class="definition_thmwrapper theorem-style-definition" id="def:L2">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<h1 id="chap:spectral">5 The Compact Self-Adjoint Spectral Theorem (External)</h1>
+
+<p>This chapter contains a single external assumption: the spectral theorem for compact self-adjoint operators on a complex Hilbert space. This is not currently in Mathlib (Jan 2026 cutoff); the formalisation must either supply it or assume it as a hypothesis. </p>
+<div class="assumption_thmwrapper theorem-style-plain" id="ass:spectral">
+  <div class="assumption_thmheading">
+    <span class="assumption_thmcaption">
+    Assumption
     </span>
-    <span class="definition_thmlabel">9</span>
-    <span class="definition_thmtitle">\(L^2(G)\)</span>
+    <span class="assumption_thmlabel">49</span>
+    <span class="assumption_thmtitle">Spectral theorem for compact self-adjoint operators</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#def:L2">#</a>
+    <a class="icon proof" href="chap-spectral.html#ass:spectral">#</a>
     
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0002.html#def:haar-prob">Definition 3</a></li>
-          
-          <li><a href="sect0001.html#def:scalars">Definition 2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
     
     
     <button class="modal lean">L∃∀N</button>
@@ -287,8 +265,6 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2" class="lean_decl">PeterWeyl.L2</a></li>
-          
         </ul>
     
       </div>
@@ -297,27 +273,39 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>    \(L^2(G) := \texttt{Lp $\mathbb C$ 2 $\mu _G$}\), the Bochner \(L^2\) space of \(\mathbb C\)-valued square-integrable equivalence classes of functions on \(G\), with inner product \(\langle f, h\rangle := \int _G f(g)\overline{h(g)}\, d\mu _G(g)\). </p>
-<p>Mathlib provides the structure (file <span class="ttfamily">Mathlib.MeasureTheory.Function.L2Space</span>) including the inner-product instance <span class="ttfamily">L2.innerProductSpace</span>, the norm \(\| f\| _{L^2}^2 = \int |f|^2 d\mu _G\), and completeness (<span class="ttfamily">MeasureTheory.Lp.completeSpace</span>). </p>
+  <div class="assumption_thmcontent">
+  <p>   Let \(H\) be a complex Hilbert space and \(T : H \to _L H\) a compact self-adjoint operator (in the sense of <span class="ttfamily">IsCompactOperator T</span> and <span class="ttfamily">IsSelfAdjoint T</span>). Then there exists an at-most-countable index set \(I\), a function \(\lambda : I \to \mathbb R \setminus \{ 0\} \) (the non-zero eigenvalues), and for each \(i \in I\) a non-zero closed subspace \(H_i := \ker (T - \lambda _i \mathrm{Id})\) such that: </p>
+<ol class="enumerate">
+  <li><p>each \(H_i\) is finite-dimensional; </p>
+</li>
+  <li><p>the family \(\{ H_i\} _{i \in I}\) is mutually orthogonal; </p>
+</li>
+  <li><p>if \(I\) is infinite, the sequence \(|\lambda _i|\) tends to \(0\); </p>
+</li>
+  <li><p>the closure of the linear span \(\bigsqcup _i H_i\) equals \((\ker T)^\perp \); </p>
+</li>
+  <li><p>equivalently, \(H = \ker T \oplus \widehat{\bigoplus }_i H_i\) as a Hilbert sum. </p>
+</li>
+</ol>
 
   </div>
 </div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:L2-Hilbert">
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:spectral-nonzero-eval">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">10</span>
-    <span class="theorem_thmtitle">\(L^2(G)\) is a Hilbert space</span>
+    <span class="theorem_thmlabel">50</span>
+    <span class="theorem_thmtitle">Existence of a non-zero eigenvalue when \(T \neq 0\)</span>
     <div class="thm_header_extras">
 
-    
-    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0003.html#thm:L2-Hilbert">#</a>
+    <a class="icon proof" href="chap-spectral.html#thm:spectral-nonzero-eval">#</a>
+    
+    <a class="icon proof" href="chap-spectral.html#a0000000060"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -332,7 +320,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
+          <li><a href="chap-spectral.html#ass:spectral">Assumption 49</a></li>
+          
+          <li><a href="chap-spectral.html#ass:spectral">Assumption 49</a></li>
           
         </ul>
     
@@ -352,7 +342,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2.completeSpace" class="lean_decl">PeterWeyl.L2.completeSpace</a></li>
+          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.exists_eigenvalue" class="lean_decl">PeterWeyl.ContinuousLinearMap.IsCompactOperator.IsSelfAdjoint.exists_eigenvalue</a></li>
           
         </ul>
     
@@ -363,203 +353,19 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    <span class="ttfamily">CompleteSpace \(L^2(G)\)</span>. </p>
+  <p>    Let \(T : H \to _L H\) be compact, self-adjoint, and non-zero. Then there exists \(\lambda \in \mathbb R \setminus \{ 0\} \) and a non-zero finite-dimensional closed subspace \(H_\lambda \leq H\) with \(T|_{H_\lambda } = \lambda \cdot \mathrm{Id}\). </p>
 
   </div>
 </div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:CG-into-L2">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<div class="proof_wrapper" id="a0000000060">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
     </span>
-    <span class="theorem_thmlabel">11</span>
-    <span class="theorem_thmtitle">\(C(G) \hookrightarrow L^2(G)\) as a continuous linear map</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#thm:CG-into-L2">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
-          
-          <li><a href="sect0001.html#def:G">Definition 1</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.continuousMapToL2" class="lean_decl">PeterWeyl.continuousMapToL2</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
+    <span class="expand-proof">▶</span>
   </div>
-  <div class="theorem_thmcontent">
-  <p>    There is a continuous linear map \(\iota _{C \to L^2} : C(G, \mathbb C) \to L^2(G)\) taking a continuous function to its \(L^2\)-equivalence class. Mathlib’s <span class="ttfamily">ContinuousMap.toLp</span> provides this. </p>
-
-  </div>
-</div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:CG-dense-L2">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">12</span>
-    <span class="theorem_thmtitle">\(\iota _{C \to L^2}\) has dense range</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#thm:CG-dense-L2">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#thm:CG-into-L2">Theorem 11</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.continuousMapToL2_denseRange" class="lean_decl">PeterWeyl.continuousMapToL2_denseRange</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="theorem_thmcontent">
-  <p>    The range of \(\iota _{C \to L^2}\) is dense in \(L^2(G)\). (Mathlib: <span class="ttfamily">MeasureTheory.Lp.continuousMap_dense</span> or <span class="ttfamily">ContinuousMap.toLp_denseRange</span> on a finite regular measure.) </p>
-
-  </div>
-</div>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:Lp-monotone">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">13</span>
-    <span class="theorem_thmtitle">\(\| \cdot \| _{L^2} \leq \| \cdot \| _{L^\infty }\) on \(L^2(G)\)</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0003.html#thm:Lp-monotone">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0003.html#def:L2">Definition 9</a></li>
-          
-          <li><a href="sect0002.html#thm:haar-isProb">Theorem 5</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/PeterWeyl.L2_norm_le_Linfty_norm" class="lean_decl">PeterWeyl.L2_norm_le_Linfty_norm</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="theorem_thmcontent">
-  <p>    For any \(f \in C(G, \mathbb C)\), \(\| \iota _{C\to L^2}(f)\| _{L^2} \leq \| f\| _\infty \). (Follows from <span class="ttfamily">MeasureTheory.MemLp.mono_exponent_of_isFiniteMeasure</span> or the direct integration estimate using \(\mu _G(G) = 1\).) </p>
+  <div class="proof_content">
+  <p> By Assumption&#160;<a href="chap-spectral.html#ass:spectral">49</a>, \(H = \ker T \oplus \widehat{\bigoplus }_i H_i\). If \(T \neq 0\), then \(T\) is non-zero on \((\ker T)^\perp \), so the family \(\{ H_i\} _i\) is non-empty (otherwise the closure of their span would be \(\{ 0\}  \neq (\ker T)^\perp \)). Pick any \(i\); take \(\lambda := \lambda _i\) and \(H_\lambda := H_i\). </p>
 
   </div>
 </div>
@@ -574,11 +380,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0002.html" title="Haar measure and the probability normalization"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-approxId.html" title="Approximate Identities"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-setup.html" title="Setup, Haar Measure, \(L^2(G)\)"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="index.html" title="Peter Weyl Lean"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-rep.html" title="Continuous Unitary Representations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-schur.html" title="Schur’s Lemma for Continuous Unitary Irreducibles"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

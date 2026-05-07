@@ -12,10 +12,10 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Intertwiners and equivalences</title>
-<link rel="next" href="sect0008.html" title="The left and right regular representations" />
-<link rel="prev" href="sect0006.html" title="Irreducibility" />
-<link rel="up" href="chap-rep.html" title="Continuous Unitary Representations" />
+<title>Schur’s Lemma for Continuous Unitary Irreducibles</title>
+<link rel="next" href="sect0014.html" title="Decomposition into self-adjoint pieces" />
+<link rel="prev" href="chap-spectral.html" title="The Compact Self-Adjoint Spectral Theorem (External)" />
+<link rel="up" href="index.html" title="Peter Weyl Lean" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/showmore.css" />
@@ -48,10 +48,10 @@
 
   </ul>
  </li>
-<li class=" active">
+<li class="">
   <a href="chap-rep.html"><span class="toc_ref">2</span> <span class="toc_entry">Continuous Unitary Representations</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
      <li class="">
   <a href="sect0004.html"><span class="toc_ref">2.1</span> <span class="toc_entry">The structure</span></a>
  </li>
@@ -61,7 +61,7 @@
 <li class="">
   <a href="sect0006.html"><span class="toc_ref">2.3</span> <span class="toc_entry">Irreducibility</span></a>
  </li>
-<li class=" active current">
+<li class="">
   <a href="sect0007.html"><span class="toc_ref">2.4</span> <span class="toc_entry">Intertwiners and equivalences</span></a>
  </li>
 <li class="">
@@ -98,10 +98,10 @@
 <li class="">
   <a href="chap-spectral.html"><span class="toc_ref">5</span> <span class="toc_entry">The Compact Self-Adjoint Spectral Theorem (External)</span></a>
  </li>
-<li class="">
+<li class=" active current">
   <a href="chap-schur.html"><span class="toc_ref">6</span> <span class="toc_entry">Schur’s Lemma for Continuous Unitary Irreducibles</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
  </li>
@@ -235,265 +235,23 @@
 
 
 <div class="main-text">
-<h1 id="a0000000008">2.4 Intertwiners and equivalences</h1>
-<div class="definition_thmwrapper theorem-style-definition" id="def:isIntertwiner">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">23</span>
-    <span class="definition_thmtitle">Intertwiner predicate</span>
-    <div class="thm_header_extras">
+<h1 id="chap:schur">6 Schur’s Lemma for Continuous Unitary Irreducibles</h1>
 
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0007.html#def:isIntertwiner">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0004.html#def:UnitaryRep">Definition 14</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/UnitaryRep.IsIntertwiner" class="lean_decl">UnitaryRep.IsIntertwiner</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    Let \(\rho : \texttt{UnitaryRep G H}\) and \(\sigma : \texttt{UnitaryRep G K}\). A bounded linear map \(T : H \to _L K\) is an <em>intertwiner</em> (\(T.\texttt{IsIntertwiner $\rho $ $\sigma $}\)) if \(\forall g : G, T \circ _L \rho (g) = \sigma (g) \circ _L T\). </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:Intertwiner">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">24</span>
-    <span class="definition_thmtitle">Space of intertwiners</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0007.html#def:Intertwiner">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0007.html#def:isIntertwiner">Definition 23</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/UnitaryRep.Intertwiner" class="lean_decl">UnitaryRep.Intertwiner</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    \(\texttt{UnitaryRep.Intertwiner $\rho $ $\sigma $}\) is the bundled type \(\{ T : H \to _L K \mid T.\texttt{IsIntertwiner $\rho $ $\sigma $}\} \), registered as a \(\mathbb C\)-module subspace of \(H \to _L K\). </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:isEquiv">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">25</span>
-    <span class="definition_thmtitle">Predicate “\(T\) is a unitary equivalence”</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0007.html#def:isEquiv">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0007.html#def:isIntertwiner">Definition 23</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/UnitaryRep.IsEquiv" class="lean_decl">UnitaryRep.IsEquiv</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    An intertwiner \(T : H \to _L K\) is a <em>unitary equivalence</em> if it is also a surjective isometry, equivalently \(T^* T = \mathrm{Id}_H\) and \(T T^* = \mathrm{Id}_K\). </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:Equiv">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">26</span>
-    <span class="definition_thmtitle">Equivalence of representations</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0007.html#def:Equiv">#</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0007.html#def:isEquiv">Definition 25</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://JonCYeh.github.io/peter-weyl-lean/find/#doc/UnitaryRep.Equiv" class="lean_decl">UnitaryRep.Equiv</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>    Two representations \(\rho , \sigma \) are <em>equivalent</em>, \(\rho \cong \sigma \), if there exists a \(T : H \to _L K\) with \(T.\texttt{IsIntertwiner $\rho $ $\sigma $}\) and \(T.\texttt{IsEquiv}\). </p>
-
-  </div>
-</div>
 
 </div> <!--main-text -->
+<nav class=local_toc>
+<ul>
+  <li>  
+  <a href="sect0014.html"><span class="toc_ref">6.1</span> <span class="toc_entry">Decomposition into self-adjoint pieces</span></a>
+  </li>
+  <li>  
+  <a href="sect0015.html"><span class="toc_ref">6.2</span> <span class="toc_entry">Self-adjoint equivariant operator on irreducible is scalar</span></a>
+  </li>
+  <li>  
+  <a href="sect0016.html"><span class="toc_ref">6.3</span> <span class="toc_entry">Schur’s lemma proper</span></a>
+  </li>
+</ul>
+</nav>
 </div> <!-- content-wrapper -->
 </div> <!-- content -->
 </div> <!-- wrapper -->
@@ -503,11 +261,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="sect0006.html" title="Irreducibility"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-spectral.html" title="The Compact Self-Adjoint Spectral Theorem (External)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
-  <a href="chap-rep.html" title="Continuous Unitary Representations"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+  <a href="index.html" title="Peter Weyl Lean"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0008.html" title="The left and right regular representations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0014.html" title="Decomposition into self-adjoint pieces"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 
