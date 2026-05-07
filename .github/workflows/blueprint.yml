@@ -1,30 +1,27 @@
-name: Compile blueprint
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main # Trigger on pushes to the default branch
-  workflow_dispatch:        # Allow manual triggering of the workflow from the GitHub Actions interface
+      - main
+  workflow_dispatch:
 
-# Cancel previous runs if a new commit is pushed to the same PR or branch
-concurrency:
-  group: ${{ github.ref }}  # Group runs by the ref (branch or PR)
-  cancel-in-progress: true  # Cancel any ongoing runs in the same group
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Required for actions/deploy-pages.
 permissions:
-  contents: read          # Read access to repository contents
-  pages: write            # Write access to GitHub Pages
-  id-token: write         # Write access to ID tokens
-  issues: write           # Write access to issues
-  pull-requests: write    # Write access to pull requests
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time.
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build_project:
+  build:
     runs-on: ubuntu-latest
-    name: Build project
     steps:
-      - name: Cleanup to free disk space
+      - name: Cleanup disk space
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.0
         with:
           tool-cache: false
@@ -35,26 +32,101 @@ jobs:
           docker-images: false
           swap-storage: false
 
-      - name: Checkout project
+      - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0 # Fetch all history for all branches and tags
+          fetch-depth: 0
 
-      - name: Build project
+      - name: Install Lean and build project
         uses: leanprover/lean-action@434f25c2f80ded67bba02502ad3a86f25db50709 # 2025-07-02
         with:
           build: true
-          # `lint: true` requires a `lintDriver` package field (or a
-          # `runLinter` lean_exe) which this project does not define.
-          # Mathlib itself no longer ships such a driver, so enabling
-          # this fails with "could not find a lint driver".  Disabled.
           lint: false
-          # `mk_all-check: true` requires a `Mathlib`-style `mk_all`
-          # executable to verify import lists; not present here.
           mk_all-check: false
 
-      - name: Compile blueprint and documentation
-        uses: leanprover-community/docgen-action@deed0cdc44dd8e5de07a300773eb751d33e32fc8 # 2025-10-26
+      - name: Install TeX Live (for blueprint pdf)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
+            texlive-science texlive-xetex latexmk
+
+      - name: Install Python and leanblueprint
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install leanblueprint plastexshowmore plastexdepgraph
+
+      - name: Build blueprint web (HTML)
+        run: |
+          cd blueprint
+          leanblueprint web
+
+      - name: Build blueprint PDF (best-effort; do not fail the build)
+        run: |
+          cd blueprint
+          leanblueprint pdf || echo "PDF build failed; continuing without PDF."
+
+      - name: Refresh find/ redirect map (in case .lean line numbers shifted)
+        run: |
+          python3 home_page/build_find.py
+
+      - name: Build doc-gen4 documentation (best-effort)
+        run: |
+          ~/.elan/bin/lake -R -Kenv=dev build PeterWeyl:docs PeterWeylComp:docs \
+            || echo "doc-gen4 build failed or not configured; site will deploy without /docs/."
+
+      - name: Assemble _site/
+        run: |
+          set -eux
+          mkdir -p _site
+
+          # 1. Jekyll homepage (acts as site root).  Includes home_page/find/.
+          if [ -d home_page ]; then
+            cp -r home_page/. _site/
+          fi
+
+          # 2. Blueprint HTML at /blueprint/.
+          mkdir -p _site/blueprint
+          if [ -d blueprint/web ]; then
+            cp -r blueprint/web/. _site/blueprint/
+          fi
+
+          # 3. Blueprint PDF at /blueprint.pdf (if built).
+          if [ -f blueprint/print/print.pdf ]; then
+            cp blueprint/print/print.pdf _site/blueprint.pdf
+          fi
+
+          # 4. doc-gen4 output at /docs/ (if built).
+          if [ -d .lake/build/doc ]; then
+            mkdir -p _site/docs
+            cp -r .lake/build/doc/. _site/docs/
+          fi
+
+          # 5. Sanity diagnostics.
+          echo "=== _site/ contents ==="
+          ls -la _site/
+          echo "=== _site/find/ ==="
+          ls -la _site/find/ || echo "(missing)"
+          echo "=== _site/blueprint/ (sample) ==="
+          ls _site/blueprint/ | head -10
+          echo "=== _site/blueprint/dep_graph_document.html present? ==="
+          [ -f _site/blueprint/dep_graph_document.html ] && echo "yes" || echo "NO -- broken"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          blueprint: true
-          homepage: home_page
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
